@@ -346,9 +346,6 @@ int main(int argc, char *argv[])
     if (argc > 1) {
         opt_parse(argc, argv);
     }
-    else {
-        conf_parse();
-    }
 
     loop = g_main_loop_new(NULL, FALSE);
 
