@@ -1,7 +1,7 @@
 /* iald_mod.c - Input Abstraction Layer Module Loader
  *
- * Copyright (C) 2004 Timo Hoenig <thoenig@nouse.net>
- *                    All rights reserved
+ * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
+ *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -202,12 +202,47 @@ void modules_load()
 
     /** Try to start the modules. */
     while (m) {
-        if (m->data->load() == FALSE)
-            WARNING(("Failed to load %s.", m->data->name));
-        else
-            INFO(("%s loaded.", m->data->name));
+        if (m->data->load() == FALSE) {
+            WARNING(("Failed to initialize %s.", m->data->name));
+            m->data->initialized = FALSE;
 
+            if (m->data->state == ENABLED) {
+                WARNING(("Setting module state to disabled since initialization failed."));
+                m->data->state = DISABLED;
+            }
+        }
+        else {
+            INFO(("%s loaded.", m->data->name));
+            m->data->initialized = TRUE;
+        }
+       
         m = m->next;
+    }
+}
+
+/** Unload a specific module
+ *
+ */
+void module_unload(IalModule* m)
+{
+    if (m == modules_list_head) {
+        DEBUG(("Removing list head."));
+        if(m->next != NULL) {
+            modules_list_head = m->next;
+            modules_list_head->prev = NULL;
+        }
+        else {
+            modules_list_head = NULL;
+        }
+    }
+    else if (m->next == NULL) {
+        DEBUG(("Removing list tail."));
+        m->prev->next = NULL;
+    }
+    else {
+        DEBUG(("Removing in the list."));
+        m->prev->next = m->next;
+        m->next->prev = m->prev;
     }
 
 }
