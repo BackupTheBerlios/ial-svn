@@ -19,16 +19,28 @@ void log_level_set(int);
 int log_level_get(void);
 
 /** Debug information logging macro */
-#define DEBUG(expr)   do {log_setup(LOGPRI_DEBUG,   __FILE__, __LINE__, __FUNCTION__); log_output expr; } while(0)
+#define DEBUG(expr) \
+        do {log_setup(LOGPRI_DEBUG, __FILE__, __LINE__, __FUNCTION__); \
+            log_output expr; \
+        } while(0)
 
 /** Information level logging macro */
-#define INFO(expr)    do {log_setup(LOGPRI_INFO,    __FILE__, __LINE__, __FUNCTION__); log_output expr; } while(0)
+#define INFO(expr) \
+        do {log_setup(LOGPRI_INFO, __FILE__, __LINE__, __FUNCTION__); \
+            log_output expr; \
+        } while(0)
 
 /** Warning level logging macro */
-#define WARNING(expr) do {log_setup(LOGPRI_WARNING, __FILE__, __LINE__, __FUNCTION__); log_output expr; } while(0)
+#define WARNING(expr) \
+        do {log_setup(LOGPRI_WARNING, __FILE__, __LINE__, __FUNCTION__); \
+            log_output expr; \
+        } while(0)
 
 /** Error leve logging macro */
-#define ERROR(expr)   do {log_setup(LOGPRI_ERROR,   __FILE__, __LINE__, __FUNCTION__); log_output expr; } while(0)
+#define ERROR(expr) \
+        do {log_setup(LOGPRI_ERROR, __FILE__, __LINE__, __FUNCTION__); \
+            log_output expr; \
+        } while(0)
 
 /** Macro for terminating the program on an unrecoverable error */
 //#define DIE(expr) do {printf("*** [TERMINATING] %s:%s():%d : ", __FILE__, __FUNCTION__, __LINE__); printf expr; printf("\n"); exit(1); } while(0)
