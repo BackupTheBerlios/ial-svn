@@ -82,6 +82,12 @@ void h_sigterm(int sigval)
     exit(1);
 }
 
+void h_sighup(int sigval)
+{
+    INFO (("Signal handler for SIGHUP is not yet implemented. SIGHUP ignored."));
+}
+
+
 void opt_debug_set(int log_level)
 {
     opt_debug = log_level;
@@ -509,6 +515,7 @@ int main(int argc, char *argv[])
     }
 
     signal(SIGTERM, h_sigterm);
+    signal(SIGHUP, h_sighup);
 
     loop = g_main_loop_new(NULL, FALSE);
 
