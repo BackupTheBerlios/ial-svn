@@ -36,7 +36,7 @@ moduledir=$libdir/ial/modules
 AC_SUBST(moduledir)
 
 
-
+AS_AC_EXPAND(LOCALSTATEDIR, $localstatedir)
 AS_AC_EXPAND(SYSCONFDIR, $sysconfdir)
 AS_AC_EXPAND(DATADIR, $datadir)
 AS_AC_EXPAND(BINDIR, $bindir)
@@ -107,6 +107,19 @@ IAL_DEFINES="-DMODULE_DIR=\\\"$MODULEDIR\\\" -DSYSCONF_DIR=\\\"$SYSCONFDIR\\\""
 AC_SUBST(IAL_DEFINES)
 
 
+dnl
+dnl PID file
+dnl
+
+if ! test -z "$with_pid_file"; then
+    IALD_PID_FILE=$with_pid_file
+else
+    IALD_PID_FILE=${LOCALSTATEDIR}/run/iald/pid  
+fi  
+       
+AC_SUBST(IALD_PID_FILE)
+AC_DEFINE_UNQUOTED(IALD_PID_FILE, "$IALD_PID_FILE", [pid file])
+
 
 dnl
 dnl Output files
@@ -125,15 +138,18 @@ echo "
 Input Abstraction Layer $VERSION
 ================================
 
-prefix:       ${prefix}
-libdir:       ${LIBDIR}
-moduledir:    ${MODULEDIR}
-bindir:       ${BINDIR}
-datadir:      ${DATADIR}
-sysconfdir:   ${SYSCONFDIR}
-dbussysdir:   ${DBUS_SYS_DIR}
+prefix:        ${prefix}
+libdir:        ${LIBDIR}
+moduledir:     ${MODULEDIR}
+bindir:        ${BINDIR}
+datadir:       ${DATADIR}
+localstatedir: ${LOCALSTATEDIR}
+sysconfdir:    ${SYSCONFDIR}
+dbussysdir:    ${DBUS_SYS_DIR}
 
-pkgcflags:    ${PACKAGE_CFLAGS}
-pkglibs:      ${PACKAGE_LIBS}
+pidfile:       ${IALD_PID_FILE}
+
+pkgcflags:     ${PACKAGE_CFLAGS}
+pkglibs:       ${PACKAGE_LIBS}
 "
 
