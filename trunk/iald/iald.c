@@ -57,14 +57,29 @@ extern DBusConnection *dbus_connection;
  * @{
  */
 
-void remove_pid_file()
+gboolean pid_file_exists()
+{
+    struct stat sb;
+
+    if (stat (IALD_PID_FILE, &sb) < 0) {
+        /* PID file does not exist */
+        return FALSE;
+    }
+    else {
+        /* PID file does exist */
+        return TRUE;
+    }
+}
+
+void pid_file_remove()
 {
     unlink(IALD_PID_FILE);
 }
 
 void h_sigterm(int sigval)
 {
-    remove_pid_file();
+    pid_file_remove();
+    exit(1);
 }
 
 void opt_debug_set(int log_level)
@@ -78,6 +93,7 @@ void opt_logfile_set(const char *logfile)
         ERROR(("Filename for logfile to long."));
         return;
     }
+
     strncpy(opt_logfile, logfile, strlen(logfile));
     opt_logfile[strlen(logfile)] = 0;
 }
@@ -121,7 +137,7 @@ void opt_usage()
             "\n"
             "Options:\n"
             "-d n, --debug n:                      Set debug level (n = 0..3)\n"
-            "-o <filename>, --output <filename>:   Set log file (`none' for stdout)\n"
+            "-o <filename>, --output <filename>:   Set log file (`stdout' for console output)\n"
             "-f,   --foreground:                   Run in foreground\n"
             "-m s, --module-options s:             Set module options (s = { module options })\n"
             "\n"
@@ -443,6 +459,11 @@ int main(int argc, char *argv[])
     /* Set logging level */
     log_level_set(opt_debug);
 
+    if (pid_file_exists() == TRUE) {
+        ERROR(("PID file %s exists. Please remove if you're sure that there is no other instance of `iald` running."));
+        exit(1);
+    }
+
     /* Daemonize or run in foreground */
     if (opt_foreground == TRUE) {
         INFO(("Running in foreground"));
@@ -484,7 +505,7 @@ int main(int argc, char *argv[])
         write(pid_file, pid, strlen(pid));
         close(pid_file);
 
-        atexit(remove_pid_file);
+        atexit(pid_file_remove);
     }
 
     signal(SIGTERM, h_sigterm);
