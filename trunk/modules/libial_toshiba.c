@@ -35,7 +35,7 @@
 ModuleOption mod_options[] = {
     {"disable", "false", "disable=(true|false)"}
     ,
-    {"poll_freq", "250", "poll_freq=n (n: polling frquency in ms)"}
+    {"poll_freq", "250", "poll_freq=n (n: polling frequency in ms)"}
     ,
     {NULL}
 };
