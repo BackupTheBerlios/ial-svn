@@ -19,11 +19,11 @@ static DBusHandlerResult event_callback(DBusConnection * connection,
         event = event_receive(dbus_message);
 
         /* ACPI, any button, quick compare on raw */
-/*        if(event.raw == -1) {
+        if(event.raw == -1) {
             open("/proc/latency_event_received", O_RDONLY);
             open("/proc/latency_get_data", O_RDONLY);
         }
-  */          
+            
         /* Toshiba ACPI, Fn-F1 */
         if(event.raw == 0x13b) {
             open("/proc/latency_event_received", O_RDONLY);
@@ -31,10 +31,10 @@ static DBusHandlerResult event_callback(DBusConnection * connection,
         }
 
         /* Input Event Interface, F11 */
-/*        if(event.raw == 0x57) {
+        if(event.raw == 0x57) {
             open("/proc/latency_event_received", O_RDONLY);
             open("/proc/latency_get_data", O_RDONLY);
-        }*/
+        }
     }
 
     return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
