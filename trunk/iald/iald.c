@@ -28,12 +28,16 @@
 #include <stddef.h>
 #include <string.h>
 #include <getopt.h>
+#include <unistd.h>
 
 #include "iald.h"
 #include "iald_mod.h"
 #include "iald_conf.h"
 
 IalModule *modules_list_head = NULL;
+
+static gboolean opt_foreground = FALSE;
+static int opt_debug = 0;
 
 /** Global D-BUS connection, libial */
 extern DBusConnection *dbus_connection;
@@ -46,6 +50,16 @@ extern DBusConnection *dbus_connection;
  *          
  * @{
  */
+
+void opt_debug_set(int log_level)
+{
+    opt_debug = log_level;
+}
+
+void opt_foreground_set(gboolean state)
+{
+    opt_foreground = state;
+}
 
 
 /**         
@@ -290,7 +304,7 @@ void opt_version()
 void opt_parse(int argc, char *argv[])
 {
     int option_index = 0;
-    int c;
+    int c = 0;
 
     static struct option long_options[] = {
         {"debug", required_argument, NULL, 'd'},
@@ -336,11 +350,11 @@ void opt_parse(int argc, char *argv[])
             break;
 
         case 'd':
-            log_level_set(atoi(optarg));
+            opt_debug_set(atoi(optarg));
             break;
 
         case 'f':
-            printf("TODO\n");
+            opt_foreground_set(TRUE);
             break;
 
         default:
@@ -394,10 +408,41 @@ int main(int argc, char *argv[])
         opt_parse(argc, argv);
     }
 
+    /* Set logging level */
+    log_level_set(opt_debug);
+
+    /* Daemonize or run in foreground */
+    if (opt_foreground == TRUE) {
+        INFO(("Running in foreground"));
+    }
+    else {
+        int pid;
+        
+        INFO(("Running as daemon"));
+        chdir ("/");
+        pid = fork();
+
+        switch (pid) {
+            case -1:
+                ERROR(("Could not fork."));
+                exit(1);
+                break;
+
+            case 0:
+                /* Child */
+                break;
+
+            default:
+                /* Parent */
+                exit(0);
+                break;
+        }
+    }
+
     loop = g_main_loop_new(NULL, FALSE);
 
     if (ial_dbus_connect() == FALSE) {
-        ERROR(("D-Bus connection failed."));
+        ERROR(("D-BUS connection failed."));
         exit(1);
     }
 

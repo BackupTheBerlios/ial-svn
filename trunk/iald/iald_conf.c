@@ -162,12 +162,26 @@ void conf_parse_file(const char *conf_file)
             key = xmlNodeListGetString(doc, cur->children, 1);
 
             INFO(("Found option \"debug\", value \"%s\".", key));
-            log_level_set(atoi(key));
+            opt_debug_set(atoi(key));
 
             xmlFree(key);
         }
         else if (!xmlStrcmp(cur->name, (const xmlChar *) "foreground")) {
-            INFO(("Found foreground"));
+            key = xmlNodeListGetString(doc, cur->children, 1);
+                        
+            INFO(("Found option \"foreground\", value \"%s\".", key));
+            if (!xmlStrcmp(key, (const xmlChar *) "false")) {
+                opt_foreground_set(FALSE);
+            }
+            else if (!xmlStrcmp(key, (const xmlChar *) "true")) {
+                opt_foreground_set(TRUE);
+            }
+            else {
+                WARNING(("Invalid value (\"%s\") for option \"foreground\" supplied. Must be either \"true\" or \"false\".)", key));
+            }
+
+            xmlFree(key);
+            
         }
         else if (!xmlStrcmp(cur->name, (const xmlChar *) "module")) {
             if ((attr =
@@ -196,7 +210,7 @@ void conf_parse_file(const char *conf_file)
  */
 void conf_parse()
 {
-    const char *conf_file = SYSCONF_DIR "/iald/iald.conf";
+    const char *conf_file = SYSCONF_DIR "/ial/iald.conf";
 
     DEBUG(("Parsing configuration file %s.", conf_file));
     conf_parse_file(conf_file);
