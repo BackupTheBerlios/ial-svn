@@ -38,5 +38,5 @@ libial_toshiba_la_LIBADD = 	\
 libial_acpi_la_LIBADD = 	\
     ../libial/libial.la
 
-libial_keyboard_la_LIBADD = 	\
+libial_event_la_LIBADD = 	\
     ../libial/libial.la
