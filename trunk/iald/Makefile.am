@@ -1,4 +1,4 @@
-configdir=$(sysconfdir)/iald
+configdir=$(sysconfdir)/ial
 
 INCLUDES =					\
 	-I$(top_srcdir)				\
