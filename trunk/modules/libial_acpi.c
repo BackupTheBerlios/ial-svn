@@ -35,7 +35,7 @@
 ModuleOption mod_options[] = {
     {"disable", "false", "disable=(true|false)"}
     ,
-    {"", "", ""}
+    {NULL}
 };
 
 /** Module Data. */
