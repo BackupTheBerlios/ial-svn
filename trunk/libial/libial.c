@@ -1,8 +1,53 @@
+/* libial.c - Input Abstraction Layer Library
+ *
+ * Copyright (C) 2004 Timo Hoenig <thoenig@nouse.net>
+ *                    All rights reserved
+ *
+ * Licensed under the Academic Free License version 2.1
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
 #include "libial.h"
 
 /** Global D-Bus connection */
 DBusConnection *dbus_connection;
 
+/**
+ * @defgroup IALLIB Input Abstraction Layer Library
+ * @brief   The Input Abstraction Layer Daemon (libial) includes common function
+ *          used by both the IAL daemon and IAL modules.
+ *          
+ * @{
+ */
+
+/**
+ * @defgroup IALLIBDBUS D-BUS wrapper 
+ * @ingroup IALLIB
+ * @brief D-BUS wrapper functions hide the actual calls to D-BUS. Thus the IPC is
+ *        transparent.
+ *
+ * @{
+ */
+
+/** Establish connection to the D-BUS daemon.
+ * 
+ * @returns     TRUE if connection could be established or if connection is already,
+ *              established. FALSE if connection failed.
+ */
 gboolean ial_dbus_connect()
 {
     DBusError dbus_error;
@@ -27,6 +72,21 @@ gboolean ial_dbus_connect()
     }
 }
 
+/* @} */
+
+/**
+ * @defgroup IALLIBEVENT Event Management
+ * @ingroup IALLIB
+ *
+ * @{
+ */
+
+/** Receive an IAL Event (IalEvent) via D-BUS.
+ *
+ * @param dbus_message  Pointer to a DBusMessage.
+ * @returns             IalEvent struct.
+ */
+
 IalEvent event_receive(DBusMessage * dbus_message)
 {
     IalEvent event;
@@ -43,6 +103,11 @@ IalEvent event_receive(DBusMessage * dbus_message)
     return event;
 }
 
+/** Send an IAL Event (IalEvent) via D-BUS.
+ *
+ * @param       Pointer to an IalEvent.
+ */
+
 void event_send(IalEvent * event)
 {
     DBusMessage *dbus_message = NULL;
@@ -57,7 +122,8 @@ void event_send(IalEvent * event)
     }
 
     dbus_message =
-        dbus_message_new_signal(dbus_path, dbus_interface, dbus_signal_name);
+        dbus_message_new_signal(dbus_path, dbus_interface,
+                                dbus_signal_name);
 
     if (dbus_message == NULL) {
         ERROR(("Not enough memory."));
@@ -78,9 +144,13 @@ void event_send(IalEvent * event)
         return;
     }
     else {
-        DEBUG(("Sending IAL Event: %s (Sender=%s, Source=%s, Raw=0x%x).", event->name, event->sender, event->source, event->raw));
+        DEBUG(("Sending IAL Event: %s (Sender=%s, Source=%s, Raw=0x%x).",
+               event->name, event->sender, event->source, event->raw));
     }
 
     dbus_message_unref(dbus_message);
     dbus_connection_flush(dbus_connection);
 }
+
+/* @} */
+/* @} */

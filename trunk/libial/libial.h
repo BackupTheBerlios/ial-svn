@@ -15,19 +15,13 @@
 
 #define IAL_DBUS_SIGNAL_EVENT "event"
 
-typedef struct IalEvent_s
-{
-    const char* sender;
-    const char* source;
-    const char* name;
+typedef struct IalEvent_s {
+    const char *sender;
+    const char *source;
+    const char *name;
     int raw;
-}
-IalEvent;
-
+} IalEvent;
 
 gboolean ial_dbus_connect(void);
 IalEvent event_receive(DBusMessage *);
-void     event_send(IalEvent *);
-
-
-
+void event_send(IalEvent *);

@@ -9,32 +9,28 @@
 #define ENABLED         TRUE
 #define DISABLED        FALSE
 
-typedef struct ModuleOption_s
-{
+typedef struct ModuleOption_s {
     const char *name;
     char value[MAX_BUF];
     const char *descr;
-}
-ModuleOption;
+} ModuleOption;
 
-typedef struct ModuleData_s
-{
-    const char* name;
-    const char* token;
-    const char* version;
-    const char* author;
-    const char* descr;
+typedef struct ModuleData_s {
+    const char *name;
+    const char *token;
+    const char *version;
+    const char *author;
+    const char *descr;
 
     int type;
 
-    ModuleOption* options;
-    
+    ModuleOption *options;
+
     gboolean state;
 
-    gboolean (*load) (void);
-    gboolean (*unload) (void);
-}
-ModuleData;
+     gboolean(*load) (void);
+     gboolean(*unload) (void);
+} ModuleData;
 
 ModuleData *mod_get_data(void);
-void mod_log(const char* format,...);
+void mod_log(const char *format, ...);
