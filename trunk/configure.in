@@ -42,6 +42,18 @@ AS_AC_EXPAND(LIBDIR, $libdir)
 AS_AC_EXPAND(MODULEDIR, $moduledir)
 
 
+dnl D-BUS system.d directory for configuration
+AC_ARG_WITH(dbus-sys, [  --with-dbus-sys=<dir>   where D-BUS system.d directory is])
+
+if ! test -z "$with_dbus_sys" ; then
+    DBUS_SYS_DIR="$with_dbus_sys"
+else
+    DBUS_SYS_DIR="$SYSCONFDIR/dbus-1/system.d"
+fi
+AC_SUBST(DBUS_SYS_DIR)
+AC_DEFINE_UNQUOTED(DBUS_SYSTEMD_DIR, "$DBUS_SYS_DIR", [Where system.d dir for DBUS is])
+
+
 
 dnl
 dnl Check for pkg-config packages
@@ -106,6 +118,7 @@ dnl Output files
 dnl
 
 AC_OUTPUT([
+ial.conf
 Makefile
 libial/Makefile
 iald/Makefile
@@ -123,6 +136,7 @@ moduledir:    ${MODULEDIR}
 bindir:       ${BINDIR}
 datadir:      ${DATADIR}
 sysconfdir:   ${SYSCONFDIR}
+dbussysdir:   ${DBUS_SYS_DIR}
 
 pkgcflags:    ${PACKAGE_CFLAGS}
 pkglibs:      ${PACKAGE_LIBS}
