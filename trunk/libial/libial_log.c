@@ -1,8 +1,8 @@
 /* libial_log.c - Input Abstraction Layer Logging
  *
- * Copyright (C) 2003 David Zeuthen, <david@fubar.dk>
- * Copyright (C) 2004 Timo Hoenig <thoenig@nouse.net>
- *                    All rights reserved
+ * Copyright (C) 2003       David Zeuthen, <david@fubar.dk>
+ * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
+ *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
