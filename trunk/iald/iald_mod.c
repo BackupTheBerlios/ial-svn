@@ -167,9 +167,10 @@ void modules_scan()
         filename = g_strdup_printf("%s/%s", module_dir, entry->d_name);
         if (!stat(filename, &statbuf) && S_ISREG(statbuf.st_mode) &&
             (extension = strrchr(entry->d_name, '.')) != NULL) {
-            if (!strcmp(extension, ".so.0")) {
+            if (!strcmp(extension, ".so")) {
                 if (module_verify(filename) == TRUE) {
                     module_add(filename);
+                    DEBUG(("Verification of \"%s\" succeeded.", filename));
                 }
                 else {
                     DEBUG(("Verification of \"%s\" failed.", filename));
