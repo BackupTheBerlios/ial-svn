@@ -67,12 +67,14 @@ GLIB_MKENUMS = @GLIB_MKENUMS@
 GLIB_REQUIRED = @GLIB_REQUIRED@
 GOBJECT_QUERY = @GOBJECT_QUERY@
 IAL_DEFINES = @IAL_DEFINES@
+INCLTDL = @INCLTDL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LDFLAGS = @LDFLAGS@
 LIBDIR = @LIBDIR@
+LIBLTDL = @LIBLTDL@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -141,14 +143,24 @@ INCLUDES = \
 	@IAL_DEFINES@
 
 
-bin_PROGRAMS = ialmon
+bin_PROGRAMS = ialmon iallatency
 
 ialmon_SOURCES = \
 	ialmon.h				\
 	ialmon.c
 
 
+iallatency_SOURCES = \
+	latency.c				\
+	ialmon.h
+
+
 ialmon_LDADD = \
+	@PACKAGE_LIBS@				\
+	../libial/libial.la
+
+
+iallatency_LDADD = \
 	@PACKAGE_LIBS@				\
 	../libial/libial.la
 
@@ -156,9 +168,13 @@ subdir = utils
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
-bin_PROGRAMS = ialmon$(EXEEXT)
+bin_PROGRAMS = ialmon$(EXEEXT) iallatency$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
+am_iallatency_OBJECTS = latency.$(OBJEXT)
+iallatency_OBJECTS = $(am_iallatency_OBJECTS)
+iallatency_DEPENDENCIES = ../libial/libial.la
+iallatency_LDFLAGS =
 am_ialmon_OBJECTS = ialmon.$(OBJEXT)
 ialmon_OBJECTS = $(am_ialmon_OBJECTS)
 ialmon_DEPENDENCIES = ../libial/libial.la
@@ -167,7 +183,7 @@ ialmon_LDFLAGS =
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/ialmon.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/ialmon.Po ./$(DEPDIR)/latency.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) \
@@ -175,9 +191,9 @@ LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) \
 CCLD = $(CC)
 LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-DIST_SOURCES = $(ialmon_SOURCES)
+DIST_SOURCES = $(iallatency_SOURCES) $(ialmon_SOURCES)
 DIST_COMMON = $(srcdir)/Makefile.in Makefile.am
-SOURCES = $(ialmon_SOURCES)
+SOURCES = $(iallatency_SOURCES) $(ialmon_SOURCES)
 
 all: all-am
 
@@ -217,6 +233,9 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
+iallatency$(EXEEXT): $(iallatency_OBJECTS) $(iallatency_DEPENDENCIES) 
+	@rm -f iallatency$(EXEEXT)
+	$(LINK) $(iallatency_LDFLAGS) $(iallatency_OBJECTS) $(iallatency_LDADD) $(LIBS)
 ialmon$(EXEEXT): $(ialmon_OBJECTS) $(ialmon_DEPENDENCIES) 
 	@rm -f ialmon$(EXEEXT)
 	$(LINK) $(ialmon_LDFLAGS) $(ialmon_OBJECTS) $(ialmon_LDADD) $(LIBS)
@@ -228,6 +247,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ialmon.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/latency.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \
