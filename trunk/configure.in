@@ -2,8 +2,8 @@ dnl Process this file with autoconf to produce a configure script.
 
 dnl VERSION="0.0.1pre1"
 
-AC_INIT(ial, 0.0.1pre, thoenig@nouse.net)
-AM_INIT_AUTOMAKE(ial, 0.0.1pre)
+AC_INIT(ial, 0.0.1, thoenig@nouse.net)
+AM_INIT_AUTOMAKE(ial, 0.0.1)
 
 dnl echo "Hello";
 dnl echo "$VERSION";
