@@ -32,7 +32,7 @@ static DBusHandlerResult event_callback(DBusConnection * connection,
         break;
     }
 
-    DEBUG(("Path=%s, Interface=%s, Method=%s, Destination=%s, Sender=%s",
+    DEBUG(("Path=%s, Interface=%s, Member=%s, Destination=%s, Sender=%s",
            dbus_message_get_path(dbus_message),
            dbus_message_get_interface(dbus_message),
            dbus_message_get_member(dbus_message),
