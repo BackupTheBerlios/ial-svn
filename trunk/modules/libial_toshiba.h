@@ -14,10 +14,13 @@
 /** libial_toshiba_utils.c */
 const char *toshiba_fnkey_description(int);
 
+/** libial_toshiba_filter.c */
+gboolean toshiba_add_filter(void);
+
 /** libial_toshiba_main.c */
-gboolean toshiba_send_event(void);
+void toshiba_event_send(void);
 gboolean toshiba_acpi_check(void);
-void     toshiba_key_flush(void);
+void toshiba_key_flush(void);
 gboolean toshiba_key_poll(void);
 gboolean toshiba_start(void);
 
@@ -32,7 +35,6 @@ gboolean mod_unload(void);
 #define POLL_FREQ_MAX           1000
 #define POLL_FREQ_DEFAULT       100
 #define POLL_FREQ_MIN           50
-
 
 /** Fn-Keys and values */
 
@@ -105,82 +107,80 @@ gboolean mod_unload(void);
 #define E_BUTTON        0xb86
 #define I_BUTTON        0xb87
 
-struct key
-{
+struct key {
     const int value;
     const char *descr;
 };
 
-static struct key keys[] =
-{
-    { FN_ESCAPE,        "Fn-Escape (Mute)"},
-    { FN_1,             "Fn-1 (Volume Down)"},
-    { FN_2,             "Fn-2 (Volume Up)"},
-    { FN_3,             "Fn-3"},
-    { FN_4,             "Fn-4"},
-    { FN_5,             "Fn-5"},
-    { FN_6,             "Fn-6"},
-    { FN_MINUS,         "Fn--"},
-    { FN_EQUAL,         "Fn-="},
-    { FN_BACKSPACE,     "Fn-Backspace"},
-    { FN_TAB,           "Fn-Tab"},
-    { FN_Q,             "Fn-q"},
-    { FN_W,             "Fn-w"},
-    { FN_E,             "Fn-e"},
-    { FN_R,             "Fn-r"},
-    { FN_T,             "Fn-t"},
-    { FN_Y,             "Fn-y"},
-    { FN_L_BRACKET,     "Fn-["},
-    { FN_R_BRACKET,     "Fn-]"},
-    { FN_A,             "Fn-a"},
-    { FN_S,             "Fn-s"},
-    { FN_D,             "Fn-d"},
-    { FN_F,             "Fn-f"},
-    { FN_G,             "Fn-g"},
-    { FN_H,             "Fn-h"},
-    { FN_APOSTROPHE,    "Fn-'"},
-    { FN_TILDE,         "Fn-~"},
-    { FN_BACKSLASH,     "Fn-\\"},
-    { FN_Z,             "Fn-z"},
-    { FN_X,             "Fn-x"},
-    { FN_C,             "Fn-c"},
-    { FN_V,             "Fn-v"},
-    { FN_B,             "Fn-b"},
-    { FN_N,             "Fn-n"},
-    { FN_LESS_THAN,     "Fn-<"},
-    { FN_PRTSC,         "Fn-PrtSc"},
-    { FN_SPACE,         "Fn-Space"},
-    { FN_CAPSLOCK,      "Fn-Caps Lock"},
-    { FN_F1,            "Fn-F1 (Lock)"},
-    { FN_F2,            "Fn-F2"},
-    { FN_F3,            "Fn-F3 (Suspend to RAM)"},
-    { FN_F4,            "Fn-F4 (Suspend to Disk)"},
-    { FN_F5,            "Fn-F5 (Switch LCD/CRT)"},
-    { FN_F6,            "Fn-F6 (Brightness Down)"},
-    { FN_F7,            "Fn-F7 (Brightness Up)"},
-    { FN_F8,            "Fn-F8"},
-    { FN_F9,            "Fn-F9"},
-    { FN_HOME,          "Fn-Home"},
-    { FN_UP,            "Fn-Up"},
-    { FN_PAGEUP,        "Fn-Page Up"},
-    { FN_LEFT,          "Fn-Left"},
-    { FN_RIGHT,         "Fn-Right"},
-    { FN_END,           "Fn-End"},
-    { FN_DOWN,          "Fn-Down"},
-    { FN_PAGEDOWN,      "Fn-Page Down"},
-    { FN_INS,           "Fn-Ins"},
-    { FN_DEL,           "Fn-Del"},
-    { FN_LESS_THAN_2,   "Fn-<"},
-    { CD_BUTTON,        "Hotbutton (CD-Button)"},
-    { DIGITAL_BUTTON,   "Hotbutton (Digital-Button)"},
-    { STOP,             "Hotbutton (Stop)"},
-    { SKIP_BACK,        "Hotbutton (Skip Track Back)"},
-    { SKIP_FORWARD,     "Hotbutton (Skip Track Forward)"},
-    { PLAY_PAUSE,       "Hotbutton (Play/Pause)"},
-    { TV_BUTTON,        "Hotbutton (TV-Button)"},
-    { E_BUTTON,         "Hotbutton (E-Button)"},
-    { I_BUTTON,         "Hotbutton (I-Button)"},
-    { 0, NULL}   
+static struct key keys[] = {
+    {FN_ESCAPE, "Fn-Escape (Mute)"},
+    {FN_1, "Fn-1 (Volume Down)"},
+    {FN_2, "Fn-2 (Volume Up)"},
+    {FN_3, "Fn-3"},
+    {FN_4, "Fn-4"},
+    {FN_5, "Fn-5"},
+    {FN_6, "Fn-6"},
+    {FN_MINUS, "Fn--"},
+    {FN_EQUAL, "Fn-="},
+    {FN_BACKSPACE, "Fn-Backspace"},
+    {FN_TAB, "Fn-Tab"},
+    {FN_Q, "Fn-q"},
+    {FN_W, "Fn-w"},
+    {FN_E, "Fn-e"},
+    {FN_R, "Fn-r"},
+    {FN_T, "Fn-t"},
+    {FN_Y, "Fn-y"},
+    {FN_L_BRACKET, "Fn-["},
+    {FN_R_BRACKET, "Fn-]"},
+    {FN_A, "Fn-a"},
+    {FN_S, "Fn-s"},
+    {FN_D, "Fn-d"},
+    {FN_F, "Fn-f"},
+    {FN_G, "Fn-g"},
+    {FN_H, "Fn-h"},
+    {FN_APOSTROPHE, "Fn-'"},
+    {FN_TILDE, "Fn-~"},
+    {FN_BACKSLASH, "Fn-\\"},
+    {FN_Z, "Fn-z"},
+    {FN_X, "Fn-x"},
+    {FN_C, "Fn-c"},
+    {FN_V, "Fn-v"},
+    {FN_B, "Fn-b"},
+    {FN_N, "Fn-n"},
+    {FN_LESS_THAN, "Fn-<"},
+    {FN_PRTSC, "Fn-PrtSc"},
+    {FN_SPACE, "Fn-Space"},
+    {FN_CAPSLOCK, "Fn-Caps Lock"},
+    {FN_F1, "Fn-F1 (Lock)"},
+    {FN_F2, "Fn-F2"},
+    {FN_F3, "Fn-F3 (Suspend to RAM)"},
+    {FN_F4, "Fn-F4 (Suspend to Disk)"},
+    {FN_F5, "Fn-F5 (Switch LCD/CRT)"},
+    {FN_F6, "Fn-F6 (Brightness Down)"},
+    {FN_F7, "Fn-F7 (Brightness Up)"},
+    {FN_F8, "Fn-F8"},
+    {FN_F9, "Fn-F9"},
+    {FN_HOME, "Fn-Home"},
+    {FN_UP, "Fn-Up"},
+    {FN_PAGEUP, "Fn-Page Up"},
+    {FN_LEFT, "Fn-Left"},
+    {FN_RIGHT, "Fn-Right"},
+    {FN_END, "Fn-End"},
+    {FN_DOWN, "Fn-Down"},
+    {FN_PAGEDOWN, "Fn-Page Down"},
+    {FN_INS, "Fn-Ins"},
+    {FN_DEL, "Fn-Del"},
+    {FN_LESS_THAN_2, "Fn-<"},
+    {CD_BUTTON, "Hotbutton (CD-Button)"},
+    {DIGITAL_BUTTON, "Hotbutton (Digital-Button)"},
+    {STOP, "Hotbutton (Stop)"},
+    {SKIP_BACK, "Hotbutton (Skip Track Back)"},
+    {SKIP_FORWARD, "Hotbutton (Skip Track Forward)"},
+    {PLAY_PAUSE, "Hotbutton (Play/Pause)"},
+    {TV_BUTTON, "Hotbutton (TV-Button)"},
+    {E_BUTTON, "Hotbutton (E-Button)"},
+    {I_BUTTON, "Hotbutton (I-Button)"},
+    {0, NULL}
 };
 
 struct fnkey_s {
@@ -191,5 +191,3 @@ struct fnkey_s {
 
     const char *description;
 };
-
-

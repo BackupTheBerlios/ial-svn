@@ -13,8 +13,9 @@ lib_LTLIBRARIES =		\
 
 libial_toshiba_la_SOURCES = 	\
     libial_toshiba.c 		\
-    libial_toshiba_utils.c	\
     libial_toshiba_main.c	\
+    libial_toshiba_filter.c	\
+    libial_toshiba_utils.c	\
     libial_toshiba.h
 
 libial_asus_la_SOURCES =	\

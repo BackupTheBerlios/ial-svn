@@ -4,11 +4,9 @@
 
 #include "../libial/libial.h"
 
-
 const char *mod_get_name(void);
 const char *mod_get_version(void);
 const char *mod_get_author(void);
 const char *mod_get_descr(void);
-const int  mod_get_type(void);
-gboolean   mod_init(void);
-
+const int mod_get_type(void);
+gboolean mod_init(void);

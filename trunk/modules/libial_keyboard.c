@@ -4,7 +4,7 @@
 ModuleOption mod_options[] = {
     {"disable", "false", "disable=(true|false)"}
     ,
-    {NULL, NULL, NULL}
+    {NULL}
 };
 
 ModuleData mod_data = {
@@ -27,10 +27,7 @@ ModuleData *mod_get_data()
 
 gboolean mod_load()
 {
-
-    return FALSE;
-    if (libial_keyboard_start() == FALSE)
-    {
+    if (libial_keyboard_start() == FALSE) {
         return FALSE;
     }
 

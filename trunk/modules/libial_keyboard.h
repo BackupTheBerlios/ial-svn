@@ -4,7 +4,7 @@
 #define MODULE_AUTHOR "Timo Hoenig <thoenig@nouse.net>"
 #define MODULE_DESCR "This module reports unknown keycodes."
 
-#define LOG_FILE "/var/log/messages"
+#define MAX_EVENT_DEV 8
 
 #include "../libial/libial.h"
 
@@ -13,10 +13,9 @@ gboolean libial_keyboard_start(void);
 gboolean mod_load(void);
 gboolean mod_unload(void);
 
-struct keyboard_s
-{
+struct keyboard_s {
     const char *scancode;
-    GIOChannel *io_channel;
+    GIOChannel *io_channel[MAX_EVENT_DEV];
 
-    int log_fd;
+    int event_fd[MAX_EVENT_DEV];
 };

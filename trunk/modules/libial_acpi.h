@@ -4,6 +4,16 @@
 #define MODULE_AUTHOR "Timo Hoenig <thoenig@nouse.net>"
 #define MODULE_DESCR "This module reports ACPI button events."
 
+/** ACPI interface */
+#define ACPI_EVENT              "/proc/acpi/event"
+#define ACPI_LID                "/proc/acpi/button/lid/LID/state"
+#define ACPID_SOCKET            "/var/run/acpid.socket"
+
+/** Lid states */
+#define ACPI_LID_STATE_OPEN     1
+#define ACPI_LID_STATE_CLOSED   0
+#define ACPI_LID_STATE_ERROR    -1
+
 #include <glib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +23,9 @@
 #include "../libial/libial.h"
 
 /** libial_acpi_main.c */
+void acpi_event_send(char *);
 gboolean acpi_event_fd_init(void);
+int acpi_lid_state(void);
 void acpi_event_handle(GString *);
 gboolean acpi_event_callback(GIOChannel *, GIOCondition, gpointer);
 gboolean acpi_socket(void);
@@ -24,12 +36,7 @@ gboolean libial_acpi_start(void);
 gboolean mod_load(void);
 gboolean mod_unload(void);
 
-/** ACPI interface */
-#define ACPI_EVENT              "/proc/acpi/event"
-#define ACPID_SOCKET            "/var/run/acpid.socket"
-
-struct acpi_s
-{
+struct acpi_s {
     const char *event;
     GIOChannel *io_channel;
 

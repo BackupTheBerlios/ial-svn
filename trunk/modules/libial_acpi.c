@@ -1,7 +1,8 @@
 #include "libial_acpi.h"
 
 ModuleOption mod_options[] = {
-    {"disable", "false", "disable=(true|false)"},
+    {"disable", "false", "disable=(true|false)"}
+    ,
     {"", "", ""}
 };
 
@@ -26,32 +27,28 @@ ModuleData *mod_get_data()
 gboolean mod_load()
 {
     /** Checking value for option "disable" */
-    if (strcmp(mod_options[0].value, "true\0") == 0)
-    {   
+    if (strcmp(mod_options[0].value, "true\0") == 0) {
         WARNING(("Setting module state to disabled."));
         mod_data.state = DISABLED;
     }
-    else if (strcmp(mod_options[0].value, "false\0") == 0)
-    {   
+    else if (strcmp(mod_options[0].value, "false\0") == 0) {
         INFO(("Setting module state to enabled."));
         mod_data.state = ENABLED;
     }
-    else
-    {   
+    else {
         WARNING(("Wrong option value (%s) for option \"%s\".",
-               mod_options[0].value, mod_options[0].name));
+                 mod_options[0].value, mod_options[0].name));
         WARNING(("Setting module state to disabled."));
         strcpy(mod_options[0].value, "true");
         mod_data.state = DISABLED;
     }
 
-    if(mod_data.state == DISABLED)
-    {
+    if (mod_data.state == DISABLED) {
         INFO(("%s is disabled and not going to be loaded.", mod_data.name));
         return FALSE;
     }
 
-    return(libial_acpi_start());
+    return (libial_acpi_start());
 }
 
 gboolean mod_unload()

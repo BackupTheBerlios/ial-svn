@@ -27,7 +27,7 @@ gboolean ial_dbus_connect()
     }
 }
 
-IalEvent receive_event(DBusMessage * dbus_message)
+IalEvent event_receive(DBusMessage * dbus_message)
 {
     IalEvent event;
     DBusError dbus_error;
@@ -43,7 +43,7 @@ IalEvent receive_event(DBusMessage * dbus_message)
     return event;
 }
 
-void send_event(IalEvent * event)
+void event_send(IalEvent * event)
 {
     DBusMessage *dbus_message = NULL;
     DBusMessageIter dbus_it;
@@ -64,6 +64,8 @@ void send_event(IalEvent * event)
         return;
     }
 
+    /* TODO: Check if event is valid */
+
     dbus_message_iter_init(dbus_message, &dbus_it);
 
     dbus_message_iter_append_string(&dbus_it, event->sender);
@@ -76,7 +78,7 @@ void send_event(IalEvent * event)
         return;
     }
     else {
-        DEBUG(("Message sent."));
+        DEBUG(("Sending IAL Event: %s (Sender=%s, Source=%s, Raw=0x%x).", event->name, event->sender, event->source, event->raw));
     }
 
     dbus_message_unref(dbus_message);

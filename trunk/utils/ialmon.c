@@ -2,7 +2,8 @@
 extern DBusConnection *dbus_connection;
 
 static DBusHandlerResult event_callback(DBusConnection * connection,
-                                        DBusMessage * dbus_message, void *user_data)
+                                        DBusMessage * dbus_message,
+                                        void *user_data)
 {
     IalEvent event;
     int message_type;
@@ -38,15 +39,15 @@ static DBusHandlerResult event_callback(DBusConnection * connection,
            dbus_message_get_sender(dbus_message)
           ));
 
-    if(dbus_message_is_signal(dbus_message, IAL_DBUS_INTERFACE_EVENT, IAL_DBUS_SIGNAL_EVENT))
-    {
-        event = receive_event(dbus_message);
+    if (dbus_message_is_signal
+        (dbus_message, IAL_DBUS_INTERFACE_EVENT, IAL_DBUS_SIGNAL_EVENT)) {
+        event = event_receive(dbus_message);
 
-        DEBUG(("Received IAL Event: %s (Sender=%s, Source=%s, Raw=0x%x).", event.name, event.sender, event.source, event.raw));
+        DEBUG(("Received IAL Event: %s (Sender=%s, Source=%s, Raw=0x%x).",
+               event.name, event.sender, event.source, event.raw));
     }
 
-
-    return DBUS_HANDLER_RESULT_HANDLED;
+    return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
 
 int main(int argc, char *argv[])

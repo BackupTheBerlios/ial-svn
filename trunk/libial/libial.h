@@ -15,7 +15,6 @@
 
 #define IAL_DBUS_SIGNAL_EVENT "event"
 
-
 typedef struct IalEvent_s
 {
     const char* sender;
@@ -27,8 +26,8 @@ IalEvent;
 
 
 gboolean ial_dbus_connect(void);
-IalEvent receive_event(DBusMessage *);
-void send_event(IalEvent *);
+IalEvent event_receive(DBusMessage *);
+void     event_send(IalEvent *);
 
 
 

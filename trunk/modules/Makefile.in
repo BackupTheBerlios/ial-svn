@@ -151,8 +151,9 @@ lib_LTLIBRARIES = \
 
 libial_toshiba_la_SOURCES = \
     libial_toshiba.c 		\
-    libial_toshiba_utils.c	\
     libial_toshiba_main.c	\
+    libial_toshiba_filter.c	\
+    libial_toshiba_utils.c	\
     libial_toshiba.h
 
 
@@ -205,8 +206,8 @@ am_libial_keyboard_la_OBJECTS = libial_keyboard.lo \
 libial_keyboard_la_OBJECTS = $(am_libial_keyboard_la_OBJECTS)
 libial_toshiba_la_LDFLAGS =
 libial_toshiba_la_DEPENDENCIES = ../libial/libial.la
-am_libial_toshiba_la_OBJECTS = libial_toshiba.lo libial_toshiba_utils.lo \
-	libial_toshiba_main.lo
+am_libial_toshiba_la_OBJECTS = libial_toshiba.lo libial_toshiba_main.lo \
+	libial_toshiba_filter.lo libial_toshiba_utils.lo
 libial_toshiba_la_OBJECTS = $(am_libial_toshiba_la_OBJECTS)
 
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
@@ -218,6 +219,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/libial_keyboard.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/libial_keyboard_main.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/libial_toshiba.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/libial_toshiba_filter.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/libial_toshiba_main.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/libial_toshiba_utils.Plo
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
@@ -290,6 +292,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_keyboard.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_keyboard_main.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_toshiba.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_toshiba_filter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_toshiba_main.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_toshiba_utils.Plo@am__quote@
 
