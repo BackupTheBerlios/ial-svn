@@ -1,7 +1,7 @@
 /* libial_evdev_key_to_string.h
  *
- * Copyright (C) 2004 Timo Hoenig <thoenig@nouse.net>
- *                    All rights reserved
+ * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
+ *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 

@@ -1,7 +1,7 @@
 /* libial_evdev_main.c - Linux Event Interface Input Abstraction Layer Module
  *
- * Copyright (C) 2004 Timo Hoenig <thoenig@nouse.net>
- *                    All rights reserved
+ * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
+ *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
