@@ -21,13 +21,12 @@
  *
  */
 
-/*#include <dbus/dbus.h>
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
-*/
 #include <libial/libial.h>
 
 /** defined in iald.c */
+void opt_debug_set(int);
+void opt_foreground_set(gboolean);
+
 void opt_header(void);
 void opt_usage(void);
 void opt_list(void);
