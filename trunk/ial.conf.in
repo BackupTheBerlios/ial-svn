@@ -5,14 +5,14 @@
 
   <policy context="default">
     <deny own="com.novell.Ial"/>
-    <deny send_interface="com.novell.Ial.Event"/>
-    <allow receive_interface="com.novell.Ial.Event"/>
+    <deny send_interface="com.novell.Ial"/>
+    <allow receive_interface="com.novell.Ial"/>
   </policy>
 
   <policy user="root">
     <allow own="com.novell.Ial"/>
-    <allow send_interface="com.novell.Ial.Event"/>
-    <allow receive_interface="com.novell.Ial.Event"/>
+    <allow send_interface="com.novell.Ial"/>
+    <allow receive_interface="com.novell.Ial"/>
   </policy>
 
 </busconfig>
