@@ -27,6 +27,7 @@
 gboolean pid_file_exists(void);
 void pid_file_remove(void);
 void h_sigterm(int);
+void h_sighup(int);
 
 void opt_debug_set(int);
 void opt_logfile_set(const char *);
