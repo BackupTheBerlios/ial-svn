@@ -1,8 +1,8 @@
 #define MAX_BUF 512
 
-#define INPUT_MODULE    0
-#define OUTPUT_MODULE   1
-#define IN_OUT_MODULE   2
+#define INPUT           0
+#define OUTPUT          1
+#define INPUT_OUTPUT    2
 
 #define ENABLED         TRUE
 #define DISABLED        FALSE
@@ -24,6 +24,7 @@ typedef struct ModuleData_s {
 
     ModuleOption *options;
 
+    gboolean initialized;
     gboolean state;
 
     gboolean(*load) (void);
