@@ -24,7 +24,11 @@
 #include <libial/libial.h>
 
 /** defined in iald.c */
+void remove_pid_file(void);
+void h_sigterm(int);
+
 void opt_debug_set(int);
+void opt_logfile_set(const char *);
 void opt_foreground_set(gboolean);
 
 void opt_header(void);

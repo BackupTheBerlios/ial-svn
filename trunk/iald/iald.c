@@ -27,8 +27,10 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
+#include <signal.h>
 #include <getopt.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include "iald.h"
 #include "iald_mod.h"
@@ -37,6 +39,7 @@
 IalModule *modules_list_head = NULL;
 
 static gboolean opt_foreground = FALSE;
+static char opt_logfile[128] = IAL_LOG;
 static int opt_debug = 0;
 
 /** Global D-BUS connection, libial */
@@ -51,9 +54,29 @@ extern DBusConnection *dbus_connection;
  * @{
  */
 
+void remove_pid_file()
+{
+    unlink(IALD_PID_FILE);
+}
+
+void h_sigterm(int sigval)
+{
+    remove_pid_file();
+}
+
 void opt_debug_set(int log_level)
 {
     opt_debug = log_level;
+}
+
+void opt_logfile_set(const char *logfile)
+{
+    if (strlen(logfile) > 128) {
+        ERROR(("Filename for logfile to long."));
+        return;
+    }
+    strncpy(opt_logfile, logfile, strlen(logfile));
+    opt_logfile[strlen(logfile)] = 0;
 }
 
 void opt_foreground_set(gboolean state)
@@ -94,9 +117,10 @@ void opt_usage()
         "Usage: iald [ options ] [ command ]\n"
             "\n"
             "Options:\n"
-            "-d n, --debug n:            Set debug level (n = 0..3)\n"
-            "-f,   --foreground:         Run in foreground\n"
-            "-m s, --module-options s:   Set module options (s = { module options })\n"
+            "-d n, --debug n:                      Set debug level (n = 0..3)\n"
+            "-o <filename>, --output <filename>:   Set log file (`none' for stdout)\n"
+            "-f,   --foreground:                   Run in foreground\n"
+            "-m s, --module-options s:             Set module options (s = { module options })\n"
             "\n"
             "module option  = token:option=value[,option=value]\n"
             "token          = Module token (see --list-verbose)\n"
@@ -308,6 +332,7 @@ void opt_parse(int argc, char *argv[])
 
     static struct option long_options[] = {
         {"debug", required_argument, NULL, 'd'},
+        {"output", required_argument, NULL, 'o'},
         {"foreground", no_argument, NULL, 'f'},
         {"help", no_argument, NULL, 'h'},
         {"list", no_argument, NULL, 'l'},
@@ -318,7 +343,7 @@ void opt_parse(int argc, char *argv[])
     };
 
     while (1) {
-        c = getopt_long(argc, argv, "fhlLvd:m:", long_options,
+        c = getopt_long(argc, argv, "fhalLvd:m:o:", long_options,
                         &option_index);
 
         if (c == -1)
@@ -357,6 +382,10 @@ void opt_parse(int argc, char *argv[])
             opt_foreground_set(TRUE);
             break;
 
+        case 'o':
+            opt_logfile_set(optarg);
+            break;
+
         default:
             opt_usage();
             exit(1);
@@ -387,8 +416,6 @@ int main(int argc, char *argv[])
     GMainLoop *loop;
     DBusError dbus_error;
 
-    log_level_set(3);
-
     /* Scan for modules that both conf_parse() and opt_parse() can set
      * options for modules.
      */
@@ -408,6 +435,9 @@ int main(int argc, char *argv[])
         opt_parse(argc, argv);
     }
 
+    /* Setup logfile */
+    log_logfile_set(opt_logfile);
+
     /* Set logging level */
     log_level_set(opt_debug);
 
@@ -416,13 +446,14 @@ int main(int argc, char *argv[])
         INFO(("Running in foreground"));
     }
     else {
-        int pid;
+        int child_pid, pid_file;
+        char pid[9];
         
         INFO(("Running as daemon"));
         chdir ("/");
-        pid = fork();
+        child_pid = fork();
 
-        switch (pid) {
+        switch (child_pid) {
             case -1:
                 ERROR(("Could not fork."));
                 exit(1);
@@ -437,7 +468,24 @@ int main(int argc, char *argv[])
                 exit(0);
                 break;
         }
+
+        unlink(IALD_PID_FILE);
+
+        pid_file = open(IALD_PID_FILE, O_WRONLY|O_CREAT|O_TRUNC|O_EXCL, 0644);
+
+        if (pid_file == -1) {
+            ERROR(("Could not create pid file."));
+            exit(1);
+        }
+
+        sprintf(pid, "%lu\n", (long unsigned) getpid());
+        write(pid_file, pid, strlen(pid));
+        close(pid_file);
+
+        atexit(remove_pid_file);
     }
+
+    signal(SIGTERM, h_sigterm);
 
     loop = g_main_loop_new(NULL, FALSE);
 

@@ -166,6 +166,14 @@ void conf_parse_file(const char *conf_file)
 
             xmlFree(key);
         }
+        else if (!xmlStrcmp(cur->name, (const xmlChar *) "logfile")) {
+            key = xmlNodeListGetString(doc, cur->children, 1);
+
+            INFO(("Found option \"logfile\", value \"%s\".", key));
+            opt_logfile_set(key);
+
+            xmlFree(key);
+        }
         else if (!xmlStrcmp(cur->name, (const xmlChar *) "foreground")) {
             key = xmlNodeListGetString(doc, cur->children, 1);
                         
