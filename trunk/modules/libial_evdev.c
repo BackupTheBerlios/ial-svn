@@ -47,7 +47,7 @@ ModuleData mod_data = {
     .descr = MODULE_DESCR,
     .type = IN_OUT_MODULE,
     .options = mod_options,
-    .state = DISABLED,
+    .state = ENABLED,
     .load = mod_load,
     .unload = mod_unload,
 };
@@ -67,6 +67,21 @@ ModuleData *mod_get_data()
  */
 gboolean mod_load()
 {
+    if (strcmp(mod_options[0].value, "true\0") == 0) {
+        WARNING(("Setting module state to disabled."));
+        mod_data.state = DISABLED;
+    }
+    else if (strcmp(mod_options[0].value, "false\0") == 0) {
+        INFO(("Setting module state to enabled."));
+        mod_data.state = ENABLED;
+    }
+
+    if (mod_data.state == DISABLED) {
+        INFO(("%s is disabled and not going to be loaded.",
+              mod_data.name));
+        return FALSE;
+    }
+
     if (libial_evdev_start() == FALSE) {
         return FALSE;
     }
