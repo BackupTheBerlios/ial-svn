@@ -25,7 +25,7 @@
 
 const char *toshiba_fnkey_description(int key_value)
 {
-    struct Key_s *keylist = keys;
+    struct Key *keylist = keys;
 
     while (keylist->value) {
         if (keylist->value == key_value) {
