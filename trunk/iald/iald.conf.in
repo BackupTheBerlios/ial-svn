@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<ialdconfig>
+
+    <!-- Debug level. Range: 0...3 -->
+    <debug>0</debug>
+
+    <!-- Foreground (do not daemonize). yes or no. --> 
+    <foreground>true</foreground>
+
+    <!-- Event Interface Module Options -->
+    <module token="evdev">
+        <disable>false</disable>
+    </module>
+
+    <!-- ACPI Module Options -->
+    <module token="acpi">
+        <disable>false</disable>
+    </module>
+    
+    <!-- Toshiba Module Options -->
+    <module token="toshiba">
+        <disable>false</disable>
+        <poll_freq>500</poll_freq>
+    </module>
+
+
+</ialdconfig>
