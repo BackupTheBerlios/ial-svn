@@ -11,11 +11,13 @@ gboolean toshiba_send_event()
 
     DEBUG(("Key event: %s (0x%x).", toshiba_fnkey_description(fnkey.value), fnkey.value));
 
-    event.name = (const char*)toshiba_fnkey_description(fnkey.value);
-    event.raw  = (const int)fnkey.value;
-    event.mod  = (const ModuleData*)&mod_data;
+    event.name = (char*)toshiba_fnkey_description(fnkey.value);
+    event.raw  = (int)fnkey.value;
+    event.mod  = (ModuleData*)&mod_data;
 
     send_event(&event);
+
+    return TRUE;
 }
 
 gboolean toshiba_acpi_check()
