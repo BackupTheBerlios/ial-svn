@@ -14,13 +14,11 @@
 #define ACPI_LID_STATE_CLOSED   0
 #define ACPI_LID_STATE_ERROR    -1
 
-#include <glib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-/* TODO clean this include */
-#include "../libial/libial.h"
+#include <libial/libial.h>
 
 /** libial_acpi_main.c */
 void acpi_event_send(char *);
@@ -36,7 +34,7 @@ gboolean libial_acpi_start(void);
 gboolean mod_load(void);
 gboolean mod_unload(void);
 
-struct acpi_s {
+struct Acpi_s {
     const char *event;
     GIOChannel *io_channel;
 

@@ -1,11 +1,11 @@
 INCLUDES =			\
+    -I$(top_srcdir)             \
     @PACKAGE_CFLAGS@		\
     @IAL_DEFINES@
 
 libdir = $(moduledir)
 	
 lib_LTLIBRARIES =		\
-    libial_asus.la		\
     libial_acpi.la		\
     libial_evdev.la		\
     libial_toshiba.la
@@ -17,10 +17,6 @@ libial_toshiba_la_SOURCES = 	\
     libial_toshiba_filter.c	\
     libial_toshiba_utils.c	\
     libial_toshiba.h
-
-libial_asus_la_SOURCES =	\
-    libial_asus.c		\
-    libial_asus.h
 
 libial_evdev_la_SOURCES =	\
     libial_evdev.c		\
