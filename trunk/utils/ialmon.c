@@ -2,40 +2,49 @@
 extern DBusConnection *dbus_connection;
 
 static DBusHandlerResult event_callback(DBusConnection * connection,
-                                        DBusMessage * message, void *user_data)
+                                        DBusMessage * dbus_message, void *user_data)
 {
-    int type;
+    IalEvent event;
+    int message_type;
 
-    type = dbus_message_get_type(message);
+    message_type = dbus_message_get_type(dbus_message);
 
-    switch(type) {
-                case DBUS_MESSAGE_TYPE_METHOD_CALL:  
-                        DEBUG(("DBUS_MESSAGE_TYPE_METHOD_CALL\n"));
-                        break;
-                case DBUS_MESSAGE_TYPE_METHOD_RETURN:
-                        DEBUG(("DBUS_MESSAGE_TYPE_METHOD_RETURN\n"));
-                        break;
-                case DBUS_MESSAGE_TYPE_ERROR:
-                        DEBUG(("DBUS_MESSAGE_TYPE_ERROR\n"));
-                        break;
-                case DBUS_MESSAGE_TYPE_SIGNAL:
-                        DEBUG(("DBUS_MESSAGE_TYPE_SIGNAL\n"));
-                        break;                                                          
-                case DBUS_MESSAGE_TYPE_INVALID:                                         
-                        DEBUG(("DBUS_MESSAGE_TYPE_INVALID\n"));
-                        break;
-                default:
-                        DEBUG(("DBUS_MESSAGE_TYPE_ .... UNKNOWN\n"));
-                        break;
-                }               
-                                        
-                DEBUG(("obj_path=%s interface=%s method=%s destination=%s sender=%s\n",
-                                        dbus_message_get_path(message),
-                                        dbus_message_get_interface(message),
-                                        dbus_message_get_member(message),
-                                        dbus_message_get_destination(message),
-                                        dbus_message_get_sender(message)
-                ));        
+    switch (message_type) {
+    case DBUS_MESSAGE_TYPE_METHOD_CALL:
+        DEBUG(("DBUS_MESSAGE_TYPE_METHOD_CALL"));
+        break;
+    case DBUS_MESSAGE_TYPE_METHOD_RETURN:
+        DEBUG(("DBUS_MESSAGE_TYPE_METHOD_RETURN"));
+        break;
+    case DBUS_MESSAGE_TYPE_ERROR:
+        DEBUG(("DBUS_MESSAGE_TYPE_ERROR"));
+        break;
+    case DBUS_MESSAGE_TYPE_SIGNAL:
+        DEBUG(("DBUS_MESSAGE_TYPE_SIGNAL"));
+        break;
+    case DBUS_MESSAGE_TYPE_INVALID:
+        DEBUG(("DBUS_MESSAGE_TYPE_INVALID"));
+        break;
+    default:
+        DEBUG(("DBUS_MESSAGE_TYPE_ .... UNKNOWN"));
+        break;
+    }
+
+    DEBUG(("Path=%s, Interface=%s, Method=%s, Destination=%s, Sender=%s",
+           dbus_message_get_path(dbus_message),
+           dbus_message_get_interface(dbus_message),
+           dbus_message_get_member(dbus_message),
+           dbus_message_get_destination(dbus_message),
+           dbus_message_get_sender(dbus_message)
+          ));
+
+    if(dbus_message_is_signal(dbus_message, IAL_DBUS_INTERFACE_EVENT, IAL_DBUS_SIGNAL_EVENT))
+    {
+        event = receive_event(dbus_message);
+
+        DEBUG(("Received IAL Event: %s (Sender=%s, Source=%s, Raw=0x%x).", event.name, event.sender, event.source, event.raw));
+    }
+
 
     return DBUS_HANDLER_RESULT_HANDLED;
 }
@@ -51,14 +60,24 @@ int main(int argc, char *argv[])
     log_level_set(3);
 
     if (ial_dbus_connect() == FALSE) {
-        DEBUG(("D-Bus Connection failed."));
+        DEBUG(("D-Bus connection failed."));
         return 1;
     }
     else {
-        DEBUG(("D-Bus Connection established."));
+        DEBUG(("D-Bus connection established."));
     }
 
     dbus_connection_setup_with_g_main(dbus_connection, NULL);
+
+    if (dbus_bus_service_exists
+        (dbus_connection, IAL_DBUS_SERVICENAME, &dbus_error) == FALSE) {
+        WARNING(("D-Bus service \"%s\" does not exist ('iald' not running?).",
+                 IAL_DBUS_SERVICENAME));
+    }
+    if (dbus_error_is_set(&dbus_error)) {
+        ERROR(("Error while looking for service."));
+        return 1;
+    }
 
     dbus_connection_add_filter(dbus_connection, event_callback, loop, NULL);
 
