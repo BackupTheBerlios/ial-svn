@@ -1,7 +1,7 @@
 /* iald_mod.h
  *
- * Copyright (C) 2004 Timo Hoenig <thoenig@nouse.net>
- *                    All rights reserved
+ * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
+ *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -42,4 +42,5 @@ void modules_scan(void);
 
 /* Load/Unload all modules */
 void modules_load(void);
+void module_unload(IalModule *);
 void modules_unload(void);
