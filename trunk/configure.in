@@ -114,7 +114,7 @@ dnl
 if ! test -z "$with_pid_file"; then
     IALD_PID_FILE=$with_pid_file
 else
-    IALD_PID_FILE=${LOCALSTATEDIR}/run/iald/pid  
+    IALD_PID_FILE=${LOCALSTATEDIR}/run/ial/iald.pid  
 fi  
        
 AC_SUBST(IALD_PID_FILE)
