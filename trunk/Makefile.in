@@ -143,8 +143,6 @@ SUBDIRS = libial iald modules utils
 
 dbusdir = $(DBUS_SYS_DIR)
 dist_dbus_DATA = ial.conf
-
-EXTRA_DIST = hal.conf.in
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -354,7 +352,7 @@ distcleancheck_listfiles = find . -type f -print
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkinstalldirs) $(distdir)/.
+	$(mkinstalldirs) $(distdir)/. $(distdir)/iald
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \

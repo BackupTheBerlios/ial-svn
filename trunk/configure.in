@@ -121,6 +121,7 @@ AC_OUTPUT([
 ial.conf
 Makefile
 libial/Makefile
+iald/iald.conf
 iald/Makefile
 modules/Makefile
 utils/Makefile
