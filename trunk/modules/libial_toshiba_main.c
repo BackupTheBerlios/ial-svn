@@ -11,9 +11,10 @@ gboolean toshiba_send_event()
 
     DEBUG(("Key event: %s (0x%x).", toshiba_fnkey_description(fnkey.value), fnkey.value));
 
-    event.name = (char*)toshiba_fnkey_description(fnkey.value);
-    event.raw  = (int)fnkey.value;
-    event.mod  = (ModuleData*)&mod_data;
+    event.sender = mod_data.token;
+    event.source = ACPI_TOSHIBA_KEYS;
+    event.name = toshiba_fnkey_description(fnkey.value);
+    event.raw  = fnkey.value;
 
     send_event(&event);
 
