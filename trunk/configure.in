@@ -108,13 +108,28 @@ AC_SUBST(IAL_DEFINES)
 
 
 dnl
+dnl Log file
+dnl
+
+if ! test -z "$with_log_file"; then
+    IALD_LOG_FILE=$with_log_file;
+else
+    IALD_LOG_FILE=stdout;
+fi  
+
+AC_SUBST(IALD_LOG_FILE)
+AC_DEFINE_UNQUOTED(IALD_LOG_FILE, "$IALD_LOG_FILE", [log file])
+
+
+
+dnl
 dnl PID file
 dnl
 
 if ! test -z "$with_pid_file"; then
-    IALD_PID_FILE=$with_pid_file
+    IALD_PID_FILE=$with_pid_file;
 else
-    IALD_PID_FILE=${LOCALSTATEDIR}/run/ial/iald.pid  
+    IALD_PID_FILE=${LOCALSTATEDIR}/run/ial/iald.pid;
 fi  
        
 AC_SUBST(IALD_PID_FILE)
@@ -147,6 +162,7 @@ localstatedir: ${LOCALSTATEDIR}
 sysconfdir:    ${SYSCONFDIR}
 dbussysdir:    ${DBUS_SYS_DIR}
 
+logfile:       ${IALD_LOG_FILE}
 pidfile:       ${IALD_PID_FILE}
 
 pkgcflags:     ${PACKAGE_CFLAGS}
