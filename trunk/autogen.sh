@@ -1,3 +1,4 @@
 #!/bin/bash
 
-aclocal; autoconf; automake -a; ./configure $@
+libtoolize --force --copy;
+aclocal; autoconf; automake --add-missing --force-missing --gnu; ./configure $@
