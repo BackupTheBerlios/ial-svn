@@ -119,7 +119,7 @@ gboolean evdev_fd_init()
                 g_io_channel_unix_new(evdev_current->fd);
             evdev_current->watch =
                 g_io_add_watch(evdev_current->io_channel,
-                               G_IO_IN | G_IO_ERR | G_IO_HUP,
+                               G_IO_IN | G_IO_ERR,
                                (GIOFunc) evdev_callback,
                                evdev_current->io_channel);
 
