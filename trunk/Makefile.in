@@ -67,12 +67,14 @@ GLIB_MKENUMS = @GLIB_MKENUMS@
 GLIB_REQUIRED = @GLIB_REQUIRED@
 GOBJECT_QUERY = @GOBJECT_QUERY@
 IAL_DEFINES = @IAL_DEFINES@
+INCLTDL = @INCLTDL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LDFLAGS = @LDFLAGS@
 LIBDIR = @LIBDIR@
+LIBLTDL = @LIBLTDL@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -150,8 +152,8 @@ RECURSIVE_TARGETS = info-recursive dvi-recursive pdf-recursive \
 	check-recursive installcheck-recursive
 DIST_COMMON = README $(srcdir)/Makefile.in $(srcdir)/configure AUTHORS \
 	COPYING ChangeLog INSTALL Makefile.am NEWS acinclude.m4 \
-	aclocal.m4 compile config.guess config.sub configure \
-	configure.in depcomp install-sh ltmain.sh missing mkinstalldirs
+	aclocal.m4 compile config.guess config.sub configure.in depcomp \
+	install-sh ltmain.sh missing mkinstalldirs
 DIST_SUBDIRS = $(SUBDIRS)
 all: all-recursive
 

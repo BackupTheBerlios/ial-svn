@@ -56,8 +56,8 @@ dnl
 dnl Libtool
 dnl
 
-dnl AC_SUBST(INCLTDL)
-dnl AC_SUBST(LIBLTDL)
+AC_SUBST(INCLTDL)
+AC_SUBST(LIBLTDL)
 
 
 dnl
@@ -117,11 +117,14 @@ echo "
   Input Abstraction Layer $VERSION
 =================================
 
-prefix:                   ${prefix}
-libdir:                   ${LIBDIR}
-moduledir:                ${MODULEDIR}
-bindir:                   ${BINDIR}
-datadir:                  ${DATADIR}
-sysconfdir:               ${SYSCONFDIR}
+prefix:       ${prefix}
+libdir:       ${LIBDIR}
+moduledir:    ${MODULEDIR}
+bindir:       ${BINDIR}
+datadir:      ${DATADIR}
+sysconfdir:   ${SYSCONFDIR}
+
+pkgcflags:    ${PACKAGE_CFLAGS}
+pkglibs:      ${PACKAGE_LIBS}
 "
 
