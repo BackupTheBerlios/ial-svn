@@ -1,0 +1,127 @@
+dnl Process this file with autoconf to produce a configure script.
+
+dnl AC_PREREQ(2.57)
+AC_INIT(ial, 0.0.1, thoenig@nouse.net)
+AM_INIT_AUTOMAKE(ial, 0.0.1)
+
+AC_ISC_POSIX
+AC_PROG_CC
+AM_PROG_CC_STDC
+AC_STDC_HEADERS
+AM_PATH_GLIB_2_0 
+
+AC_C_CONST
+AC_FUNC_MALLOC
+
+AM_DISABLE_STATIC
+AM_PROG_LIBTOOL
+AC_SUBST(LTLIBINTL)
+   
+dnl
+dnl Library Dependencies
+dnl
+
+GLIB_REQUIRED=2.0.3
+AC_SUBST(GLIB_REQUIRED)
+
+
+
+dnl
+dnl Module directory
+dnl
+
+moduledir=$libdir/ial/modules
+AC_SUBST(moduledir)
+
+
+
+AS_AC_EXPAND(SYSCONFDIR, $sysconfdir)
+AS_AC_EXPAND(DATADIR, $datadir)
+AS_AC_EXPAND(BINDIR, $bindir)
+AS_AC_EXPAND(LIBDIR, $libdir)
+AS_AC_EXPAND(MODULEDIR, $moduledir)
+
+
+
+dnl
+dnl Check for pkg-config packages
+dnl
+
+pkg_modules="glib-2.0 >= 2.2.2, dbus-1 >= 0.20, dbus-glib-1 >= 0.20, libxml-2.0"
+PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
+AC_SUBST(PACKAGE_CFLAGS)
+AC_SUBST(LIB_DL)
+
+dnl
+dnl Libtool
+dnl
+
+dnl AC_SUBST(INCLTDL)
+dnl AC_SUBST(LIBLTDL)
+
+
+dnl
+dnl DBUS API is subject to changes
+dnl
+
+AC_DEFINE_UNQUOTED(DBUS_API_SUBJECT_TO_CHANGE, ,DBUS API is subject to change)
+
+
+
+dnl
+dnl Add Warnings
+dnl
+
+CFLAGS="$CFLAGS -Wall"
+CFLAGS="$CFLAGS -Wchar-subscripts"
+CFLAGS="$CFLAGS -Wmissing-declarations"
+CFLAGS="$CFLAGS -Wnested-externs"
+CFLAGS="$CFLAGS -Wpointer-arith"
+CFLAGS="$CFLAGS -Wcast-align"
+CFLAGS="$CFLAGS -Wsign-compare"
+CFLAGS="$CFLAGS -Wimplicit -Wunused"
+CFLAGS="$CFLAGS -Wmissing-prototypes"
+
+
+
+dnl
+dnl libltdl
+dnl
+
+AC_CONFIG_SUBDIRS(libltdl)
+
+
+
+dnl
+dnl IAL Defines
+dnl
+
+IAL_DEFINES="-DMODULE_DIR=\\\"$MODULEDIR\\\" -DSYSCONF_DIR=\\\"$SYSCONFDIR\\\""
+AC_SUBST(IAL_DEFINES)
+
+
+
+dnl
+dnl Output files
+dnl
+
+AC_OUTPUT([
+Makefile
+libial/Makefile
+iald/Makefile
+modules/Makefile
+utils/Makefile
+])
+
+echo "
+  Input Abstraction Layer $VERSION
+=================================
+
+prefix:                   ${prefix}
+libdir:                   ${LIBDIR}
+moduledir:                ${MODULEDIR}
+bindir:                   ${BINDIR}
+datadir:                  ${DATADIR}
+sysconfdir:               ${SYSCONFDIR}
+"
+
