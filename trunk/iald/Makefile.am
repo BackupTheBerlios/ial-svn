@@ -16,4 +16,4 @@ iald_SOURCES = 					\
 iald_LDADD =					\
 	@PACKAGE_LIBS@				\
 	../libial/libial.la			\
-	-ldl
+	-ldl 
