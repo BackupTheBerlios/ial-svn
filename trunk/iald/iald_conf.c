@@ -1,3 +1,26 @@
+/* iald_conf.c - Input Abstraction Layer Configuration File Parser
+ *
+ * Copyright (C) 2004 Timo Hoenig <thoenig@nouse.net>
+ *                    All rights reserved
+ *
+ * Licensed under the Academic Free License version 2.1
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -10,7 +33,30 @@
 
 extern IalModule *modules_list_head;
 
-void parse_module(xmlDocPtr doc, xmlNodePtr cur, xmlAttrPtr attr,
+/**
+ * @addtogroup IAL
+ * @{
+ */
+
+/**         
+ * @defgroup IALCONF Configuration File Parser
+ * @ingroup  IAL
+ * @brief    The Input Abstraction Layer configuration file parser uses libxml2 to parse
+ *           the configuration file `iald.conf`. The configuration file includes both options
+ *           for the IAL daemon and IAL modules.
+ * @{
+ */
+
+/**
+ * Parse a module node found in the configuration file.
+ *
+ * @param       doc             Pointer to XML document.
+ * @param       cur             Ponter to XML node.
+ * @param       attr            Pointer to XML attribute.
+ * @param       conf_file       Pointer to the configuration file.
+ */
+
+void conf_parse_module(xmlDocPtr doc, xmlNodePtr cur, xmlAttrPtr attr,
                   const char *conf_file)
 {
     xmlChar *tok;
@@ -74,7 +120,13 @@ void parse_module(xmlDocPtr doc, xmlNodePtr cur, xmlAttrPtr attr,
     return;
 }
 
-void parse_config(const char *conf_file)
+/**
+ * Parse Input Abstraction Layer Daemon configuration file using libxml2.
+ *
+ * @param conf_file     Location of configuration file.
+ */
+
+void conf_parse_file(const char *conf_file)
 {
     xmlDocPtr doc;
     xmlNodePtr cur;
@@ -121,7 +173,7 @@ void parse_config(const char *conf_file)
         }
         else if (!xmlStrcmp(cur->name, (const xmlChar *) "module")) {
             if ((attr = xmlHasProp(cur, (const xmlChar *) "token")) != NULL) {
-                parse_module(doc, cur->children->next, attr, conf_file);
+                conf_parse_module(doc, cur->children->next, attr, conf_file);
             }
             else {
                 ERROR((">%s", cur->name));
@@ -139,11 +191,16 @@ void parse_config(const char *conf_file)
     return;
 }
 
+/**
+ * Invoke parser for Input Abstraction Layer Daemon configuration file.
+ */
 void conf_parse(void)
 {
     const char *conf_file = SYSCONF_DIR "/iald/iald.conf";
 
     DEBUG(("Parsing configuration file %s.", conf_file));
-    parse_config(conf_file);
+    conf_parse_file(conf_file);
     DEBUG(("Finished parsing configuration file."));
 }
+
+/** @} */

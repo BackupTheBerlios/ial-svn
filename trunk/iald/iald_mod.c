@@ -1,3 +1,26 @@
+/* iald_mod.c - Input Abstraction Layer Module Loader
+ *
+ * Copyright (C) 2004 Timo Hoenig <thoenig@nouse.net>
+ *                    All rights reserved
+ *
+ * Licensed under the Academic Free License version 2.1
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,34 +39,22 @@
 
 extern IalModule *modules_list_head;
 
-/** Allocate a given amount of bytes of memory. Aborts if no memory is left.
- *
- *  @param  amount              Number of bytes to allocated
- *  @return                     Pointer to allocated memory
+/**         
+ * @defgroup IALMOD Module Loader
+ * @ingroup  IAL
+ * @brief    The Input Abstraction Layer module loader is scanning (LIBDIR)/iald/modules
+ *           for valid IAL modules, checks whether they have the correct symbols and
+ *           manages them in a linked list.
+ * @{
  */
-void *xmalloc(unsigned int amount)
-{
-    void *p = malloc(amount);
-    if (!p) {
-        exit(1);
-    }
-    return p;
-}
 
-/** String duplication; aborts if no memory.
+
+/** Load shared library.
  *
- *  @param  how_much            Number of bytes to allocated
- *  @return                     Pointer to allocated storage
+ * @param   filename    Filename of library to open
+ * @param   symbol      Symbel to lookup in library
+ * @returns             Void Pointer to function
  */
-char *xstrdup(const char *str)
-{
-    char *p = strdup(str);
-    if (!p) {
-        exit(1);
-    }
-    return p;
-}
-
 void *dl_function(char *filename, const char *symbol)
 {
     void *handle;
@@ -71,14 +82,14 @@ void *dl_function(char *filename, const char *symbol)
 
 /** Add a new module.
  *
- *  @return                     Nothing 
+ *  @param filename     Filename of module.
  */
 void module_add(char *filename)
 {
     ModuleData *(*function) (void);
     IalModule *module;
 
-    module = (IalModule *) xmalloc(sizeof(IalModule));
+    module = (IalModule *) malloc(sizeof(IalModule));
 
     function = dl_function(filename, "mod_get_data");
     module->data = function();
@@ -92,12 +103,20 @@ void module_add(char *filename)
     modules_list_head = module;
 }
 
-void module_remove(IalModule * module)
+/** Remove module.
+ *
+ * @param module        Module to be removed.
+ */
+void module_remove(IalModule *module)
 {
 
 }
 
-/* if return is true, the module initializes successfully */
+/** Initialize module.
+ *
+ * @param filename      Filename of module.
+ * @returns             TRUE if module was initialized succeeded, else FALSE.
+ */
 gboolean module_init(char *filename)
 {
     gboolean(*mod_init) (void);
@@ -107,7 +126,11 @@ gboolean module_init(char *filename)
     return (*mod_init) ();
 }
 
-/* Check if module has all neccessary symbols */
+/** Verify module.
+ *
+ * @param filename      Filename of module.
+ * @returns             TRUE if module has the symbol `mod_get_data', else FALSE;
+ */
 gboolean module_verify(char *filename)
 {
     void (*function) (void);
@@ -125,10 +148,12 @@ gboolean module_verify(char *filename)
     return TRUE;
 }
 
-/* Heavily based on scan_plugins() by XMMS (http://www.xmms.org) */
-
+/** Scan (LIBDIR)/iald/modules for modules. 
+ *
+ */
 void modules_scan()
 {
+    /* Heavily based on scan_plugins() by XMMS (http://www.xmms.org) */
     char *filename, *extension;
     char *module_dir = MODULE_DIR;
     DIR *dir;
@@ -158,6 +183,9 @@ void modules_scan()
 
 }
 
+/** Load all modules.
+ *
+ */
 void modules_load()
 {
     IalModule *m;
@@ -185,8 +213,12 @@ void modules_load()
 
 }
 
+/** Unload all modules.
+ *
+ */
 void modules_unload()
 {
-    ERROR(("QQQ"));
 
 }
+
+/** @} */

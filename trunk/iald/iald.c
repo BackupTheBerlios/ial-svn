@@ -1,11 +1,26 @@
-/***************************************************************************
+/* main.c - Input Abstraction Layer Daemon
  *
- * main.c : main() for Input Abstraction Layer Daemon
+ * Copyright (C) 2004 Timo Hoenig <thoenig@nouse.net>
+ *                    All rights reserved
  *
- * Copyright (C) 2004 Timo Hoenig, <thoenig@nouse.net>
- *
+ * Licensed under the Academic Free License version 2.1
  * 
- **************************************************************************/
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
 
 #define _GNU_SOURCE
 
@@ -26,34 +41,50 @@
 
 IalModule *modules_list_head = NULL;
 
-/** Global D-Bus connection, libial */
+/** Global D-BUS connection, libial */
 extern DBusConnection *dbus_connection;
 
 /**
  * @defgroup IAL Input Abstraction Layer Daemon
- * @brief The Input Abstraction Layer Daemon (iald) makes all kind of function keys
- *        found on laptops and multimedia keyboards accessible to other applications
- *        through a D-Bus interface.
+ * @brief   The Input Abstraction Layer Daemon (iald) makes all kind of function keys
+ *          found on laptops and multimedia keyboards accessible to other applications
+ *          through a D-BUS interface.
+ *          
  * @{
  */
 
-/** D-Bus filter function
+/** D-BUS filter function
  *
  * Message handler for method invocations. All invocations on any object
  * or interface is routed through this function.
  * 
- * @param  connection                   D-Bus connection
- * @param  message                      A D-Bus message
+ * @param  connection                   D-BUS connection
+ * @param  message                      A D-BUS message
  * @param  user_data                    User data
  * @return                              What to do with the message
  *
  */
+
 static DBusHandlerResult filter_function(DBusConnection * connection,
                                          DBusMessage * message, void *user_data)
 {
 
     return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
+
+
+/**         
+ * @defgroup IALCLI Command Line Interface (CLI)
+ * @brief    The Input Abstraction Layer CLI implements the user interface and parses
+ *           the supplied command line options.
+ * 
+ * @{
+ */
+
+
+/** 
+ * Print header for command line options.
+ */
 
 void opt_header()
 {
@@ -64,6 +95,10 @@ void opt_header()
 
     printf("%s", header);
 }
+
+/**
+ * Print usage for command line options.
+ */
 
 void opt_usage()
 {
@@ -93,6 +128,10 @@ void opt_usage()
     printf("%s", usage);
 }
 
+/**
+ * Print available Input Abtraction Layer modules.
+ */
+
 void opt_list()
 {
     IalModule *m = NULL;
@@ -114,6 +153,10 @@ void opt_list()
         ("Use  'iald --list-verbose'  for module options and more information.\n\n");
 
 }
+
+/**
+ * Print available Input Abstraction Layer modules and their options (verbose).
+ */
 
 void opt_list_verbose()
 {
@@ -150,6 +193,14 @@ void opt_list_verbose()
         ("Example:  'iald --module-options acpi:disable=yes,toshiba:poll_freq=100:disable=no'\n\n");
 
 }
+
+/**
+ * Parse command line options for Input Abstraction Layer modules.
+ *
+ * @param  optarg                   Command line option arguments for module options (-m,
+ *                                  --module-options).
+ *                                  
+ */
 
 void opt_modules_opts(char *optarg)
 {
@@ -235,6 +286,10 @@ void opt_modules_opts(char *optarg)
     }
 }
 
+/**
+ * Print Input Abstraction layer version and build date.
+ */
+
 void opt_version()
 {
     static char *version = {
@@ -248,6 +303,14 @@ void opt_version()
     printf("%s", version);
 
 }
+
+/**
+ * Parse command line options for Input Abstraction Layer daemon.
+ *
+ * @param argc                          Number of arguments.
+ * @param argv                          Argument values
+ * 
+ */
 
 void opt_parse(int argc, char *argv[])
 {
@@ -313,7 +376,15 @@ void opt_parse(int argc, char *argv[])
 
 }
 
-/** Entry point for Input Abstraction Layer Daemon
+/** @} */
+
+/** Entry point for Input Abstraction Layer Daemon.
+ *
+ * The main function of IAL first scans for IAL modules, then parses the configuration
+ * file, the command line options (which overwrite options given by the configuration
+ * file) and calls the init functions of the IAL modules.
+ *
+ * At the end of all initialization, the main loop is started.
  *
  * @param  argc                         Number of arguments
  * @param  argv                         Array of arguments
@@ -339,10 +410,10 @@ int main(int argc, char *argv[])
         WARNING(("No modules available"));
     }
 
-    /** Parse config file */
+    /* Parse config file */
     conf_parse();
 
-    /** Parse command line options */
+    /* Parse command line options */
     if (argc > 1) {
         opt_parse(argc, argv);
     }
