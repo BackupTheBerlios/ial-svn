@@ -1,7 +1,7 @@
 /* iald.c - Input Abstraction Layer Daemon
  *
- * Copyright (C) 2004 Timo Hoenig <thoenig@nouse.net>
- *                    All rights reserved
+ * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
+ *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -35,12 +35,15 @@
 #include "iald.h"
 #include "iald_mod.h"
 #include "iald_conf.h"
+#include "iald_dbus.h"
 
 IalModule *modules_list_head = NULL;
 
 static gboolean opt_foreground = FALSE;
 static char opt_logfile[128] = IAL_LOG;
 static int opt_debug = 0;
+
+GMainLoop *loop;
 
 /** Global D-BUS connection, libial */
 extern DBusConnection *dbus_connection;
@@ -101,7 +104,7 @@ void opt_header()
 {
     static char *header = {
         "Input Abstraction Layer v" VERSION "\n"
-            "Copyright (C) 2004 Timo Hoenig <thoenig@nouse.net>\n" "\n"
+            "Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>\n" "\n"
     };
 
     printf("%s", header);
@@ -413,7 +416,6 @@ void opt_parse(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
     IalModule *m = NULL;
-    GMainLoop *loop;
     DBusError dbus_error;
 
     /* Scan for modules that both conf_parse() and opt_parse() can set
@@ -494,6 +496,8 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
+    dbus_connection_setup_with_g_main(dbus_connection, NULL);
+
     dbus_error_init(&dbus_error);
 
     /* TODO
@@ -516,6 +520,8 @@ int main(int argc, char *argv[])
     }
 
     modules_load();
+
+    iald_dbus_init();
 
     g_main_loop_run(loop);
 
