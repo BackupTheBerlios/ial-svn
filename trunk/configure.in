@@ -13,9 +13,7 @@ AM_PATH_GLIB_2_0
 AC_C_CONST
 AC_FUNC_MALLOC
 
-AM_DISABLE_STATIC
 AM_PROG_LIBTOOL
-AC_SUBST(LTLIBINTL)
    
 dnl
 dnl Library Dependencies
@@ -63,13 +61,6 @@ pkg_modules="glib-2.0 >= 2.2.2, dbus-1 >= 0.20, dbus-glib-1 >= 0.20, libxml-2.0"
 PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
 AC_SUBST(PACKAGE_CFLAGS)
 AC_SUBST(LIB_DL)
-
-dnl
-dnl Libtool
-dnl
-
-AC_SUBST(INCLTDL)
-AC_SUBST(LIBLTDL)
 
 
 dnl
