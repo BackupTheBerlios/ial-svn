@@ -476,7 +476,7 @@ int main(int argc, char *argv[])
         pid_file = open(IALD_PID_FILE, O_WRONLY|O_CREAT|O_TRUNC|O_EXCL, 0644);
 
         if (pid_file == -1) {
-            ERROR(("Could not create pid file."));
+            ERROR(("Could not create pid file (%s).", IALD_PID_FILE));
             exit(1);
         }
 
