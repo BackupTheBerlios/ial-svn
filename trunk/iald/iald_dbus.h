@@ -21,3 +21,8 @@
  *
  */
 
+
+DBusHandlerResult get_modules (DBusConnection *, DBusMessage * message);
+DBusHandlerResult filter_function (DBusConnection *, DBusMessage *, void *);
+
+void iald_dbus_init(void);
