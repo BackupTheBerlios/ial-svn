@@ -15,6 +15,8 @@ iald_SOURCES = 					\
 	iald.c					\
 	iald_conf.c				\
 	iald_conf.h				\
+	iald_dbus.c				\
+	iald_dbus.h				\
 	iald_mod.c				\
 	iald_mod.h
 
