@@ -22,10 +22,10 @@ libial_asus_la_SOURCES =	\
     libial_asus.c		\
     libial_asus.h
 
-libial_keyboard_la_SOURCES =	\
-    libial_keyboard.c		\
-    libial_keyboard_main.c      \
-    libial_keyboard.h
+libial_event_la_SOURCES =	\
+    libial_event.c		\
+    libial_event_main.c      	\
+    libial_event.h
 
 libial_acpi_la_SOURCES =	\
     libial_acpi.c		\
