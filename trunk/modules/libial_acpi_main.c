@@ -67,7 +67,6 @@ gboolean acpi_event_fd_init()
 {
     /* raw access to the ACPI event interface */
     acpi.event_fd = open(ACPI_EVENT, 0);
-    acpi.event_fd = -1;
 
     if (acpi.event_fd >= 0) {
         acpi.io_channel = g_io_channel_unix_new(acpi.event_fd);
