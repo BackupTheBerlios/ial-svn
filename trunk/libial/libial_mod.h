@@ -31,4 +31,3 @@ typedef struct ModuleData_s {
 } ModuleData;
 
 ModuleData *mod_get_data(void);
-void mod_log(const char *format, ...);
