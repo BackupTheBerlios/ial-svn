@@ -18,13 +18,20 @@ gboolean evdev_callback(gpointer user_data)
     
     read(fd, &input_event, sizeof(input_event));
 
+    /* We only care about key presses. */
     if ((input_event.type == EV_KEY) && (input_event.value == 1)) {
+        /* We do _not_ want to report all keys. Otherwise passwords and everything else would go to the bus*/
         if (key_blacklisted(input_event.code) == TRUE) {
             DEBUG(("Key blacklisted. Not sending to D-Bus."));
         }
         else {
+
+            printf("\n\ntype %i code: %i value %i\n", input_event.type, input_event.code, input_event.value);
+            /* TODO: move checks to event_send implementation */
             /* Get device name */
-            ioctl(fd,EVIOCGNAME(sizeof(source)), source);
+            if(ioctl(fd,EVIOCGNAME(sizeof(source)), source) == -1)
+                strcpy(source, "Unknown device");
+
 
             /* Fill structure and send D-Bus message */
             event.sender = mod_data.token;
@@ -43,6 +50,8 @@ gboolean evdev_fd_init()
 {
     evdev *evdev_current = NULL;
     char evdev_if[32];
+    char source[MAX_EVENT_DEV_NAME];
+    char phys[MAX_EVENT_DEV_NAME];
     int i, protocol_version, evdev_if_count = 0;
 
     for (i = 0; i < MAX_EVENT_DEV; i++) {
@@ -71,11 +80,20 @@ gboolean evdev_fd_init()
             evdev_current->watch = g_io_add_watch(evdev_current->io_channel, G_IO_IN | G_IO_ERR | G_IO_HUP,
                     (GIOFunc) evdev_callback, evdev_current->io_channel);
 
+            if(ioctl(evdev_current->fd,EVIOCGNAME(sizeof(source)), source) == -1) {
+                strcpy(source, "Unknown device");
+            }
+
+            if(ioctl(evdev_current->fd,EVIOCGPHYS(sizeof(phys)), phys) == -1) {
+                strcpy(source, "Unknown physical address");
+            }
+            
+            DEBUG(("Event interface for %s (%s) found.", source, phys));
         }
     }
 
     if (evdev_if_count > 0) {
-        DEBUG(("Found %i event interface(s) (/dev/input/*).", evdev_if_count));
+        DEBUG(("Found %i event interface(s).", evdev_if_count));
         return TRUE;
     }
     else {

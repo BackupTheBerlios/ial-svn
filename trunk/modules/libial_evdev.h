@@ -22,6 +22,7 @@ static char *KEY_NAME[KEY_MAX] = {
 /* IOCTL */
 #define EVIOCGVERSION           _IOR('E', 0x01, int)                    /* get driver version */
 #define EVIOCGNAME(len)         _IOC(_IOC_READ, 'E', 0x06, len)         /* get device name */
+#define EVIOCGPHYS(len)         _IOC(_IOC_READ, 'E', 0x07, len)         /* get physical location */
 
 #define key_blacklisted(code) (((code) < KEY_MAX) && ((code) > KEY_MIN) ? FALSE : TRUE)
 #define key_to_string(code) (KEY_NAME[code] ? KEY_NAME[code] : "Unknown key")
