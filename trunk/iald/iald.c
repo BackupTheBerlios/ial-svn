@@ -103,7 +103,7 @@ void opt_usage()
             "-f,   --foreground:         Run in foreground\n"
             "-m s, --module-options s:   Set module options (s = { module options })\n"
             "\n"
-            "module options = token:option[:option][,token:{option}[,option]]\n"
+            "module option  = token:option=value[,option=value]\n"
             "token          = Module token (see --list-verbose)\n"
             "option         = Module option (see --list-verbose)\n"
             "\n"
