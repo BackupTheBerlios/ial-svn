@@ -53,7 +53,7 @@ gboolean mod_unload(void);
 #define ACPI_TOSHIBA            "/proc/acpi/toshiba"
 #define ACPI_TOSHIBA_KEYS       "/proc/acpi/toshiba/keys"
 
-/** Polling frquency in ms*/
+/** Polling frequency in ms*/
 #define POLL_FREQ_MAX           1000
 #define POLL_FREQ_DEFAULT       100
 #define POLL_FREQ_MIN           50
@@ -129,12 +129,12 @@ gboolean mod_unload(void);
 #define E_BUTTON        0xb86
 #define I_BUTTON        0xb87
 
-struct Key_s {
+struct Key {
     const int value;
     const char *descr;
 };
 
-static struct Key_s keys[] = {
+static struct Key keys[] = {
     {FN_ESCAPE, "Fn-Escape (Mute)"},
     {FN_1, "Fn-1 (Volume Down)"},
     {FN_2, "Fn-2 (Volume Up)"},
