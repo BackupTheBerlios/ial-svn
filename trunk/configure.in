@@ -61,7 +61,7 @@ dnl AC_SUBST(LIBLTDL)
 
 
 dnl
-dnl DBUS API is subject to changes
+dnl D-BUS API is subject to change
 dnl
 
 AC_DEFINE_UNQUOTED(DBUS_API_SUBJECT_TO_CHANGE, ,DBUS API is subject to change)
