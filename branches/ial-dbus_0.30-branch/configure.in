@@ -1,0 +1,155 @@
+dnl Process this file with autoconf to produce a configure script.
+
+dnl VERSION="0.0.1pre1"
+
+AC_INIT(ial, 0.0.1, thoenig@nouse.net)
+AM_INIT_AUTOMAKE(ial, 0.0.1)
+
+dnl echo "Hello";
+dnl echo "$VERSION";
+
+AC_ISC_POSIX
+AC_PROG_CC
+AM_PROG_CC_STDC
+AC_STDC_HEADERS
+AM_PATH_GLIB_2_0 
+
+AC_C_CONST
+AC_FUNC_MALLOC
+
+AM_PROG_LIBTOOL
+   
+dnl
+dnl Library Dependencies
+dnl
+
+GLIB_REQUIRED=2.0.3
+AC_SUBST(GLIB_REQUIRED)
+
+
+
+dnl
+dnl Module directory
+dnl
+
+moduledir=$libdir/ial/modules
+AC_SUBST(moduledir)
+
+
+AS_AC_EXPAND(LOCALSTATEDIR, $localstatedir)
+AS_AC_EXPAND(SYSCONFDIR, $sysconfdir)
+AS_AC_EXPAND(DATADIR, $datadir)
+AS_AC_EXPAND(BINDIR, $bindir)
+AS_AC_EXPAND(LIBDIR, $libdir)
+AS_AC_EXPAND(MODULEDIR, $moduledir)
+
+
+dnl D-BUS system.d directory for configuration
+AC_ARG_WITH(dbus-sys, [  --with-dbus-sys=<dir>   where D-BUS system.d directory is])
+
+if ! test -z "$with_dbus_sys" ; then
+    DBUS_SYS_DIR="$with_dbus_sys"
+else
+    DBUS_SYS_DIR="$SYSCONFDIR/dbus-1/system.d"
+fi
+AC_SUBST(DBUS_SYS_DIR)
+AC_DEFINE_UNQUOTED(DBUS_SYSTEMD_DIR, "$DBUS_SYS_DIR", [Where system.d dir for DBUS is])
+
+
+
+dnl
+dnl Check for pkg-config packages
+dnl
+
+pkg_modules="glib-2.0 >= 2.2.2, dbus-1 >= 0.20, dbus-glib-1 >= 0.20, libxml-2.0"
+PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
+AC_SUBST(PACKAGE_CFLAGS)
+AC_SUBST(LIB_DL)
+
+
+dnl
+dnl D-BUS API is subject to change
+dnl
+
+AC_DEFINE_UNQUOTED(DBUS_API_SUBJECT_TO_CHANGE, ,DBUS API is subject to change)
+
+
+
+dnl
+dnl Add Warnings
+dnl
+
+CFLAGS="$CFLAGS -Wall"
+CFLAGS="$CFLAGS -Wchar-subscripts"
+CFLAGS="$CFLAGS -Wmissing-declarations"
+CFLAGS="$CFLAGS -Wnested-externs"
+CFLAGS="$CFLAGS -Wpointer-arith"
+CFLAGS="$CFLAGS -Wcast-align"
+CFLAGS="$CFLAGS -Wsign-compare"
+CFLAGS="$CFLAGS -Wimplicit -Wunused"
+CFLAGS="$CFLAGS -Wmissing-prototypes"
+
+
+
+dnl
+dnl libltdl
+dnl
+
+AC_CONFIG_SUBDIRS(libltdl)
+
+
+
+dnl
+dnl IAL Defines
+dnl
+
+IAL_DEFINES="-DMODULE_DIR=\\\"$MODULEDIR\\\" -DSYSCONF_DIR=\\\"$SYSCONFDIR\\\""
+AC_SUBST(IAL_DEFINES)
+
+
+dnl
+dnl PID file
+dnl
+
+if ! test -z "$with_pid_file"; then
+    IALD_PID_FILE=$with_pid_file
+else
+    IALD_PID_FILE=${LOCALSTATEDIR}/run/iald/pid  
+fi  
+       
+AC_SUBST(IALD_PID_FILE)
+AC_DEFINE_UNQUOTED(IALD_PID_FILE, "$IALD_PID_FILE", [pid file])
+
+
+dnl
+dnl Output files
+dnl
+
+AC_OUTPUT([
+ial.conf
+Makefile
+libial/Makefile
+iald/iald.conf
+iald/Makefile
+modules/Makefile
+])
+
+echo "
+Input Abstraction Layer $VERSION
+================================
+
+prefix:        ${prefix}
+libdir:        ${LIBDIR}
+moduledir:     ${MODULEDIR}
+bindir:        ${BINDIR}
+datadir:       ${DATADIR}
+localstatedir: ${LOCALSTATEDIR}
+sysconfdir:    ${SYSCONFDIR}
+dbussysdir:    ${DBUS_SYS_DIR}
+
+pidfile:       ${IALD_PID_FILE}
+
+pkgcflags:     ${PACKAGE_CFLAGS}
+pkglibs:       ${PACKAGE_LIBS}
+"
+
