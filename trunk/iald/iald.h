@@ -24,7 +24,8 @@
 #include <libial/libial.h>
 
 /** defined in iald.c */
-void remove_pid_file(void);
+gboolean pid_file_exists(void);
+void pid_file_remove(void);
 void h_sigterm(int);
 
 void opt_debug_set(int);
