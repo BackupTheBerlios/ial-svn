@@ -65,28 +65,30 @@ void acpi_event_send(char *button)
  */
 gboolean acpi_event_fd_init()
 {
-    /* raw */
+    /* raw access to the ACPI event interface */
     acpi.event_fd = open(ACPI_EVENT, 0);
+    acpi.event_fd = -1;
+
     if (acpi.event_fd >= 0) {
         acpi.io_channel = g_io_channel_unix_new(acpi.event_fd);
         return TRUE;
     }
+    else {
 
-    /* acpid */
-    acpi.event_fd = socket(PF_UNIX, SOCK_STREAM, 0);
+        /* access to the ACPI events using sockt of `acpid` */
+        acpi.event_fd = socket(PF_UNIX, SOCK_STREAM, 0);
 
-    if (acpi.event_fd >= 0) {
-        struct sockaddr_un addr;
-        addr.sun_family = AF_UNIX;
-        strcpy(addr.sun_path, ACPID_SOCKET);
-        if (connect(acpi.event_fd, (struct sockaddr *) &addr, sizeof(addr))
-            == 0) {
-            acpi.io_channel = g_io_channel_unix_new(acpi.event_fd);
-            return TRUE;
+        if (acpi.event_fd >= 0) {
+            struct sockaddr_un addr;
+            addr.sun_family = AF_UNIX;
+            strcpy(addr.sun_path, ACPID_SOCKET);
+            if (connect(acpi.event_fd, (struct sockaddr *) &addr, sizeof(addr))
+                == 0) {
+                acpi.io_channel = g_io_channel_unix_new(acpi.event_fd);
+                return TRUE;
+            }
         }
     }
-
-    acpi.event_fd = -1;
 
     return FALSE;
 }
@@ -220,6 +222,7 @@ gboolean libial_acpi_start()
         acpi_event_watch =
             g_io_add_watch(acpi.io_channel, G_IO_IN | G_IO_ERR | G_IO_HUP,
                            acpi_event_callback, NULL);
+
         return TRUE;
     }
 
