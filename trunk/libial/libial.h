@@ -9,13 +9,13 @@
 
 #define IAL_DBUS_SERVICENAME "com.novell.Ial"
 
-#define IAL_DBUS_PATH_EVENT  "/com/novell/Ial/Event"
-#define IAL_DBUS_PATH_STATUS "/com/novell/Ial/Status"
+#define IAL_DBUS_PATH_EVENT  "/com/novell/Ial"
+#define IAL_DBUS_PATH_STATUS "/com/novell/Ial"
 
-#define IAL_DBUS_INTERFACE_EVENT  "com.novell.Ial.Event"
-#define IAL_DBUS_INTERFACE_STATUS "com.novell.Ial.Status"
+#define IAL_DBUS_INTERFACE_EVENT  "com.novell.Ial"
+#define IAL_DBUS_INTERFACE_STATUS "com.novell.Ial"
 
-#define IAL_DBUS_SIGNAL_EVENT "event"
+#define IAL_DBUS_SIGNAL_EVENT "InputEvent"
 
 typedef struct IalEvent_s {
     const char *sender;
