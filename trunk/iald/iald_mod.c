@@ -48,7 +48,6 @@ extern IalModule *modules_list_head;
  * @{
  */
 
-
 /** Load shared library.
  *
  * @param   filename    Filename of library to open
@@ -107,7 +106,7 @@ void module_add(char *filename)
  *
  * @param module        Module to be removed.
  */
-void module_remove(IalModule *module)
+void module_remove(IalModule * module)
 {
 
 }

@@ -57,7 +57,7 @@ extern IalModule *modules_list_head;
  */
 
 void conf_parse_module(xmlDocPtr doc, xmlNodePtr cur, xmlAttrPtr attr,
-                  const char *conf_file)
+                       const char *conf_file)
 {
     xmlChar *tok;
     xmlChar *val;
@@ -81,8 +81,8 @@ void conf_parse_module(xmlDocPtr doc, xmlNodePtr cur, xmlAttrPtr attr,
 
                         if (strlen(val) <= MAX_BUF) {
                             strcpy(opt->value, val);
-                            DEBUG(("%s: Setting option \"%s\" to \"%s\".", tok,
-                                   opt->name, val));
+                            DEBUG(("%s: Setting option \"%s\" to \"%s\".",
+                                   tok, opt->name, val));
                         }
 
                         xmlFree(val);
@@ -172,8 +172,10 @@ void conf_parse_file(const char *conf_file)
             INFO(("Found foreground"));
         }
         else if (!xmlStrcmp(cur->name, (const xmlChar *) "module")) {
-            if ((attr = xmlHasProp(cur, (const xmlChar *) "token")) != NULL) {
-                conf_parse_module(doc, cur->children->next, attr, conf_file);
+            if ((attr =
+                 xmlHasProp(cur, (const xmlChar *) "token")) != NULL) {
+                conf_parse_module(doc, cur->children->next, attr,
+                                  conf_file);
             }
             else {
                 ERROR((">%s", cur->name));

@@ -21,7 +21,6 @@
  *
  */
 
-
 #define _GNU_SOURCE
 
 #include <stdio.h>
@@ -66,12 +65,12 @@ extern DBusConnection *dbus_connection;
  */
 
 static DBusHandlerResult filter_function(DBusConnection * connection,
-                                         DBusMessage * message, void *user_data)
+                                         DBusMessage * message,
+                                         void *user_data)
 {
 
     return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
-
 
 /**         
  * @defgroup IALCLI Command Line Interface (CLI)
@@ -80,7 +79,6 @@ static DBusHandlerResult filter_function(DBusConnection * connection,
  * 
  * @{
  */
-
 
 /** 
  * Print header for command line options.
@@ -254,7 +252,8 @@ void opt_modules_opts(char *optarg)
 
                     /* copy option */
                     token_opt =
-                        strndup(token_opt, strchr(token_opt, ':') - token_opt);
+                        strndup(token_opt,
+                                strchr(token_opt, ':') - token_opt);
 
                     /* remove option and trailing '=' */
                     token_val = strstr(token_opt, "=");
@@ -329,7 +328,8 @@ void opt_parse(int argc, char *argv[])
     };
 
     while (1) {
-        c = getopt_long(argc, argv, "fhlLvd:m:", long_options, &option_index);
+        c = getopt_long(argc, argv, "fhlLvd:m:", long_options,
+                        &option_index);
 
         if (c == -1)
             break;
@@ -439,7 +439,8 @@ int main(int argc, char *argv[])
                              &dbus_error);
 
     if (dbus_error_is_set(&dbus_error)) {
-        ERROR(("dbus_bus_acquire_service(): Error. (%s)", dbus_error.message));
+        ERROR(("dbus_bus_acquire_service(): Error. (%s)",
+               dbus_error.message));
         exit(1);
     }
     else {
@@ -447,7 +448,8 @@ int main(int argc, char *argv[])
               IAL_DBUS_SERVICENAME));
     }
 
-    dbus_connection_add_filter(dbus_connection, filter_function, NULL, NULL);
+    dbus_connection_add_filter(dbus_connection, filter_function, NULL,
+                               NULL);
 
     modules_load();
 

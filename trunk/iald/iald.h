@@ -21,7 +21,6 @@
  *
  */
 
-
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
@@ -36,6 +35,5 @@ void opt_list_verbose(void);
 void opt_modules_opts(char *);
 void opt_version(void);
 void opt_parse(int, char *[]);
-
 
 int main(int, char *[]);

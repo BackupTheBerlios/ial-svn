@@ -21,23 +21,20 @@
  *
  */
 
-
 #include <glib.h>
 
-typedef struct IalModule_s
-{
+typedef struct IalModule_s {
     ModuleData *data;
 
-    struct IalModule_s* prev;
-    struct IalModule_s* next;
-}
-IalModule;
+    struct IalModule_s *prev;
+    struct IalModule_s *next;
+} IalModule;
 
 void *dl_function(char *, const char *);
 
 /* Add/Remove a single modules to the configuration */
 void module_add(char *);
-void module_remove(IalModule*);
+void module_remove(IalModule *);
 
 gboolean module_init(char *);
 gboolean module_verify(char *);
@@ -48,5 +45,3 @@ void modules_scan(void);
 /* Load/Unload all modules */
 void modules_load(void);
 void modules_unload(void);
-
-
