@@ -36,8 +36,7 @@ gboolean mod_load()
         mod_data.state = ENABLED;
     }
     else {
-        WARNING(("Wrong option value (%s) for option \"%s\".",
-                 mod_options[0].value, mod_options[0].name));
+        WARNING(("Wrong option value (%s) for option \"%s\".", mod_options[0].value, mod_options[0].name));
         WARNING(("Setting module state to disabled."));
         strcpy(mod_options[0].value, "true");
         mod_data.state = DISABLED;

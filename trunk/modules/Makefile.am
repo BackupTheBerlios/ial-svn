@@ -7,7 +7,7 @@ libdir = $(moduledir)
 lib_LTLIBRARIES =		\
     libial_asus.la		\
     libial_acpi.la		\
-    libial_event.la		\
+    libial_evdev.la		\
     libial_toshiba.la
 
 
@@ -22,10 +22,12 @@ libial_asus_la_SOURCES =	\
     libial_asus.c		\
     libial_asus.h
 
-libial_event_la_SOURCES =	\
-    libial_event.c		\
-    libial_event_main.c      	\
-    libial_event.h
+libial_evdev_la_SOURCES =	\
+    libial_evdev.c		\
+    libial_evdev_main.c      	\
+    libial_evdev.h		\
+    libial_evdev_keys.h		\
+    libial_evdev_key_to_string.h
 
 libial_acpi_la_SOURCES =	\
     libial_acpi.c		\
@@ -38,5 +40,5 @@ libial_toshiba_la_LIBADD = 	\
 libial_acpi_la_LIBADD = 	\
     ../libial/libial.la
 
-libial_event_la_LIBADD = 	\
+libial_evdev_la_LIBADD = 	\
     ../libial/libial.la

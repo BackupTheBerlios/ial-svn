@@ -3,12 +3,11 @@
 extern ModuleOption mod_options[];
 extern ModuleData mod_data;
 
+IalEvent event;
 static struct fnkey_s fnkey;
 
 void toshiba_event_send()
 {
-    IalEvent event;
-
     event.sender = mod_data.token;
     event.source = ACPI_TOSHIBA_KEYS;
     event.name = toshiba_fnkey_description(fnkey.value);
@@ -50,8 +49,7 @@ void toshiba_key_flush()
             fclose(fnkey.fp);
 
             fnkey.fp = fopen(ACPI_TOSHIBA_KEYS, "r+");
-            fscanf(fnkey.fp, "hotkey_ready: %d\nhotkey: 0x%4x",
-                   &fnkey.hotkey_ready, &fnkey.value);
+            fscanf(fnkey.fp, "hotkey_ready: %d\nhotkey: 0x%4x", &fnkey.hotkey_ready, &fnkey.value);
         }
 
         if (fnkey.fp)
@@ -71,8 +69,7 @@ gboolean toshiba_key_ready()
         return FALSE;
     }
 
-    fscanf(fnkey.fp, "hotkey_ready: %1d\nhotkey: 0x%4x", &fnkey.hotkey_ready,
-           &fnkey.value);
+    fscanf(fnkey.fp, "hotkey_ready: %1d\nhotkey: 0x%4x", &fnkey.hotkey_ready, &fnkey.value);
 
     if (fnkey.hotkey_ready) {
         /** Signal the driver that we have read the key */
@@ -101,8 +98,7 @@ gboolean toshiba_key_poll()
             toshiba_event_send();
         }
         else {
-            if (!toshiba_fnkey_description(fnkey.value - 0x80) &&
-                (fnkey.value != FN)) {
+            if (!toshiba_fnkey_description(fnkey.value - 0x80) && (fnkey.value != FN)) {
                 INFO(("Unknown key event (0x%x). Please report to <thoenig at nouse dot net>", fnkey.value));
             }
 
@@ -125,8 +121,7 @@ gboolean toshiba_start()
 
     toshiba_key_flush();
 
-    if (!(g_timeout_add
-          (atoi(mod_options[1].value), (GSourceFunc) toshiba_key_poll, NULL))) {
+    if (!(g_timeout_add(atoi(mod_options[1].value), (GSourceFunc) toshiba_key_poll, NULL))) {
         ERROR(("g_timeout_add() for toshiba_key_poll() failed."));
         return FALSE;
     }

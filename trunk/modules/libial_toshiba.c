@@ -40,8 +40,7 @@ gboolean mod_load()
         mod_data.state = ENABLED;
     }
     else {
-        WARNING(("Wrong option value (%s) for option \"%s\".",
-                 mod_options[0].value, mod_options[0].name));
+        WARNING(("Wrong option value (%s) for option \"%s\".", mod_options[0].value, mod_options[0].name));
         WARNING(("Setting module state to disabled."));
         strcpy(mod_options[0].value, "true");
         mod_data.state = DISABLED;
@@ -50,9 +49,9 @@ gboolean mod_load()
     //* Checking value for option "poll_freq" */
     poll_freq_val = atoi(mod_options[1].value);
     if ((poll_freq_val < POLL_FREQ_MIN) || (poll_freq_val > POLL_FREQ_MAX)) {
-        WARNING(("Bad value (%s) for polling frequence. Please use values between %i and %i.", mod_options[1].value, POLL_FREQ_MIN, POLL_FREQ_MAX));
-        WARNING(("Using default value %i for polling frequence.",
-                 POLL_FREQ_DEFAULT));
+        WARNING(("Bad value (%s) for polling frequence. Please use values between %i and %i.", mod_options[1].value,
+                 POLL_FREQ_MIN, POLL_FREQ_MAX));
+        WARNING(("Using default value %i for polling frequence.", POLL_FREQ_DEFAULT));
         sprintf(mod_options[1].value, "%i", POLL_FREQ_DEFAULT);
     }
 

@@ -41,8 +41,7 @@ gboolean acpi_event_fd_init()
         struct sockaddr_un addr;
         addr.sun_family = AF_UNIX;
         strcpy(addr.sun_path, ACPID_SOCKET);
-        if (connect(acpi.event_fd, (struct sockaddr *) &addr, sizeof(addr)) ==
-            0) {
+        if (connect(acpi.event_fd, (struct sockaddr *) &addr, sizeof(addr)) == 0) {
             acpi.io_channel = g_io_channel_unix_new(acpi.event_fd);
             return TRUE;
         }
@@ -120,8 +119,7 @@ void acpi_event_handle(GString * acpi_event)
 
 }
 
-gboolean acpi_event_callback(GIOChannel * chan, GIOCondition cond,
-                             gpointer data)
+gboolean acpi_event_callback(GIOChannel * chan, GIOCondition cond, gpointer data)
 {
     if (cond & (G_IO_ERR | G_IO_HUP)) {
         /* some exception handling TODO */
@@ -143,8 +141,7 @@ gboolean acpi_event_callback(GIOChannel * chan, GIOCondition cond,
         GError *gerror = NULL;
         acpi_event = g_string_new(NULL);
 
-        if (g_io_channel_read_line_string
-            (acpi.io_channel, acpi_event, &i, &gerror)
+        if (g_io_channel_read_line_string(acpi.io_channel, acpi_event, &i, &gerror)
             == G_IO_STATUS_NORMAL) {
 
             acpi_event_handle(acpi_event);
@@ -160,9 +157,7 @@ gboolean acpi_event_callback(GIOChannel * chan, GIOCondition cond,
 gboolean libial_acpi_start()
 {
     if (acpi_event_fd_init() == TRUE) {
-        acpi_event_watch =
-            g_io_add_watch(acpi.io_channel, G_IO_IN | G_IO_ERR | G_IO_HUP,
-                           acpi_event_callback, NULL);
+        acpi_event_watch = g_io_add_watch(acpi.io_channel, G_IO_IN | G_IO_ERR | G_IO_HUP, acpi_event_callback, NULL);
         return TRUE;
     }
 
