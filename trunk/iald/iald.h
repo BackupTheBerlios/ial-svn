@@ -21,11 +21,11 @@
  *
  */
 
-#include <dbus/dbus.h>
+/*#include <dbus/dbus.h>
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
-
-#include "../libial/libial.h"
+*/
+#include <libial/libial.h>
 
 /** defined in iald.c */
 void opt_header(void);

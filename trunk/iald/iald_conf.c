@@ -24,8 +24,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <libxml/xmlmemory.h>
-#include <libxml/parser.h>
 
 #include "iald.h"
 #include "iald_mod.h"
@@ -196,7 +194,7 @@ void conf_parse_file(const char *conf_file)
 /**
  * Invoke parser for Input Abstraction Layer Daemon configuration file.
  */
-void conf_parse(void)
+void conf_parse()
 {
     const char *conf_file = SYSCONF_DIR "/iald/iald.conf";
 

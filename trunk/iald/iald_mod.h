@@ -21,8 +21,6 @@
  *
  */
 
-#include <glib.h>
-
 typedef struct IalModule_s {
     ModuleData *data;
 

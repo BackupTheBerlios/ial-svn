@@ -1,4 +1,5 @@
 INCLUDES =					\
+	-I$(top_srcdir)				\
 	@PACKAGE_CFLAGS@			\
 	@IAL_DEFINES@
 

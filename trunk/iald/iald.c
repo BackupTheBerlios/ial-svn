@@ -29,11 +29,6 @@
 #include <string.h>
 #include <getopt.h>
 
-#include <glib.h>
-
-#include <dbus/dbus.h>
-#include <dbus/dbus-glib.h>
-
 #include "iald.h"
 #include "iald_mod.h"
 #include "iald_conf.h"
@@ -43,7 +38,7 @@ IalModule *modules_list_head = NULL;
 /** Global D-BUS connection, libial */
 extern DBusConnection *dbus_connection;
 
-/**
+/** 
  * @defgroup IAL Input Abstraction Layer Daemon
  * @brief   The Input Abstraction Layer Daemon (iald) makes all kind of function keys
  *          found on laptops and multimedia keyboards accessible to other applications
