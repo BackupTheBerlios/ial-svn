@@ -47,25 +47,6 @@ extern DBusConnection *dbus_connection;
  * @{
  */
 
-/** D-BUS filter function
- *
- * Message handler for method invocations. All invocations on any object
- * or interface is routed through this function.
- * 
- * @param  connection                   D-BUS connection
- * @param  message                      A D-BUS message
- * @param  user_data                    User data
- * @return                              What to do with the message
- *
- */
-
-static DBusHandlerResult filter_function(DBusConnection * connection,
-                                         DBusMessage * message,
-                                         void *user_data)
-{
-
-    return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
-}
 
 /**         
  * @defgroup IALCLI Command Line Interface (CLI)
@@ -312,13 +293,13 @@ void opt_parse(int argc, char *argv[])
     int c;
 
     static struct option long_options[] = {
-        {"foreground", no_argument, 0, 'f'},
-        {"help", no_argument, 0, 'h'},
-        {"list", no_argument, 0, 'l'},
-        {"list-verbose", no_argument, 0, 'L'},
-        {"module-options", required_argument, 0, 'm'},
-        {"version", no_argument, 0, 'v'},
-        {"debug", required_argument, 0, 'd'},
+        {"debug", required_argument, NULL, 'd'},
+        {"foreground", no_argument, NULL, 'f'},
+        {"help", no_argument, NULL, 'h'},
+        {"list", no_argument, NULL, 'l'},
+        {"list-verbose", no_argument, NULL, 'L'},
+        {"module-options", required_argument, NULL, 'm'},
+        {"version", no_argument, NULL, 'v'},
         {0, 0, 0, 0}
     };
 
@@ -420,8 +401,6 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    dbus_connection_setup_with_g_main(dbus_connection, NULL);
-
     dbus_error_init(&dbus_error);
 
     /* TODO
@@ -442,9 +421,6 @@ int main(int argc, char *argv[])
         INFO(("dbus_bus_acquire_service(): Success. (%s)",
               IAL_DBUS_SERVICENAME));
     }
-
-    dbus_connection_add_filter(dbus_connection, filter_function, NULL,
-                               NULL);
 
     modules_load();
 
