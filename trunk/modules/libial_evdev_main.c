@@ -102,13 +102,13 @@ gboolean evdev_fd_init()
         if (evdev_current->fd > 0) {
             if (ioctl(evdev_current->fd, EVIOCGVERSION, &protocol_version)
                 == -1) {
-                ERROR(("Could not gather protocol version."));
+                WARNING(("Could not gather protocol version."));
                 close(evdev_current->fd);
                 return FALSE;
             }
 
             if (protocol_version != EV_VERSION) {
-                ERROR(("Protocol version mismatch."));
+                WARNING(("Protocol version mismatch."));
                 close(evdev_current->fd);
                 return FALSE;
             }

@@ -54,7 +54,7 @@ gboolean toshiba_add_filter()
                        IAL_DBUS_PATH_EVENT "',", &dbus_error);
 
     if (dbus_error_is_set(&dbus_error)) {
-        ERROR(("Could not register signal handler."));
+        WARNING(("Could not register signal handler."));
         return FALSE;
     }
 

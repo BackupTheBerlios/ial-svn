@@ -57,7 +57,7 @@ gboolean toshiba_acpi_check()
     fnkey.fp = fopen(ACPI_TOSHIBA_KEYS, "r+");
 
     if (!fnkey.fp) {
-        ERROR(("Could not open %s.", ACPI_TOSHIBA_KEYS));
+        WARNING(("Could not open %s.", ACPI_TOSHIBA_KEYS));
         return FALSE;
     }
 
@@ -72,7 +72,7 @@ void toshiba_key_flush()
     fnkey.fp = fopen(ACPI_TOSHIBA_KEYS, "r+");
 
     if (!fnkey.fp) {
-        ERROR(("Could not open %s.", ACPI_TOSHIBA_KEYS));
+        WARNING(("Could not open %s.", ACPI_TOSHIBA_KEYS));
         return;
     }
     else {
@@ -167,7 +167,7 @@ gboolean toshiba_start()
     dbus_error_init(&dbus_error);
 
     if (toshiba_acpi_check() == FALSE) {
-        ERROR(("Failed to access the Toshiba ACPI interface."));
+        WARNING(("Failed to access the Toshiba ACPI interface."));
         return FALSE;
     }
 
@@ -177,12 +177,12 @@ gboolean toshiba_start()
         (g_timeout_add
          (atoi(mod_options[1].value), (GSourceFunc) toshiba_key_poll,
           NULL))) {
-        ERROR(("g_timeout_add() for toshiba_key_poll() failed."));
+        WARNING(("g_timeout_add() for toshiba_key_poll() failed."));
         return FALSE;
     }
 
     if (!(toshiba_add_filter())) {
-        ERROR(("toshiba_add_filter() failed."));
+        WARNING(("toshiba_add_filter() failed."));
         return FALSE;
     }
     return TRUE;
