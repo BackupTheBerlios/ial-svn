@@ -85,8 +85,8 @@ void log_logfile_set(const char *logfile)
 {
     int logfd;
 
-    if (!strcmp(logfile, "stderr")) {
-        INFO(("Logging to \"stderr\"."));
+    if (!strcmp(logfile, "stdout")) {
+        INFO(("Logging to \"standard out\"."));
         return;
     }
     else {
