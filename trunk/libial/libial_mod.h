@@ -1,5 +1,3 @@
-#include <glib.h>
-
 #define MAX_BUF 512
 
 #define INPUT_MODULE    0

@@ -44,10 +44,10 @@ static int level;
 
 /** Setup logging
  *
- * @param priority     Log priority (LOGPRI_DEBUG, LOGPRI_INFO, LOGPRI_WARNING or LOGPRI_ERROR).
- * @param file         File which invoked logging.
- * @param line         Line number of `file`.
- * @param function     Name of function which invoked logging.
+ * @param _priority     Log priority (LOGPRI_DEBUG, LOGPRI_INFO, LOGPRI_WARNING or LOGPRI_ERROR).
+ * @param _file         File which invoked logging.
+ * @param _line         Line number of `file`.
+ * @param _function     Name of function which invoked logging.
  */
 void log_setup(int _priority, const char *_file, int _line,
                const char *_function)
@@ -60,7 +60,7 @@ void log_setup(int _priority, const char *_file, int _line,
 
 /** Set log level
  *
- * @para level          Log priority
+ * @param _level          Log priority
  */
 void log_level_set(int _level)
 {

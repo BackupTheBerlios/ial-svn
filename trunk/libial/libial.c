@@ -105,7 +105,7 @@ IalEvent event_receive(DBusMessage * dbus_message)
 
 /** Send an IAL Event (IalEvent) via D-BUS.
  *
- * @param       Pointer to an IalEvent.
+ * @param event      Pointer to an IalEvent.
  */
 
 void event_send(IalEvent * event)

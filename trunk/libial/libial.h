@@ -1,6 +1,8 @@
 #include <glib.h>
+
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib.h>
+#include <dbus/dbus-glib-lowlevel.h>
 
 #include "libial_mod.h"
 #include "libial_log.h"
