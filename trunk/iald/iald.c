@@ -1,4 +1,4 @@
-/* main.c - Input Abstraction Layer Daemon
+/* iald.c - Input Abstraction Layer Daemon
  *
  * Copyright (C) 2004 Timo Hoenig <thoenig@nouse.net>
  *                    All rights reserved
