@@ -14,9 +14,11 @@ enum {
 void log_setup(int priority, const char *file, int line,
                const char *function);
 
-void log_output(const char *format, ...);
+void log_logfile_set(const char *);
 void log_level_set(int);
-int log_level_get(void);
+int  log_level_get(void);
+
+void log_output(const char *format, ...);
 
 /** Debug information logging macro */
 #define DEBUG(expr) \

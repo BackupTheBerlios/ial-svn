@@ -7,6 +7,8 @@
 #include "libial_mod.h"
 #include "libial_log.h"
 
+#define IAL_LOG "stderr"
+
 #define IAL_DBUS_SERVICENAME "com.novell.Ial"
 
 #define IAL_DBUS_PATH_EVENT  "/com/novell/Ial"

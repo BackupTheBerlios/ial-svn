@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include "libial_log.h"
 
@@ -41,6 +43,7 @@ static const char *file;
 static int line;
 static const char *function;
 static int level;
+
 
 /** Setup logging
  *
@@ -78,6 +81,38 @@ void log_level_set(int _level)
     }
 }
 
+void log_logfile_set(const char *logfile)
+{
+    int logfd;
+
+    if (!strcmp(logfile, "stderr")) {
+        INFO(("Logging to \"stderr\"."));
+        return;
+    }
+    else {
+
+    }
+
+    logfd =  open(logfile, O_WRONLY|O_CREAT|O_APPEND); 
+
+    if (logfd < 0) {
+        WARNING(("Could not write to logfile \"%s\". Logging output will be on \"stderr\".", logfile));
+        return;
+    }
+
+    if (dup2(logfd, STDIN_FILENO) == -1) {
+        WARNING(("Can not redirect stdin."));
+    }
+        
+    if (dup2(logfd, STDOUT_FILENO) == -1) {
+        WARNING(("Can not redirect stdout."));
+    }
+            
+    if (dup2(logfd, STDERR_FILENO) == -1) {
+        WARNING(("Can not redirect stderr."));
+    }
+}
+
 /** Get log level
  *
  * @returns Current log level.
@@ -97,6 +132,8 @@ void log_output(const char *format, ...)
     va_list args;
     char buf[512];
     char *pri;
+
+    int logfd;
 
     if (priority > level)
         return;
