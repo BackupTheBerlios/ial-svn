@@ -9,7 +9,7 @@
 #define ENABLED         TRUE
 #define DISABLED        FALSE
 
-#define LOG(expr)   do { mod_log expr; } while(0)
+//#define LOG(expr)   do { mod_log expr; } while(0)
 
 typedef struct ModuleOption_s
 {

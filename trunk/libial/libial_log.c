@@ -40,8 +40,7 @@ void log_setup(int _priority, const char *_file, int _line,
 
 void log_level_set(int _level)
 {
-    switch (_level)
-    {
+    switch (_level) {
     case LOGPRI_DEBUG:
     case LOGPRI_INFO:
     case LOGPRI_WARNING:
@@ -77,8 +76,7 @@ void log_output(const char *format, ...)
     va_start(args, format);
     vsnprintf(buf, 512, format, args);
 
-    switch (priority)
-    {
+    switch (priority) {
     case LOGPRI_DEBUG:
         pri = "Debug:  ";
         break;
