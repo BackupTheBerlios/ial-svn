@@ -1,8 +1,12 @@
 dnl Process this file with autoconf to produce a configure script.
 
-dnl AC_PREREQ(2.57)
-AC_INIT(ial, 0.0.1, thoenig@nouse.net)
-AM_INIT_AUTOMAKE(ial, 0.0.1)
+dnl VERSION="0.0.1pre1"
+
+AC_INIT("ial", "0.0.1pre", "thoenig@nouse.net")
+AM_INIT_AUTOMAKE("ial", "0.0.1pre")
+
+dnl echo "Hello";
+dnl echo "$VERSION";
 
 AC_ISC_POSIX
 AC_PROG_CC
@@ -119,8 +123,8 @@ utils/Makefile
 ])
 
 echo "
-  Input Abstraction Layer $VERSION
-=================================
+Input Abstraction Layer $VERSION
+================================
 
 prefix:       ${prefix}
 libdir:       ${LIBDIR}
