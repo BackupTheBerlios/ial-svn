@@ -506,16 +506,16 @@ int main(int argc, char *argv[])
      *
      */
 
-    dbus_bus_acquire_service(dbus_connection, IAL_DBUS_SERVICENAME, 0,
+    dbus_bus_request_name(dbus_connection, IAL_DBUS_SERVICENAME, 0,
                              &dbus_error);
 
     if (dbus_error_is_set(&dbus_error)) {
-        ERROR(("dbus_bus_acquire_service(): Error. (%s)",
+        ERROR(("dbus_bus_request_name(): Error. (%s)",
                dbus_error.message));
         exit(1);
     }
     else {
-        INFO(("dbus_bus_acquire_service(): Success. (%s)",
+        INFO(("dbus_bus_request_name(): Success. (%s)",
               IAL_DBUS_SERVICENAME));
     }
 
