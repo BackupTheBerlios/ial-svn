@@ -1,7 +1,12 @@
+configdir=$(sysconfdir)/iald
+
 INCLUDES =					\
 	-I$(top_srcdir)				\
 	@PACKAGE_CFLAGS@			\
 	@IAL_DEFINES@
+
+config_DATA=                                    \
+	iald.conf
 
 sbin_PROGRAMS = iald
 
