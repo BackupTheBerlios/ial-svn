@@ -115,12 +115,10 @@ void log_output(const char *format, ...)
         pri = "Warning:";
         break;
     default:                   /* explicit fallthrough */
-    case LOGPRI_ERROR:
         pri = "Error:  ";
-        break;
     }
 
-    fprintf(stderr, "%s %s:%d %s() : %s\n", pri, file, line, function,
+    fprintf(stderr, "%s %s:%d %s(): %s\n", pri, file, line, function,
             buf);
 
     va_end(args);
