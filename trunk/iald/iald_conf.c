@@ -111,7 +111,7 @@ void conf_parse_module(xmlDocPtr doc, xmlNodePtr cur, xmlAttrPtr attr,
         if (!m) {
             WARNING(("No module with token \"%s\" was found.", tok));
         }
-    }
+}
 
     xmlFree(tok);
 
