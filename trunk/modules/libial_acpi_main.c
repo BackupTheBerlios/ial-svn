@@ -178,15 +178,20 @@ gboolean acpi_event_callback(GIOChannel * chan, GIOCondition cond,
                              gpointer data)
 {
     if (cond & (G_IO_ERR | G_IO_HUP)) {
-        /* some exception handling TODO */
+        /* better implemenration TODO */
 
-        /* does this lead to some race? 
+        /* does this lead to some race? e.g. if acpid is restarted we claim
+         * /proc/acpi/event and acpid will not be longer able to receive acpi
+         * events.
          *
          * it is nice to restart the module since:
-         * - if we were listening on the socket of acpid and acpid shutsdown
+         * - if we were listening on the socket of acpid and acpid shuts down
          *   we are reinitializing the module and get the events from the
          *   /proc/acpi/event.
          */
+
+        /* wait a bit to give acpid a chance to claim the interface again */
+        usleep(1000 * 1000 * 2);
 
         libial_acpi_start();
         return FALSE;
