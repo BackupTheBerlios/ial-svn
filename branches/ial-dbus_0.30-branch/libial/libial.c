@@ -132,12 +132,12 @@ void event_send(IalEvent * event)
 
     /* TODO: Check if event is valid */
 
-    dbus_message_iter_init(dbus_message, &dbus_it);
+    dbus_message_iter_init_append(dbus_message, &dbus_it);
 
-    dbus_message_iter_append_string(&dbus_it, event->sender);
-    dbus_message_iter_append_string(&dbus_it, event->source);
-    dbus_message_iter_append_string(&dbus_it, event->name);
-    dbus_message_iter_append_int32(&dbus_it, event->raw);
+    dbus_message_iter_append_basic(&dbus_it, DBUS_TYPE_STRING, &(event->sender));
+    dbus_message_iter_append_basic(&dbus_it, DBUS_TYPE_STRING, &(event->source));
+    dbus_message_iter_append_basic(&dbus_it, DBUS_TYPE_STRING, &(event->name));
+    dbus_message_iter_append_basic(&dbus_it, DBUS_TYPE_INT32, &(event->raw));
 
     if (!dbus_connection_send(dbus_connection, dbus_message, NULL)) {
         ERROR(("Sending message failed."));
