@@ -1,0 +1,19 @@
+<!DOCTYPE busconfig PUBLIC
+ "-//freedesktop//DTD D-BUS Bus Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+<busconfig>
+
+  <policy context="default">
+    <deny own="com.novell.Ial"/>
+    <deny send_interface="com.novell.Ial.Event"/>
+    <allow receive_interface="com.novell.Ial.Event"/>
+  </policy>
+
+  <policy user="root">
+    <allow own="com.novell.Ial"/>
+    <allow send_interface="com.novell.Ial.Event"/>
+    <allow receive_interface="com.novell.Ial.Event"/>
+  </policy>
+
+</busconfig>
+
