@@ -145,7 +145,7 @@ INCLUDES = \
 lib_LTLIBRARIES = \
     libial_asus.la		\
     libial_acpi.la		\
-    libial_keyboard.la		\
+    libial_event.la		\
     libial_toshiba.la
 
 
@@ -182,7 +182,7 @@ libial_acpi_la_LIBADD = \
     ../libial/libial.la
 
 
-libial_keyboard_la_LIBADD = \
+libial_event_la_LIBADD = \
     ../libial/libial.la
 
 subdir = modules
@@ -199,10 +199,10 @@ libial_asus_la_LDFLAGS =
 libial_asus_la_LIBADD =
 am_libial_asus_la_OBJECTS = libial_asus.lo
 libial_asus_la_OBJECTS = $(am_libial_asus_la_OBJECTS)
-libial_keyboard_la_LDFLAGS =
-libial_keyboard_la_DEPENDENCIES = ../libial/libial.la
-libial_keyboard_la_SOURCES = libial_keyboard.la.c
-libial_keyboard_la_OBJECTS = libial_keyboard.la.lo
+libial_event_la_LDFLAGS =
+libial_event_la_DEPENDENCIES = ../libial/libial.la
+am_libial_event_la_OBJECTS = libial_event.lo libial_event_main.lo
+libial_event_la_OBJECTS = $(am_libial_event_la_OBJECTS)
 libial_toshiba_la_LDFLAGS =
 libial_toshiba_la_DEPENDENCIES = ../libial/libial.la
 am_libial_toshiba_la_OBJECTS = libial_toshiba.lo libial_toshiba_main.lo \
@@ -215,7 +215,8 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/libial_acpi.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/libial_acpi_main.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/libial_asus.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/libial_keyboard.la.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/libial_event.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/libial_event_main.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/libial_toshiba.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/libial_toshiba_filter.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/libial_toshiba_main.Plo \
@@ -228,9 +229,9 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 DIST_SOURCES = $(libial_acpi_la_SOURCES) $(libial_asus_la_SOURCES) \
-	libial_keyboard.la.c $(libial_toshiba_la_SOURCES)
+	$(libial_event_la_SOURCES) $(libial_toshiba_la_SOURCES)
 DIST_COMMON = $(srcdir)/Makefile.in Makefile.am
-SOURCES = $(libial_acpi_la_SOURCES) $(libial_asus_la_SOURCES) libial_keyboard.la.c $(libial_toshiba_la_SOURCES)
+SOURCES = $(libial_acpi_la_SOURCES) $(libial_asus_la_SOURCES) $(libial_event_la_SOURCES) $(libial_toshiba_la_SOURCES)
 
 all: all-am
 
@@ -273,8 +274,8 @@ libial_acpi.la: $(libial_acpi_la_OBJECTS) $(libial_acpi_la_DEPENDENCIES)
 	$(LINK) -rpath $(libdir) $(libial_acpi_la_LDFLAGS) $(libial_acpi_la_OBJECTS) $(libial_acpi_la_LIBADD) $(LIBS)
 libial_asus.la: $(libial_asus_la_OBJECTS) $(libial_asus_la_DEPENDENCIES) 
 	$(LINK) -rpath $(libdir) $(libial_asus_la_LDFLAGS) $(libial_asus_la_OBJECTS) $(libial_asus_la_LIBADD) $(LIBS)
-libial_keyboard.la: $(libial_keyboard_la_OBJECTS) $(libial_keyboard_la_DEPENDENCIES) 
-	$(LINK) -rpath $(libdir) $(libial_keyboard_la_LDFLAGS) $(libial_keyboard_la_OBJECTS) $(libial_keyboard_la_LIBADD) $(LIBS)
+libial_event.la: $(libial_event_la_OBJECTS) $(libial_event_la_DEPENDENCIES) 
+	$(LINK) -rpath $(libdir) $(libial_event_la_LDFLAGS) $(libial_event_la_OBJECTS) $(libial_event_la_LIBADD) $(LIBS)
 libial_toshiba.la: $(libial_toshiba_la_OBJECTS) $(libial_toshiba_la_DEPENDENCIES) 
 	$(LINK) -rpath $(libdir) $(libial_toshiba_la_LDFLAGS) $(libial_toshiba_la_OBJECTS) $(libial_toshiba_la_LIBADD) $(LIBS)
 
@@ -287,7 +288,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_acpi.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_acpi_main.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_asus.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_keyboard.la.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_event.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_event_main.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_toshiba.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_toshiba_filter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libial_toshiba_main.Plo@am__quote@

@@ -7,7 +7,7 @@ libdir = $(moduledir)
 lib_LTLIBRARIES =		\
     libial_asus.la		\
     libial_acpi.la		\
-    libial_keyboard.la		\
+    libial_event.la		\
     libial_toshiba.la
 
 
