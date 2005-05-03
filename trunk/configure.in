@@ -17,7 +17,9 @@ AM_PATH_GLIB_2_0
 AC_C_CONST
 AC_FUNC_MALLOC
 
-AM_PROG_LIBTOOL
+dnl AM_PROG_LIBTOOL
+
+dnl AC_PROG_LIBTOOL
    
 dnl
 dnl Library Dependencies
@@ -61,7 +63,7 @@ dnl
 dnl Check for pkg-config packages
 dnl
 
-pkg_modules="glib-2.0 >= 2.2.2, dbus-1 >= 0.20, dbus-glib-1 >= 0.20, libxml-2.0"
+pkg_modules="glib-2.0 >= 2.2.2, dbus-1 >= 0.33, dbus-glib-1 >= 0.33, libxml-2.0"
 PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
 AC_SUBST(PACKAGE_CFLAGS)
 AC_SUBST(LIB_DL)

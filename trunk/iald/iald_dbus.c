@@ -32,6 +32,9 @@ extern IalModule *modules_list_head;
 DBusHandlerResult get_modules(DBusConnection * connection,
                               DBusMessage * message)
 {
+/* disabled for good. need work for dbus 0.30 */
+
+/*
     DBusMessage *reply;
     DBusMessageIter iter, iter1, iter2;
     
@@ -46,7 +49,7 @@ DBusHandlerResult get_modules(DBusConnection * connection,
 
 
     dbus_message_iter_init(reply, &iter);
-    dbus_message_iter_append_array(&iter, &iter1, DBUS_TYPE_ARRAY);
+    dbus_message_iter_append_basic(&iter, &iter1, DBUS_TYPE_ARRAY);
     m = modules_list_head;
 
     while (m) {
@@ -95,7 +98,7 @@ DBusHandlerResult get_modules(DBusConnection * connection,
     }
 
     dbus_message_unref(reply);
-    
+*/    
     return DBUS_HANDLER_RESULT_HANDLED;
 }
 
