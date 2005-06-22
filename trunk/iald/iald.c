@@ -2,6 +2,8 @@
  *
  * iald.c - Input Abstraction Layer Daemon
  *
+ * $Id$
+ *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
  *                          All rights reserved
  *
