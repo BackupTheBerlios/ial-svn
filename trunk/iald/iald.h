@@ -1,7 +1,10 @@
-/* iald.h
+/***************************************************************************
+ * 
+ * iald.h - Input Abstraction Layer Daemon
+ *
+ * SVN ID: $Id$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
- *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -24,21 +27,21 @@
 #include <libial/libial.h>
 
 /** defined in iald.c */
-gboolean pid_file_exists(void);
-void pid_file_remove(void);
-void h_sigterm(int);
-void h_sighup(int);
+gboolean pid_file_exists (void);
+void pid_file_remove (void);
+void h_sigterm (int);
+void h_sighup (int);
 
-void opt_debug_set(int);
-void opt_logfile_set(const char *);
-void opt_foreground_set(gboolean);
+void opt_debug_set (int);
+void opt_logfile_set (const char *);
+void opt_foreground_set (gboolean);
 
-void opt_header(void);
-void opt_usage(void);
-void opt_list(void);
-void opt_list_verbose(void);
-void opt_modules_opts(char *);
-void opt_version(void);
-void opt_parse(int, char *[]);
+void opt_header (void);
+void opt_usage (void);
+void opt_list (void);
+void opt_list_verbose (void);
+void opt_modules_opts (char *);
+void opt_version (void);
+void opt_parse (int, char *[]);
 
-int main(int, char *[]);
+int main (int, char *[]);
