@@ -2,7 +2,7 @@
  * 
  * iald.h - Input Abstraction Layer Daemon
  *
- * SVN ID: $Id$
+ * SVN ID: $Id:$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
  *
