@@ -2,7 +2,7 @@
  * 
  * libial.c - Input Abstraction Layer Library Module Data Structures
  *
- * SVN ID: $Id:$
+ * SVN ID: $Id$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
  *
@@ -53,8 +53,8 @@ typedef struct ModuleData_s {
     gboolean initialized;
     gboolean state;
 
-      gboolean (*load) (void);
-      gboolean (*unload) (void);
+    gboolean (*load) (void);
+    gboolean (*unload) (void);
 } ModuleData;
 
 ModuleData *mod_get_data (void);
