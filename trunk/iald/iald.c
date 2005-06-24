@@ -2,10 +2,9 @@
  *
  * iald.c - Input Abstraction Layer Daemon
  *
- * $Id$
+ * SVN ID: $Id$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
- *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -61,58 +60,62 @@ extern DBusConnection *dbus_connection;
  * @{
  */
 
-gboolean pid_file_exists()
+gboolean
+pid_file_exists ()
 {
     struct stat sb;
 
     if (stat (IALD_PID_FILE, &sb) < 0) {
         /* PID file does not exist */
         return FALSE;
-    }
-    else {
+    } else {
         /* PID file does exist */
         return TRUE;
     }
 }
 
-void pid_file_remove()
+void
+pid_file_remove ()
 {
-    unlink(IALD_PID_FILE);
+    unlink (IALD_PID_FILE);
 }
 
-void h_sigterm(int sigval)
+void
+h_sigterm (int sigval)
 {
-    pid_file_remove();
-    exit(1);
+    pid_file_remove ();
+    exit (1);
 }
 
-void h_sighup(int sigval)
+void
+h_sighup (int sigval)
 {
     INFO (("Signal handler for SIGHUP is not yet implemented. SIGHUP ignored."));
 }
 
-
-void opt_debug_set(int log_level)
+void
+opt_debug_set (int log_level)
 {
     opt_debug = log_level;
 }
 
-void opt_logfile_set(const char *logfile)
+void
+opt_logfile_set (const char *logfile)
 {
-    if (strlen(logfile) > 128) {
-        ERROR(("Filename for logfile to long."));
+    if (strlen (logfile) > 128) {
+        ERROR (("Filename for logfile to long."));
         return;
     }
 
-    strncpy(opt_logfile, logfile, strlen(logfile));
-    opt_logfile[strlen(logfile)] = 0;
+    strncpy (opt_logfile, logfile, strlen (logfile));
+    opt_logfile[strlen (logfile)] = 0;
 }
 
-void opt_foreground_set(gboolean state)
+void
+opt_foreground_set (gboolean state)
 {
     opt_foreground = state;
 }
-
 
 /**         
  * @defgroup IALCLI Command Line Interface (CLI)
@@ -126,21 +129,22 @@ void opt_foreground_set(gboolean state)
  * Print header for command line options.
  */
 
-void opt_header()
+void
+opt_header ()
 {
     static char *header = {
-        "Input Abstraction Layer v" VERSION "\n"
-            "Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>\n" "\n"
+        "Input Abstraction Layer v" VERSION "\n" "Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>\n\n"
     };
 
-    printf("%s", header);
+    printf ("%s", header);
 }
 
 /**
  * Print usage for command line options.
  */
 
-void opt_usage()
+void
+opt_usage ()
 {
     static char *usage = {
         "Usage: iald [ options ] [ command ]\n"
@@ -160,38 +164,38 @@ void opt_usage()
             "-l, --list:           List modules and exit\n"
             "-L, --list-verbose:   List modules and options and exit \n"
             "-v, --version:        Show version and exit\n" "\n"
-            "Note: Command line options overwrite configuration file options.\n"
-            "\n"
+            "Note: Command line options overwrite configuration file options.\n" "\n"
     };
 
-    opt_header();
+    opt_header ();
 
-    printf("%s", usage);
+    printf ("%s", usage);
 }
 
 /**
  * Print available Input Abtraction Layer modules.
  */
 
-void opt_list()
+void
+opt_list ()
 {
     IalModule *m = NULL;
 
-    opt_header();
+    opt_header ();
 
-    printf("Available modules:\n\n");
+    printf ("Available modules:\n\n");
 
     m = modules_list_head;
 
     while (m) {
-        printf("%s\n", m->data->name);
+        printf ("%s\n", m->data->name);
         m = m->next;
     }
 
-    printf("\n");
+    printf ("\n");
 
-    printf
-        ("Use  'iald --list-verbose'  for module options and more information.\n\n");
+    printf ("Use the command  'iald --list-verbose'  for all available modules, "
+            "their options options and more information.\n\n");
 
 }
 
@@ -199,39 +203,36 @@ void opt_list()
  * Print available Input Abstraction Layer modules and their options (verbose).
  */
 
-void opt_list_verbose()
+void
+opt_list_verbose ()
 {
     IalModule *m = NULL;
     ModuleOption *opt = NULL;
 
-    opt_header();
+    opt_header ();
 
-    printf("Available modules:\n\n");
+    printf ("Available modules:\n\n");
 
     m = modules_list_head;
 
     while (m) {
-        printf("Module name:        %s v%s (%s)\n", m->data->name,
-               m->data->version, m->data->author);
-        printf("Module description: %s\n",
-               m->data->descr ? m->data->descr : "(no description)");
-        printf("Module token:       %s\n", m->data->token);
-        printf("Module options:     ");
+        printf ("Module name:        %s v%s (%s)\n", m->data->name, m->data->version, m->data->author);
+        printf ("Module description: %s\n", m->data->descr ? m->data->descr : "(no description)");
+        printf ("Module token:       %s\n", m->data->token);
+        printf ("Module options:     ");
 
         opt = m->data->options;
 
         while (opt->name) {
-            printf("%s, default: %s=%s\n                    ", opt->descr,
-                   opt->name, opt->value);
+            printf ("%s, default: %s=%s\n                    ", opt->descr, opt->name, opt->value);
             *opt++;
         }
-        printf("\n");
+        printf ("\n");
 
         m = m->next;
     }
 
-    printf
-        ("Example:  'iald --module-options acpi:disable=yes,toshiba:poll_freq=100:disable=no'\n\n");
+    printf ("Example:  'iald --module-options acpi:disable=yes,toshiba:poll_freq=100:disable=no'\n\n");
 
 }
 
@@ -243,7 +244,8 @@ void opt_list_verbose()
  *                                  
  */
 
-void opt_modules_opts(char *optarg)
+void
+opt_modules_opts (char *optarg)
 {
     IalModule *m = NULL;
     ModuleOption *opt = NULL;
@@ -252,76 +254,66 @@ void opt_modules_opts(char *optarg)
     char *token_val = NULL;
     const char *module_opts = optarg;
 
-    DEBUG(("Parsing module options (%s)...", optarg));
+    DEBUG (("Parsing module options (%s)...", optarg));
 
     m = modules_list_head;
 
     while (m) {
         /* get pointer to token */
-        token_opts = strstr(module_opts, m->data->token);
+        token_opts = strstr (module_opts, m->data->token);
 
         /* token must be present and followed by ':' */
-        if ((token_opts == NULL) ||
-            (*(token_opts + strlen(m->data->token)) != ':')) {
-            DEBUG(("No options passed for \"%s\" (token: \"%s\").",
-                   m->data->name, m->data->token));
-        }
-        else {
+        if ((token_opts == NULL)
+            || (*(token_opts + strlen (m->data->token)) != ':')) {
+            DEBUG (("No options passed for \"%s\" (token: \"%s\").", m->data->name, m->data->token));
+        } else {
             /* copy all options for token */
-            token_opts =
-                strndup(token_opts, strchr(token_opts, ',') - token_opts);
+            token_opts = strndup (token_opts, strchr (token_opts, ',') - token_opts);
 
-            DEBUG(("Parsing passed options for \"%s\" (token: \"%s\").",
-                   m->data->name, m->data->token));
-            DEBUG(("Token options: %s.", token_opts));
+            DEBUG (("Parsing passed options for \"%s\" (token: \"%s\").", m->data->name, m->data->token));
+            DEBUG (("Token options: %s.", token_opts));
 
             opt = m->data->options;
 
             while (opt->name) {
-                DEBUG(("Looking for option \"%s\"...", opt->name));
+                DEBUG (("Looking for option \"%s\"...", opt->name));
 
                 /* get pointer to token option */
-                token_opt = strstr(token_opts, opt->name);
+                token_opt = strstr (token_opts, opt->name);
 
                 /* option must be present and followed by '=' */
                 if (token_opt == NULL) {
-                    DEBUG(("Not found."));
-                }
-                else if (*(token_opt + strlen(opt->name)) != '=') {
-                    WARNING(("Wrong syntax for option %s. Wrong spelling or no option value supplied.", opt->name));
-                }
-                else {
-                    DEBUG(("Found."));
+                    DEBUG (("Not found."));
+                } else if (*(token_opt + strlen (opt->name)) != '=') {
+                    WARNING (("Wrong syntax for option %s. Wrong spelling or no option value supplied.", opt->name));
+                } else {
+                    DEBUG (("Found."));
 
                     /* copy option */
-                    token_opt =
-                        strndup(token_opt,
-                                strchr(token_opt, ':') - token_opt);
+                    token_opt = strndup (token_opt, strchr (token_opt, ':') - token_opt);
 
                     /* remove option and trailing '=' */
-                    token_val = strstr(token_opt, "=");
+                    token_val = strstr (token_opt, "=");
 
                     *token_val++;
 
-                    if (strlen(token_val) <= MAX_BUF) {
-                        strcpy(opt->value, token_val);
-                        DEBUG(("Option \"%s\" set to \"%s\".", opt->name,
-                               opt->value));
-                    }
-                    else {
-                        WARNING(("Option value for \"%s\" too long (%i).",
-                                 opt->name, strlen(token_val)));
+                    if (strlen (token_val) <= MAX_BUF) {
+                        strcpy (opt->value, token_val);
+                        DEBUG (("Option \"%s\" set to \"%s\".", opt->name, opt->value));
+                    } else {
+                        WARNING (("Option value for \"%s\" too long (%i).", opt->name, strlen (token_val)));
                     }
 
-                    if (token_opt)
-                        free(token_opt);
+                    if (token_opt) {
+                        free (token_opt);
+                    }
                 }
 
                 *opt++;
             }
 
             if (token_opts)
-                free(token_opts);
+                free (token_opts);
         }
 
         m = m->next;
@@ -332,17 +324,17 @@ void opt_modules_opts(char *optarg)
  * Print Input Abstraction layer version and build date.
  */
 
-void opt_version()
+void
+opt_version ()
 {
     static char *version = {
-        "Package name: " PACKAGE_NAME
-            "\n" "Package version: " PACKAGE_VERSION "\n" "Build date: "
-            __DATE__ "\n" "Build time: " __TIME__ "\n" "\n"
+        "Package name: " PACKAGE_NAME "\n"
+            "Package version: " PACKAGE_VERSION "\n" "Build date: " __DATE__ "\n" "Build time: " __TIME__ "\n" "\n"
     };
 
-    opt_header();
+    opt_header ();
 
-    printf("%s", version);
+    printf ("%s", version);
 
 }
 
@@ -354,7 +346,8 @@ void opt_version()
  * 
  */
 
-void opt_parse(int argc, char *argv[])
+void
+opt_parse (int argc, char *argv[])
 {
     int option_index = 0;
     int c = 0;
@@ -372,52 +365,50 @@ void opt_parse(int argc, char *argv[])
     };
 
     while (1) {
-        c = getopt_long(argc, argv, "fhalLvd:m:o:", long_options,
-                        &option_index);
-
+        c = getopt_long (argc, argv, "fhalLvd:m:o:", long_options, &option_index);
         if (c == -1)
             break;
 
         switch (c) {
         case 'h':
-            opt_usage();
-            exit(0);
+            opt_usage ();
+            exit (0);
             break;
 
         case 'l':
-            opt_list();
-            exit(0);
+            opt_list ();
+            exit (0);
             break;
 
         case 'L':
-            opt_list_verbose();
-            exit(0);
+            opt_list_verbose ();
+            exit (0);
             break;
 
         case 'm':
-            opt_modules_opts(optarg);
+            opt_modules_opts (optarg);
             break;
 
         case 'v':
-            opt_version();
-            exit(0);
+            opt_version ();
+            exit (0);
             break;
 
         case 'd':
-            opt_debug_set(atoi(optarg));
+            opt_debug_set (atoi (optarg));
             break;
 
         case 'f':
-            opt_foreground_set(TRUE);
+            opt_foreground_set (TRUE);
             break;
 
         case 'o':
-            opt_logfile_set(optarg);
+            opt_logfile_set (optarg);
             break;
 
         default:
-            opt_usage();
-            exit(1);
+            opt_usage ();
+            exit (1);
             break;
         }
     }
@@ -439,123 +430,119 @@ void opt_parse(int argc, char *argv[])
  * @return                              Exit code
  *
  */
-int main(int argc, char *argv[])
+int
+main (int argc, char *argv[])
 {
     IalModule *m = NULL;
     DBusError dbus_error;
 
-    /* Scan for modules that both conf_parse() and opt_parse() can set
-     * options for modules.
-     */
+/* Scan for modules that both conf_parse() and opt_parse() can set
+ * options for modules.
+ */
 
-    modules_scan();
+    modules_scan ();
 
     m = modules_list_head;
     if (!m) {
-        WARNING(("No modules available"));
+        WARNING (("No modules available"));
     }
 
-    /* Parse config file */
-    conf_parse();
+/* Parse config file */
+    conf_parse ();
 
-    /* Parse command line options */
+/* Parse command line options */
     if (argc > 1) {
-        opt_parse(argc, argv);
+        opt_parse (argc, argv);
     }
 
-    /* Setup logfile */
-    log_logfile_set(opt_logfile);
+/* Setup logfile */
+    log_logfile_set (opt_logfile);
 
-    /* Set logging level */
-    log_level_set(opt_debug);
+/* Set logging level */
+    log_level_set (opt_debug);
 
-    if (pid_file_exists() == TRUE) {
-        ERROR(("PID file %s exists. Please remove if you're sure that there is no other instance of `iald` running."));
-        exit(1);
+    if (pid_file_exists () == TRUE) {
+        ERROR (("PID file %s exists. Please remove if you're sure that there is no other instance of `iald` running."));
+        exit (1);
     }
 
-    /* Daemonize or run in foreground */
+/* Daemonize or run in foreground */
     if (opt_foreground == TRUE) {
-        INFO(("Running in foreground"));
-    }
-    else {
-        int child_pid, pid_file;
+        INFO (("Running in foreground"));
+    } else {
+        int child_pid;
+        int pid_file;
         char pid[9];
-        
-        INFO(("Running as daemon"));
+
+        INFO (("Running as daemon"));
+
         chdir ("/");
-        child_pid = fork();
-
+        child_pid = fork ();
         switch (child_pid) {
-            case -1:
-                ERROR(("Could not fork."));
-                exit(1);
-                break;
+        case -1:
+            ERROR (("Could not fork."));
+            exit (1);
+            break;
 
-            case 0:
-                /* Child */
-                break;
+        case 0:
+/* Child */
+            break;
 
-            default:
-                /* Parent */
-                exit(0);
-                break;
+        default:
+/* Parent */
+            exit (0);
+            break;
         }
 
-        unlink(IALD_PID_FILE);
+        unlink (IALD_PID_FILE);
 
-        pid_file = open(IALD_PID_FILE, O_WRONLY|O_CREAT|O_TRUNC|O_EXCL, 0644);
-
+        pid_file = open (IALD_PID_FILE, O_WRONLY | O_CREAT | O_TRUNC | O_EXCL, 0644);
         if (pid_file == -1) {
-            ERROR(("Could not create pid file (%s).", IALD_PID_FILE));
-            exit(1);
+            ERROR (("Could not create pid file (%s).", IALD_PID_FILE));
+            exit (1);
         }
 
-        sprintf(pid, "%lu\n", (long unsigned) getpid());
-        write(pid_file, pid, strlen(pid));
-        close(pid_file);
+        sprintf (pid, "%lu\n", (long unsigned) getpid ());
+        write (pid_file, pid, strlen (pid));
+        close (pid_file);
 
-        atexit(pid_file_remove);
+        atexit (pid_file_remove);
     }
 
-    signal(SIGTERM, h_sigterm);
-    signal(SIGHUP, h_sighup);
+    signal (SIGTERM, h_sigterm);
+    signal (SIGHUP, h_sighup);
 
-    loop = g_main_loop_new(NULL, FALSE);
+    loop = g_main_loop_new (NULL, FALSE);
 
-    if (ial_dbus_connect() == FALSE) {
-        ERROR(("D-BUS connection failed."));
-        exit(1);
+    if (ial_dbus_connect () == FALSE) {
+        ERROR (("D-BUS connection failed."));
+        exit (1);
     }
 
-    dbus_connection_setup_with_g_main(dbus_connection, NULL);
+    dbus_connection_setup_with_g_main (dbus_connection, NULL);
 
-    dbus_error_init(&dbus_error);
+    dbus_error_init (&dbus_error);
 
-    /* TODO
-     *
-     * Evaluate if it makes sense to check whether dbus_bus_service_exists() == TRUE and abort if so..
-     *
-     */
+/* TODO
+ *
+ * Evaluate if it makes sense to check whether dbus_bus_service_exists() == TRUE and abort if so..
+ *
+ */
 
-    dbus_bus_request_name(dbus_connection, IAL_DBUS_SERVICENAME, 0,
-                             &dbus_error);
+    dbus_bus_request_name (dbus_connection, IAL_DBUS_SERVICENAME, 0, &dbus_error);
 
-    if (dbus_error_is_set(&dbus_error)) {
-        ERROR(("dbus_bus_request_name(): Error. (%s)",
-               dbus_error.message));
-        exit(1);
-    }
-    else {
-        INFO(("dbus_bus_request_name(): Success. (%s)",
-              IAL_DBUS_SERVICENAME));
+    if (dbus_error_is_set (&dbus_error)) {
+        ERROR (("dbus_bus_request_name(): Error. (%s)", dbus_error.message));
+        exit (1);
+    } else {
+        INFO (("dbus_bus_request_name(): Success. (%s)", IAL_DBUS_SERVICENAME));
     }
 
-    modules_load();
+    modules_load ();
 
-    iald_dbus_init();
+    iald_dbus_init ();
 
-    g_main_loop_run(loop);
+    g_main_loop_run (loop);
 
     return 0;
 }
