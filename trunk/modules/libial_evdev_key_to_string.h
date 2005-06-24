@@ -313,5 +313,4 @@
     [KEY_TWEN] = "Twen",
     [KEY_DEL_EOL] = "Delete EOL",
     [KEY_DEL_EOS] = "Delete EOS",
-    [KEY_INS_LINE] = "Insert Line",
-    [KEY_DEL_LINE] = "Delete Line",[KEY_INTERNET] = "Internet",
+    [KEY_INS_LINE] = "Insert Line",[KEY_DEL_LINE] = "Delete Line",[KEY_INTERNET] = "Internet",

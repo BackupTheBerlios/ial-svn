@@ -21,18 +21,18 @@
 #include <libial/libial.h>
 
 /** libial_acpi_main.c */
-void acpi_event_send(char *);
-gboolean acpi_event_fd_init(void);
-int acpi_lid_state(void);
-void acpi_event_handle(GString *);
-gboolean acpi_event_callback(GIOChannel *, GIOCondition, gpointer);
-gboolean acpi_socket(void);
-gboolean acpi_raw(void);
-gboolean libial_acpi_start(void);
+void acpi_event_send (char *);
+gboolean acpi_event_fd_init (void);
+int acpi_lid_state (void);
+void acpi_event_handle (GString *);
+gboolean acpi_event_callback (GIOChannel *, GIOCondition, gpointer);
+gboolean acpi_socket (void);
+gboolean acpi_raw (void);
+gboolean libial_acpi_start (void);
 
 /** libial_acpi.c */
-gboolean mod_load(void);
-gboolean mod_unload(void);
+gboolean mod_load (void);
+gboolean mod_unload (void);
 
 struct Acpi_s {
     const char *event;

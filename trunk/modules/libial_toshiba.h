@@ -34,20 +34,20 @@
 #include <libial/libial.h>
 
 /** libial_toshiba_utils.c */
-const char *toshiba_fnkey_description(int);
+const char *toshiba_fnkey_description (int);
 
 /** libial_toshiba_filter.c */
-gboolean toshiba_add_filter(void);
+gboolean toshiba_add_filter (void);
 
 /** libial_toshiba_main.c */
-void toshiba_event_send(void);
-gboolean toshiba_acpi_check(void);
-void toshiba_key_flush(void);
-gboolean toshiba_key_poll(void);
-gboolean toshiba_start(void);
+void toshiba_event_send (void);
+gboolean toshiba_acpi_check (void);
+void toshiba_key_flush (void);
+gboolean toshiba_key_poll (void);
+gboolean toshiba_start (void);
 
-gboolean mod_load(void);
-gboolean mod_unload(void);
+gboolean mod_load (void);
+gboolean mod_unload (void);
 
 /** Toshiba ACPI interface */
 #define ACPI_TOSHIBA            "/proc/acpi/toshiba"

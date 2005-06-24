@@ -1,7 +1,10 @@
-/* libial_acpi_main.c - ACPI Input Abstraction Layer Module
+/***************************************************************************
+ *
+ * libial_acpi_main.c - ACPI Input Abstraction Layer Module
+ *
+ * SVN ID: $Id:$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
- *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- */
+ **************************************************************************/
 
 #include "libial_acpi.h"
 
@@ -47,7 +50,8 @@ int acpi_event_watch;
  *
  * @param button        Button description.
  */
-void acpi_event_send(char *button)
+void
+acpi_event_send (char *button)
 {
     IalEvent event;
 
@@ -56,34 +60,34 @@ void acpi_event_send(char *button)
     event.name = button;
     event.raw = -1;
 
-    event_send(&event);
+    event_send (&event);
 }
 
 /** Initialize ACPI event source
  *
  * @returns TRUE on success, else FALSE.
  */
-gboolean acpi_event_fd_init()
+gboolean
+acpi_event_fd_init ()
 {
     /* raw access to the ACPI event interface */
-    acpi.event_fd = open(ACPI_EVENT, 0);
+    acpi.event_fd = open (ACPI_EVENT, 0);
 
     if (acpi.event_fd >= 0) {
-        acpi.io_channel = g_io_channel_unix_new(acpi.event_fd);
+        acpi.io_channel = g_io_channel_unix_new (acpi.event_fd);
         return TRUE;
-    }
-    else {
+    } else {
 
         /* access to the ACPI events using sockt of `acpid` */
-        acpi.event_fd = socket(PF_UNIX, SOCK_STREAM, 0);
+        acpi.event_fd = socket (PF_UNIX, SOCK_STREAM, 0);
 
         if (acpi.event_fd >= 0) {
             struct sockaddr_un addr;
             addr.sun_family = AF_UNIX;
-            strcpy(addr.sun_path, ACPID_SOCKET);
-            if (connect(acpi.event_fd, (struct sockaddr *) &addr, sizeof(addr))
+            strcpy (addr.sun_path, ACPID_SOCKET);
+            if (connect (acpi.event_fd, (struct sockaddr *) &addr, sizeof (addr))
                 == 0) {
-                acpi.io_channel = g_io_channel_unix_new(acpi.event_fd);
+                acpi.io_channel = g_io_channel_unix_new (acpi.event_fd);
                 return TRUE;
             }
         }
@@ -96,29 +100,27 @@ gboolean acpi_event_fd_init()
  *
  * @returns ACPI_LID_STATE_OPEN if LID is open, ACPI_LID_STATE_CLOSED if LID is closed, ACPI_LID_STATE_ERROR on error.
  */
-int acpi_lid_state()
+int
+acpi_lid_state ()
 {
     FILE *fd;
     char buffer[MAX_BUF];
 
-    fd = fopen(ACPI_LID, "r");
+    fd = fopen (ACPI_LID, "r");
 
     if (fd) {
-        fscanf(fd, "%[^\"]", buffer);
-        fclose(fd);
+        fscanf (fd, "%[^\"]", buffer);
+        fclose (fd);
 
-        if (strstr(buffer, "open")) {
+        if (strstr (buffer, "open")) {
             return ACPI_LID_STATE_OPEN;
-        }
-        else if (strstr(buffer, "closed")) {
+        } else if (strstr (buffer, "closed")) {
             return ACPI_LID_STATE_CLOSED;
-        }
-        else {
+        } else {
             return ACPI_LID_STATE_ERROR;
         }
-    }
-    else {
-        WARNING(("Could not open %s.", ACPI_LID));
+    } else {
+        WARNING (("Could not open %s.", ACPI_LID));
         return ACPI_LID_STATE_ERROR;
     }
 }
@@ -127,29 +129,28 @@ int acpi_lid_state()
  *
  * @param acpi_event String which contains the whole ACPI event.
  */
-void acpi_event_handle(GString * acpi_event)
+void
+acpi_event_handle (GString * acpi_event)
 {
-    if (strstr(acpi_event->str, "button")) {
+    if (strstr (acpi_event->str, "button")) {
 
-        if (strstr(acpi_event->str, "PWRF")) {
+        if (strstr (acpi_event->str, "PWRF")) {
             /* Power Button */
-            acpi_event_send("Power Button");
-        }
-        else if (strstr(acpi_event->str, "SLPF")) {
+            acpi_event_send ("Power Button");
+        } else if (strstr (acpi_event->str, "SLPF")) {
             /* Sleep Button */
-            acpi_event_send("Sleep Button");
-        }
-        else if (strstr(acpi_event->str, "LID")) {
+            acpi_event_send ("Sleep Button");
+        } else if (strstr (acpi_event->str, "LID")) {
             /* Lid Button */
 
             /** Determine lid state and send event */
-            switch (acpi_lid_state()) {
+            switch (acpi_lid_state ()) {
             case ACPI_LID_STATE_OPEN:
-                acpi_event_send("Lid Switch (open)");
+                acpi_event_send ("Lid Switch (open)");
                 break;
 
             case ACPI_LID_STATE_CLOSED:
-                acpi_event_send("Lid Switch (close)");
+                acpi_event_send ("Lid Switch (close)");
                 break;
 
             case ACPI_LID_STATE_ERROR:
@@ -158,10 +159,9 @@ void acpi_event_handle(GString * acpi_event)
             default:
                 break;
             }
-        }
-        else {
-            WARNING(("Unknown button event received."));
-            acpi_event_send(acpi_event->str);
+        } else {
+            WARNING (("Unknown button event received."));
+            acpi_event_send (acpi_event->str);
         }
     }
 
@@ -174,8 +174,8 @@ void acpi_event_handle(GString * acpi_event)
  * @param       data Data.
  * @returns     TRUE on success, FALSE on error (callback function will be removed from event loop).
  */
-gboolean acpi_event_callback(GIOChannel * chan, GIOCondition cond,
-                             gpointer data)
+gboolean
+acpi_event_callback (GIOChannel * chan, GIOCondition cond, gpointer data)
 {
     if (cond & (G_IO_ERR | G_IO_HUP)) {
         /* better implemenration TODO */
@@ -191,25 +191,23 @@ gboolean acpi_event_callback(GIOChannel * chan, GIOCondition cond,
          */
 
         /* wait a bit to give acpid a chance to claim the interface again */
-        usleep(1000 * 1000 * 2);
+        usleep (1000 * 1000 * 2);
 
-        libial_acpi_start();
+        libial_acpi_start ();
         return FALSE;
-    }
-    else {
+    } else {
         gsize i;
         GString *acpi_event;
         GError *gerror = NULL;
-        acpi_event = g_string_new(NULL);
+        acpi_event = g_string_new (NULL);
 
-        if (g_io_channel_read_line_string
-            (acpi.io_channel, acpi_event, &i, &gerror)
+        if (g_io_channel_read_line_string (acpi.io_channel, acpi_event, &i, &gerror)
             == G_IO_STATUS_NORMAL) {
 
-            acpi_event_handle(acpi_event);
+            acpi_event_handle (acpi_event);
         }
 
-        g_string_free(acpi_event, TRUE);
+        g_string_free (acpi_event, TRUE);
 
     }
 
@@ -220,12 +218,11 @@ gboolean acpi_event_callback(GIOChannel * chan, GIOCondition cond,
  *
  * @returns TRUE on success, FALSE on error.
  */
-gboolean libial_acpi_start()
+gboolean
+libial_acpi_start ()
 {
-    if (acpi_event_fd_init() == TRUE) {
-        acpi_event_watch =
-            g_io_add_watch(acpi.io_channel, G_IO_IN | G_IO_ERR | G_IO_HUP,
-                           acpi_event_callback, NULL);
+    if (acpi_event_fd_init () == TRUE) {
+        acpi_event_watch = g_io_add_watch (acpi.io_channel, G_IO_IN | G_IO_ERR | G_IO_HUP, acpi_event_callback, NULL);
 
         return TRUE;
     }

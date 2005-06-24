@@ -1,7 +1,10 @@
-/* libial_toshiba_utils.c - Toshiba SMM Input Abstraction Layer Module
+/***************************************************************************
+ *
+ * libial_toshiba_utils.c - Toshiba SMM Input Abstraction Layer Module
+ *
+ * SVN ID: $Id:$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
- *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -19,19 +22,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- */
+ **************************************************************************/
 
 #include "libial_toshiba.h"
 
-const char *toshiba_fnkey_description(int key_value)
+const char *
+toshiba_fnkey_description (int key_value)
 {
     struct Key *keylist = keys;
 
     while (keylist->value) {
         if (keylist->value == key_value) {
             return keylist->descr;
-        }
-        else {
+        } else {
             *keylist++;
         }
     }

@@ -68,14 +68,15 @@ static char *KEY_NAME[KEY_MAX] = {
 #define EV_FF_STATUS            0x17
 #define EV_MAX                  0x1f
 
-gboolean evdev_callback(gpointer);
-gboolean libial_evdev_start(void);
+gboolean evdev_callback (gpointer);
+gboolean libial_evdev_start (void);
 
-gboolean mod_load(void);
-gboolean mod_unload(void);
+gboolean mod_load (void);
+gboolean mod_unload (void);
 
 typedef struct Evdev_s {
-    int fd, watch;
+    int fd,
+      watch;
     GIOChannel *io_channel;
 } evdev;
 

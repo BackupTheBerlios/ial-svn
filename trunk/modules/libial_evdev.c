@@ -1,7 +1,10 @@
-/* libial_evdev.c - Linux Event Interface Input Abstraction Layer Module
+/***************************************************************************
+ *
+ * libial_evdev.c - Linux Event Interface Input Abstraction Layer Module
+ *
+ * SVN ID: $Id:$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
- *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- */
+ **************************************************************************/
 
 #include "libial_evdev.h"
 
@@ -56,7 +59,8 @@ ModuleData mod_data = {
  *
  * @returns pointer to mod_data.
  */
-ModuleData *mod_get_data()
+ModuleData *
+mod_get_data ()
 {
     return &mod_data;
 }
@@ -65,24 +69,23 @@ ModuleData *mod_get_data()
  *
  * @returns TRUE if initialization was successful, else FALSE.
  */
-gboolean mod_load()
+gboolean
+mod_load ()
 {
-    if (strcmp(mod_options[0].value, "true\0") == 0) {
-        WARNING(("Setting module state to disabled."));
+    if (strcmp (mod_options[0].value, "true\0") == 0) {
+        WARNING (("Setting module state to disabled."));
         mod_data.state = DISABLED;
-    }
-    else if (strcmp(mod_options[0].value, "false\0") == 0) {
-        INFO(("Setting module state to enabled."));
+    } else if (strcmp (mod_options[0].value, "false\0") == 0) {
+        INFO (("Setting module state to enabled."));
         mod_data.state = ENABLED;
     }
 
     if (mod_data.state == DISABLED) {
-        INFO(("%s is disabled and not going to be loaded.",
-              mod_data.name));
+        INFO (("%s is disabled and not going to be loaded.", mod_data.name));
         return FALSE;
     }
 
-    if (libial_evdev_start() == FALSE) {
+    if (libial_evdev_start () == FALSE) {
         return FALSE;
     }
 
@@ -93,7 +96,8 @@ gboolean mod_load()
  *
  *  @returns TRUE if unloading was successful, else FALSE.
  */
-gboolean mod_unload()
+gboolean
+mod_unload ()
 {
     return TRUE;
 }
