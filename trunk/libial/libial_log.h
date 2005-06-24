@@ -1,7 +1,29 @@
 /***************************************************************************
- * Copyright (C) 2003 David Zeuthen, <david@fubar.dk>
- * Licensed under the Academic Free License version 2.0
- *************************************************************************/
+ *
+ * libial_log.h - Input Abstraction Layer Logging Facilities
+ *
+ * SVN ID: $Id:$
+ *
+ * Copyright (C) 2003        David Zeuthen, <david@fubar.dk>
+ * Copyright (C) 2004, 2005  Timo Hoenig <thoenig@nouse.net>
+ *
+ * Licensed under the Academic Free License version 2.1
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ **************************************************************************/
 
 /* Log prios */
 enum {
@@ -11,14 +33,13 @@ enum {
     LOGPRI_DEBUG = 3     /**< debug statements in code */
 };
 
-void log_setup(int priority, const char *file, int line,
-               const char *function);
+void log_setup (int priority, const char *file, int line, const char *function);
 
-void log_logfile_set(const char *);
-void log_level_set(int);
-int  log_level_get(void);
+void log_logfile_set (const char *);
+void log_level_set (int);
+int log_level_get (void);
 
-void log_output(const char *format, ...);
+void log_output (const char *format, ...);
 
 /** Debug information logging macro */
 #define DEBUG(expr) \

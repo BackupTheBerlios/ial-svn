@@ -1,7 +1,10 @@
-/* libial.c - Input Abstraction Layer Library
+/***************************************************************************
+ * 
+ * libial.c - Input Abstraction Layer Library
+ *
+ * SVN ID: $Id$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
- *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- */
+ **************************************************************************/
 
 #include "libial.h"
 
@@ -48,26 +51,25 @@ DBusConnection *dbus_connection;
  * @returns     TRUE if connection could be established or if connection is already,
  *              established. FALSE if connection failed.
  */
-gboolean ial_dbus_connect()
+gboolean
+ial_dbus_connect ()
 {
     DBusError dbus_error;
 
     if (dbus_connection == NULL) {
-        dbus_connection_set_change_sigpipe(TRUE);
-        dbus_error_init(&dbus_error);
-        dbus_connection = dbus_bus_get(DBUS_BUS_SYSTEM, &dbus_error);
+        dbus_connection_set_change_sigpipe (TRUE);
+        dbus_error_init (&dbus_error);
+        dbus_connection = dbus_bus_get (DBUS_BUS_SYSTEM, &dbus_error);
 
         if (dbus_connection == NULL) {
-            ERROR(("dbus_bus_get(): Error. (%s)", dbus_error.message));
+            ERROR (("dbus_bus_get(): Error. (%s)", dbus_error.message));
             return FALSE;
-        }
-        else {
-            INFO(("dbus_bus_get(): Success."));
+        } else {
+            INFO (("dbus_bus_get(): Success."));
             return TRUE;
         }
-    }
-    else {
-        INFO(("Already connected to D-Bus."));
+    } else {
+        INFO (("Already connected to D-Bus."));
         return TRUE;
     }
 }
@@ -87,18 +89,18 @@ gboolean ial_dbus_connect()
  * @returns             IalEvent struct.
  */
 
-IalEvent event_receive(DBusMessage * dbus_message)
+IalEvent
+event_receive (DBusMessage * dbus_message)
 {
     IalEvent event;
     DBusError dbus_error;
 
-    dbus_error_init(&dbus_error);
+    dbus_error_init (&dbus_error);
 
-    dbus_message_get_args(dbus_message, &dbus_error,
-                          DBUS_TYPE_STRING, &event.sender,
-                          DBUS_TYPE_STRING, &event.source,
-                          DBUS_TYPE_STRING, &event.name,
-                          DBUS_TYPE_INT32, &event.raw, DBUS_TYPE_INVALID);
+    dbus_message_get_args (dbus_message, &dbus_error,
+                           DBUS_TYPE_STRING, &event.sender,
+                           DBUS_TYPE_STRING, &event.source,
+                           DBUS_TYPE_STRING, &event.name, DBUS_TYPE_INT32, &event.raw, DBUS_TYPE_INVALID);
 
     return event;
 }
@@ -108,7 +110,8 @@ IalEvent event_receive(DBusMessage * dbus_message)
  * @param event      Pointer to an IalEvent.
  */
 
-void event_send(IalEvent * event)
+void
+event_send (IalEvent * event)
 {
     DBusMessage *dbus_message = NULL;
     DBusMessageIter dbus_it;
@@ -117,39 +120,36 @@ void event_send(IalEvent * event)
     const char *dbus_interface = IAL_DBUS_INTERFACE_EVENT;
 
     if (dbus_connection == NULL) {
-        ERROR(("No connection to D-Bus."));
+        ERROR (("No connection to D-Bus."));
         return;
     }
 
-    dbus_message =
-        dbus_message_new_signal(dbus_path, dbus_interface,
-                                dbus_signal_name);
+    dbus_message = dbus_message_new_signal (dbus_path, dbus_interface, dbus_signal_name);
 
     if (dbus_message == NULL) {
-        ERROR(("Not enough memory."));
+        ERROR (("Not enough memory."));
         return;
     }
 
     /* TODO: Check if event is valid */
 
-    dbus_message_iter_init_append(dbus_message, &dbus_it);
+    dbus_message_iter_init_append (dbus_message, &dbus_it);
 
-    dbus_message_iter_append_basic(&dbus_it, DBUS_TYPE_STRING, &(event->sender));
-    dbus_message_iter_append_basic(&dbus_it, DBUS_TYPE_STRING, &(event->source));
-    dbus_message_iter_append_basic(&dbus_it, DBUS_TYPE_STRING, &(event->name));
-    dbus_message_iter_append_basic(&dbus_it, DBUS_TYPE_INT32, &(event->raw));
+    dbus_message_iter_append_basic (&dbus_it, DBUS_TYPE_STRING, &(event->sender));
+    dbus_message_iter_append_basic (&dbus_it, DBUS_TYPE_STRING, &(event->source));
+    dbus_message_iter_append_basic (&dbus_it, DBUS_TYPE_STRING, &(event->name));
+    dbus_message_iter_append_basic (&dbus_it, DBUS_TYPE_INT32, &(event->raw));
 
-    if (!dbus_connection_send(dbus_connection, dbus_message, NULL)) {
-        ERROR(("Sending message failed."));
+    if (!dbus_connection_send (dbus_connection, dbus_message, NULL)) {
+        ERROR (("Sending message failed."));
         return;
-    }
-    else {
-        DEBUG(("Sending IAL Event: %s (Sender=%s, Source=%s, Raw=0x%x).",
-               event->name, event->sender, event->source, event->raw));
+    } else {
+        DEBUG (("Sending IAL Event: %s (Sender=%s, Source=%s, Raw=0x%x).",
+                event->name, event->sender, event->source, event->raw));
     }
 
-    dbus_message_unref(dbus_message);
-    dbus_connection_flush(dbus_connection);
+    dbus_message_unref (dbus_message);
+    dbus_connection_flush (dbus_connection);
 }
 
 /* @} */

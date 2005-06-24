@@ -27,8 +27,8 @@ typedef struct ModuleData_s {
     gboolean initialized;
     gboolean state;
 
-    gboolean(*load) (void);
-    gboolean(*unload) (void);
+      gboolean (*load) (void);
+      gboolean (*unload) (void);
 } ModuleData;
 
-ModuleData *mod_get_data(void);
+ModuleData *mod_get_data (void);
