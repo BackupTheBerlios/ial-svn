@@ -1,7 +1,10 @@
-/* iald_conf.c - Input Abstraction Layer Configuration File Parser
+/***************************************************************************
+ *
+ * iald_conf.c - Input Abstraction Layer Configuration File Parser
+ *
+ * SVN ID: $Id:$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
- *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- */
+ **************************************************************************/
 
 #include <stdio.h>
 #include <string.h>
@@ -54,36 +57,35 @@ extern IalModule *modules_list_head;
  * @param       conf_file       Pointer to the configuration file.
  */
 
-void conf_parse_module(xmlDocPtr doc, xmlNodePtr cur, xmlAttrPtr attr,
-                       const char *conf_file)
+void
+conf_parse_module (xmlDocPtr doc, xmlNodePtr cur, xmlAttrPtr attr, const char *conf_file)
 {
-    xmlChar *tok;
-    xmlChar *val;
+    xmlChar *tok,
+     *val;
     IalModule *m = NULL;
     ModuleOption *opt = NULL;
 
-    tok = xmlNodeListGetString(doc, attr->children, 1);
+    tok = xmlNodeListGetString (doc, attr->children, 1);
 
-    DEBUG(("Configuration for module token \"%s\" found.", tok));
+    DEBUG (("Configuration for module token \"%s\" found.", tok));
 
     m = modules_list_head;
 
     while (m) {
-        if (!xmlStrcmp(tok, (const xmlChar *) m->data->token)) {
+        if (!xmlStrcmp (tok, (const xmlChar *) m->data->token)) {
             while (cur != NULL) {
+
                 opt = m->data->options;
-
                 while (opt->name) {
-                    if (!xmlStrcmp(cur->name, opt->name)) {
-                        val = xmlNodeListGetString(doc, cur->children, 1);
+                    if (!xmlStrcmp (cur->name, opt->name)) {
+                        val = xmlNodeListGetString (doc, cur->children, 1);
 
-                        if (strlen(val) <= MAX_BUF) {
-                            strcpy(opt->value, val);
-                            DEBUG(("%s: Setting option \"%s\" to \"%s\".",
-                                   tok, opt->name, val));
+                        if (strlen (val) <= MAX_BUF) {
+                            strcpy (opt->value, val);
+                            DEBUG (("%s: Setting option \"%s\" to \"%s\".", tok, opt->name, val));
                         }
 
-                        xmlFree(val);
+                        xmlFree (val);
 
                         /* We're done. Leave while(opt->name) */
                         break;
@@ -96,7 +98,8 @@ void conf_parse_module(xmlDocPtr doc, xmlNodePtr cur, xmlAttrPtr attr,
                      *
                      */
                     if ((!opt->name) && cur->type == XML_ELEMENT_NODE) {
-                        WARNING(("There is no such option \"%s\" for module \"%s\" (%s, line %i).", cur->name, m->data->token, conf_file, cur->line));
+                        WARNING (("There is no such option \"%s\" for module \"%s\" (%s, line %i).", cur->name,
+                                  m->data->token, conf_file, cur->line));
                     }
                 }
 
@@ -109,11 +112,11 @@ void conf_parse_module(xmlDocPtr doc, xmlNodePtr cur, xmlAttrPtr attr,
 
         m = m->next;
         if (!m) {
-            WARNING(("No module with token \"%s\" was found.", tok));
+            WARNING (("No module with token \"%s\" was found.", tok));
         }
-}
+    }
 
-    xmlFree(tok);
+    xmlFree (tok);
 
     return;
 }
@@ -124,83 +127,74 @@ void conf_parse_module(xmlDocPtr doc, xmlNodePtr cur, xmlAttrPtr attr,
  * @param conf_file     Location of configuration file.
  */
 
-void conf_parse_file(const char *conf_file)
+void
+conf_parse_file (const char *conf_file)
 {
     xmlDocPtr doc;
     xmlNodePtr cur;
     xmlChar *key;
     xmlAttr *attr;
 
-    xmlLineNumbersDefault(1);
+    xmlLineNumbersDefault (1);
 
-    doc = xmlParseFile(conf_file);
+    doc = xmlParseFile (conf_file);
 
     if (doc == NULL) {
-        ERROR(("Configuration file %s could not be parsed successfully.",
-               conf_file));
+        ERROR (("Configuration file %s could not be parsed successfully.", conf_file));
         return;
     }
 
-    cur = xmlDocGetRootElement(doc);
+    cur = xmlDocGetRootElement (doc);
 
     if (cur == NULL) {
-        ERROR(("Configuration file %s is empty.", conf_file));
-        xmlFreeDoc(doc);
+        ERROR (("Configuration file %s is empty.", conf_file));
+        xmlFreeDoc (doc);
         return;
     }
 
-    if (xmlStrcmp(cur->name, (const xmlChar *) "ialdconfig")) {
-        ERROR(("Configuration file root is not 'ialdconfig'."));
-        xmlFreeDoc(doc);
+    if (xmlStrcmp (cur->name, (const xmlChar *) "ialdconfig")) {
+        ERROR (("Configuration file root is not 'ialdconfig'."));
+        xmlFreeDoc (doc);
         return;
     }
 
     cur = cur->children;
 
     while (cur != NULL) {
-        if (!xmlStrcmp(cur->name, (const xmlChar *) "debug")) {
-            key = xmlNodeListGetString(doc, cur->children, 1);
+        if (!xmlStrcmp (cur->name, (const xmlChar *) "debug")) {
+            key = xmlNodeListGetString (doc, cur->children, 1);
 
-            INFO(("Found option \"debug\", value \"%s\".", key));
-            opt_debug_set(atoi(key));
+            INFO (("Found option \"debug\", value \"%s\".", key));
+            opt_debug_set (atoi (key));
 
-            xmlFree(key);
-        }
-        else if (!xmlStrcmp(cur->name, (const xmlChar *) "logfile")) {
-            key = xmlNodeListGetString(doc, cur->children, 1);
+            xmlFree (key);
+        } else if (!xmlStrcmp (cur->name, (const xmlChar *) "logfile")) {
+            key = xmlNodeListGetString (doc, cur->children, 1);
 
-            INFO(("Found option \"logfile\", value \"%s\".", key));
-            opt_logfile_set(key);
+            INFO (("Found option \"logfile\", value \"%s\".", key));
+            opt_logfile_set (key);
 
-            xmlFree(key);
-        }
-        else if (!xmlStrcmp(cur->name, (const xmlChar *) "foreground")) {
-            key = xmlNodeListGetString(doc, cur->children, 1);
-                        
-            INFO(("Found option \"foreground\", value \"%s\".", key));
-            if (!xmlStrcmp(key, (const xmlChar *) "false")) {
-                opt_foreground_set(FALSE);
-            }
-            else if (!xmlStrcmp(key, (const xmlChar *) "true")) {
-                opt_foreground_set(TRUE);
-            }
-            else {
-                WARNING(("Invalid value (\"%s\") for option \"foreground\" supplied. Must be either \"true\" or \"false\".)", key));
+            xmlFree (key);
+        } else if (!xmlStrcmp (cur->name, (const xmlChar *) "foreground")) {
+            key = xmlNodeListGetString (doc, cur->children, 1);
+
+            INFO (("Found option \"foreground\", value \"%s\".", key));
+            if (!xmlStrcmp (key, (const xmlChar *) "false")) {
+                opt_foreground_set (FALSE);
+            } else if (!xmlStrcmp (key, (const xmlChar *) "true")) {
+                opt_foreground_set (TRUE);
+            } else {
+                WARNING (("Invalid value (\"%s\") for option \"foreground\" supplied. Must be either \"true\" or \"false\".)", key));
             }
 
-            xmlFree(key);
-            
-        }
-        else if (!xmlStrcmp(cur->name, (const xmlChar *) "module")) {
-            if ((attr =
-                 xmlHasProp(cur, (const xmlChar *) "token")) != NULL) {
-                conf_parse_module(doc, cur->children->next, attr,
-                                  conf_file);
-            }
-            else {
-                ERROR((">%s", cur->name));
-                ERROR(("Corrupt module definition found (%s, line %i).",
-                       conf_file, cur->line));
+            xmlFree (key);
+
+        } else if (!xmlStrcmp (cur->name, (const xmlChar *) "module")) {
+            if ((attr = xmlHasProp (cur, (const xmlChar *) "token")) != NULL) {
+                conf_parse_module (doc, cur->children->next, attr, conf_file);
+            } else {
+                ERROR ((">%s", cur->name));
+                ERROR (("Corrupt module definition found (%s, line %i).", conf_file, cur->line));
             }
 
             attr = NULL;
@@ -209,20 +203,22 @@ void conf_parse_file(const char *conf_file)
         cur = cur->next;
     }
 
-    xmlFreeDoc(doc);
+    xmlFreeDoc (doc);
     return;
 }
 
 /**
  * Invoke parser for Input Abstraction Layer Daemon configuration file.
  */
-void conf_parse()
+
+void
+conf_parse ()
 {
     const char *conf_file = SYSCONF_DIR "/ial/iald.conf";
 
-    DEBUG(("Parsing configuration file %s.", conf_file));
-    conf_parse_file(conf_file);
-    DEBUG(("Finished parsing configuration file."));
+    DEBUG (("Parsing configuration file %s.", conf_file));
+    conf_parse_file (conf_file);
+    DEBUG (("Finished parsing configuration file."));
 }
 
 /** @} */

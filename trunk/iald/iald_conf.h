@@ -1,7 +1,10 @@
-/* iald_conf.h
+/***************************************************************************
+ *
+ * iald_conf.h - Input Abstraction Layer Configuration File Parser
+ *
+ * SVN ID: $Id:$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
- *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -19,11 +22,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- */
+ **************************************************************************/
 
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 
-void conf_parse_module(xmlDocPtr, xmlNodePtr, xmlAttrPtr, const char *);
-void conf_parse_file(const char *);
-void conf_parse(void);
+void conf_parse_module (xmlDocPtr, xmlNodePtr, xmlAttrPtr, const char *);
+void conf_parse_file (const char *);
+void conf_parse (void);

@@ -1,7 +1,10 @@
-/* iald_dbus.h - Input Abstraction Layer Daemon
+/*************************************************************************** 
+ *
+ * iald_dbus.h - Input Abstraction Layer Daemon D-BUS Interface
+ *
+ * SVN ID: $Id:$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
- *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -19,10 +22,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- */
+ **************************************************************************/
 
+DBusHandlerResult get_modules (DBusConnection *, DBusMessage *);
 
-DBusHandlerResult get_modules (DBusConnection *, DBusMessage * message);
 DBusHandlerResult filter_function (DBusConnection *, DBusMessage *, void *);
 
-void iald_dbus_init(void);
+void iald_dbus_init (void);

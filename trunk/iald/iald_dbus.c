@@ -1,7 +1,10 @@
-/* iald_dbus.c - Input Abstraction Layer Daemon
+/*************************************************************************** 
+ *
+ * iald_dbus.c - Input Abstraction Layer Daemon D-BUS Interface
+ *
+ * SVN ID: $Id:$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
- *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -19,113 +22,91 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- */
+ **************************************************************************/
 
 #include "iald.h"
 #include "iald_mod.h"
 #include "iald_dbus.h"
+#include "string.h"
 
 extern GMainLoop *loop;
 extern DBusConnection *dbus_connection;
 extern IalModule *modules_list_head;
 
-DBusHandlerResult get_modules(DBusConnection * connection,
-                              DBusMessage * message)
+DBusHandlerResult
+get_modules (DBusConnection * connection, DBusMessage * message)
 {
-/* disabled for good. need work for dbus 0.30 */
-
-/*
     DBusMessage *reply;
-    DBusMessageIter iter, iter1, iter2;
-    
-    IalModule *m = NULL;
+    DBusMessageIter it_message;
+    DBusMessageIter it_array;
+    DBusMessageIter it_module;
 
-    reply = dbus_message_new_method_return(message);
+    IalModule *m = NULL;
+    const char *true = "true";
+    const char *false = "false";
+
+    reply = dbus_message_new_method_return (message);
 
     if (reply == NULL) {
-        ERROR(("No memory."));
+        ERROR (("No memory."));
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
     }
 
-
-    dbus_message_iter_init(reply, &iter);
-    dbus_message_iter_append_basic(&iter, &iter1, DBUS_TYPE_ARRAY);
+    dbus_message_iter_init_append (reply, &it_message);
     m = modules_list_head;
 
+    dbus_message_iter_open_container (&it_message,
+                                      DBUS_TYPE_ARRAY, DBUS_TYPE_ARRAY_AS_STRING DBUS_TYPE_STRING_AS_STRING, &it_array);
+
     while (m) {
-        dbus_message_iter_append_array(&iter1, &iter2, DBUS_TYPE_STRING);
-        
-        dbus_message_iter_append_string(&iter2, m->data->name);
-        dbus_message_iter_append_string(&iter2, m->data->token);
-        dbus_message_iter_append_string(&iter2, m->data->version); 
-        dbus_message_iter_append_string(&iter2, m->data->author);
-        dbus_message_iter_append_string(&iter2, m->data->descr);
+        dbus_message_iter_open_container (&it_array,
+                                          DBUS_TYPE_ARRAY,
+                                          DBUS_TYPE_STRING_AS_STRING DBUS_TYPE_INT32_AS_STRING, &it_module);
 
-        switch (m->data->type) {
-        case INPUT:
-            dbus_message_iter_append_string(&iter2, "0");
-            break;
-            
-        case OUTPUT:
-            dbus_message_iter_append_string(&iter2, "1");
-            break;
+        dbus_message_iter_append_basic (&it_module, DBUS_TYPE_STRING, &(m->data->name));
 
-        case INPUT_OUTPUT:
-            dbus_message_iter_append_string(&iter2, "2");
-            break;
+        dbus_message_iter_append_basic (&it_module, DBUS_TYPE_STRING, &(m->data->author));
 
-        default:
-            dbus_message_iter_append_string(&iter2, "-1");
-            break;
-        }
+        dbus_message_iter_append_basic (&it_module, DBUS_TYPE_STRING, m->data->initialized ? &true : &false);
 
-        if (m->data->initialized== TRUE)
-            dbus_message_iter_append_string(&iter2, "true");
-        else
-            dbus_message_iter_append_string(&iter2, "false");
+        dbus_message_iter_append_basic (&it_module, DBUS_TYPE_STRING, m->data->state ? &true : &false);
 
-        if (m->data->state == TRUE)
-            dbus_message_iter_append_string(&iter2, "true");
-        else 
-            dbus_message_iter_append_string(&iter2, "false");
+        dbus_message_iter_close_container (&it_array, &it_module);
 
         m = m->next;
     }
 
+    dbus_message_iter_close_container (&it_message, &it_array);
+
     if (!dbus_connection_send (connection, reply, NULL)) {
-        ERROR(("No memory."));
+        ERROR (("No memory."));
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
     }
 
-    dbus_message_unref(reply);
-*/    
-    return DBUS_HANDLER_RESULT_HANDLED;
-}
-
-DBusHandlerResult filter_function(DBusConnection * connection,
-                                  DBusMessage * message,
-                                  void *user_data)
-{
-    if (dbus_message_is_method_call(message, "com.novell.Ial", "GetModules") &&
-        strcmp(dbus_message_get_path(message), "/com/novell/Ial") == 0) {
-        
-        return get_modules(connection, message);
-    }
-    else {
-        return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
-    }
+    dbus_message_unref (reply);
 
     return DBUS_HANDLER_RESULT_HANDLED;
 }
 
-
-void iald_dbus_init(void)
+DBusHandlerResult
+filter_function (DBusConnection * connection, DBusMessage * message, void *user_data)
 {
-    dbus_connection_add_filter(dbus_connection, filter_function, loop, NULL);
+    if ((dbus_message_is_method_call (message, "com.novell.Ial", "GetModules")) &&
+        (strcmp (dbus_message_get_path (message), "/com/novell/Ial")) == 0) {
 
-    dbus_bus_add_match(dbus_connection,
-                       "type='signal',"
-                       "interface='"IAL_DBUS_INTERFACE_EVENT"',"
-                       "path='"IAL_DBUS_PATH_EVENT"',",
-                       NULL);
+        return get_modules (connection, message);
+    } else {
+        return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+    }
+    return DBUS_HANDLER_RESULT_HANDLED;
+}
+
+void
+iald_dbus_init (void)
+{
+    dbus_connection_add_filter (dbus_connection, filter_function, loop, NULL);
+
+    dbus_bus_add_match (dbus_connection,
+                        "type='signal',"
+                        "interface='" IAL_DBUS_INTERFACE_EVENT "'," "path='" IAL_DBUS_PATH_EVENT "',", NULL);
 }

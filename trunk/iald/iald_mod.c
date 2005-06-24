@@ -1,7 +1,10 @@
-/* iald_mod.c - Input Abstraction Layer Module Loader
+/*************************************************************************** 
  *
+ * iald_mod.c - Input Abstraction Layer Daemon Module Loader
+ *
+ * SVN ID: $Id:$
+ * 
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
- *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- */
+ **************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,7 +57,8 @@ extern IalModule *modules_list_head;
  * @param   symbol      Symbel to lookup in library
  * @returns             Void Pointer to function
  */
-void *dl_function(char *filename, const char *symbol)
+void *
+dl_function (char *filename, const char *symbol)
 {
     void *handle;
     char *error;
@@ -63,16 +67,16 @@ void *dl_function(char *filename, const char *symbol)
     handle = NULL;
     error = NULL;
 
-    handle = dlopen(filename, RTLD_LAZY);
+    handle = dlopen (filename, RTLD_LAZY);
 
     if (!handle) {
-        WARNING(("%s is not a shared library.", filename));
+        WARNING (("%s is not a shared library.", filename));
         return NULL;
     }
 
-    function = dlsym(handle, symbol);
-    if ((error = dlerror()) != NULL) {
-        WARNING(("%s (%s).", error, filename));
+    function = dlsym (handle, symbol);
+    if ((error = dlerror ()) != NULL) {
+        WARNING (("%s (%s).", error, filename));
         return NULL;
     }
 
@@ -83,15 +87,16 @@ void *dl_function(char *filename, const char *symbol)
  *
  *  @param filename     Filename of module.
  */
-void module_add(char *filename)
+void
+module_add (char *filename)
 {
     ModuleData *(*function) (void);
     IalModule *module;
 
-    module = (IalModule *) malloc(sizeof(IalModule));
+    module = (IalModule *) malloc (sizeof (IalModule));
 
-    function = dl_function(filename, "mod_get_data");
-    module->data = function();
+    function = dl_function (filename, "mod_get_data");
+    module->data = function ();
 
     module->prev = NULL;
     module->next = modules_list_head;
@@ -106,7 +111,8 @@ void module_add(char *filename)
  *
  * @param module        Module to be removed.
  */
-void module_remove(IalModule * module)
+void
+module_remove (IalModule * module)
 {
 
 }
@@ -116,11 +122,12 @@ void module_remove(IalModule * module)
  * @param filename      Filename of module.
  * @returns             TRUE if module was initialized succeeded, else FALSE.
  */
-gboolean module_init(char *filename)
+gboolean
+module_init (char *filename)
 {
-    gboolean(*mod_init) (void);
+    gboolean (*mod_init) (void);
 
-    mod_init = dl_function(filename, "mod_init");
+    mod_init = dl_function (filename, "mod_init");
 
     return (*mod_init) ();
 }
@@ -130,19 +137,20 @@ gboolean module_init(char *filename)
  * @param filename      Filename of module.
  * @returns             TRUE if module has the symbol `mod_get_data', else FALSE;
  */
-gboolean module_verify(char *filename)
+gboolean
+module_verify (char *filename)
 {
     void (*function) (void);
 
-    DEBUG(("Checking %s for symbol.", filename));
+    DEBUG (("Checking %s for symbol.", filename));
 
-    function = dl_function(filename, "mod_get_data");
+    function = dl_function (filename, "mod_get_data");
     if (!function) {
-        WARNING(("%s is not a valid module.", filename));
+        WARNING (("%s is not a valid module.", filename));
         return FALSE;
     }
 
-    DEBUG(("Symbol found."));
+    DEBUG (("Symbol found."));
 
     return TRUE;
 }
@@ -150,73 +158,74 @@ gboolean module_verify(char *filename)
 /** Scan (LIBDIR)/iald/modules for modules. 
  *
  */
-void modules_scan()
+void
+modules_scan ()
 {
-    /* Heavily based on scan_plugins() by XMMS (http://www.xmms.org) */
-    char *filename, *extension;
+/* Heavily based on scan_plugins() by XMMS (http://www.xmms.org) */
+    char *filename,
+     *extension;
     char *module_dir = MODULE_DIR;
     DIR *dir;
     struct dirent *entry;
     struct stat statbuf;
 
-    dir = opendir(module_dir);
+    dir = opendir (module_dir);
     if (!dir)
         return;
 
-    while ((entry = readdir(dir)) != NULL) {
-        filename = g_strdup_printf("%s/%s", module_dir, entry->d_name);
-        if (!stat(filename, &statbuf) && S_ISREG(statbuf.st_mode) &&
-            (extension = strrchr(entry->d_name, '.')) != NULL) {
-            if (!strcmp(extension, ".so")) {
-                if (module_verify(filename) == TRUE) {
-                    module_add(filename);
-                    DEBUG(("Verification of \"%s\" succeeded.", filename));
-                }
-                else {
-                    DEBUG(("Verification of \"%s\" failed.", filename));
+    while ((entry = readdir (dir)) != NULL) {
+        filename = g_strdup_printf ("%s/%s", module_dir, entry->d_name);
+        if (!stat (filename, &statbuf) && S_ISREG (statbuf.st_mode) &&
+            (extension = strrchr (entry->d_name, '.')) != NULL) {
+            if (!strcmp (extension, ".so")) {
+                if (module_verify (filename) == TRUE) {
+                    module_add (filename);
+                    DEBUG (("Verification of \"%s\" succeeded.", filename));
+                } else {
+                    DEBUG (("Verification of \"%s\" failed.", filename));
                 }
             }
         }
-        g_free(filename);
+        g_free (filename);
     }
-    closedir(dir);
+    closedir (dir);
 
 }
 
 /** Load all modules.
  *
  */
-void modules_load()
+void
+modules_load ()
 {
     IalModule *m;
 
     m = modules_list_head;
 
     if (modules_list_head == NULL) {
-        modules_scan();
+        modules_scan ();
         m = modules_list_head;
     }
 
     if (m == NULL) {
-        ERROR(("No modules found."));
+        ERROR (("No modules found."));
     }
 
     /** Try to start the modules. */
     while (m) {
-        if (m->data->load() == FALSE) {
-            WARNING(("Failed to initialize %s.", m->data->name));
+        if (m->data->load () == FALSE) {
+            WARNING (("Failed to initialize %s.", m->data->name));
             m->data->initialized = FALSE;
 
             if (m->data->state == ENABLED) {
-                WARNING(("Setting module state to disabled since initialization failed."));
+                WARNING (("Setting module state to disabled since initialization failed."));
                 m->data->state = DISABLED;
             }
-        }
-        else {
-            INFO(("%s loaded.", m->data->name));
+        } else {
+            INFO (("%s loaded.", m->data->name));
             m->data->initialized = TRUE;
         }
-       
+
         m = m->next;
     }
 }
@@ -224,24 +233,22 @@ void modules_load()
 /** Unload a specific module
  *
  */
-void module_unload(IalModule* m)
+void
+module_unload (IalModule * m)
 {
     if (m == modules_list_head) {
-        DEBUG(("Removing list head."));
-        if(m->next != NULL) {
+        DEBUG (("Removing list head."));
+        if (m->next != NULL) {
             modules_list_head = m->next;
             modules_list_head->prev = NULL;
-        }
-        else {
+        } else {
             modules_list_head = NULL;
         }
-    }
-    else if (m->next == NULL) {
-        DEBUG(("Removing list tail."));
+    } else if (m->next == NULL) {
+        DEBUG (("Removing list tail."));
         m->prev->next = NULL;
-    }
-    else {
-        DEBUG(("Removing in the list."));
+    } else {
+        DEBUG (("Removing in the list."));
         m->prev->next = m->next;
         m->next->prev = m->prev;
     }
@@ -251,7 +258,8 @@ void module_unload(IalModule* m)
 /** Unload all modules.
  *
  */
-void modules_unload()
+void
+modules_unload ()
 {
 
 }

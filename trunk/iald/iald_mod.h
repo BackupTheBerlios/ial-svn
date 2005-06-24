@@ -1,7 +1,10 @@
-/* iald_mod.h
+/*************************************************************************** 
  *
+ * iald_mod.h - Input Abstraction Layer Daemon Module Loader
+ *
+ * SVN ID: $Id:$
+ * 
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
- *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
  * 
@@ -19,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- */
+ **************************************************************************/
 
 typedef struct IalModule_s {
     ModuleData *data;
@@ -28,19 +31,19 @@ typedef struct IalModule_s {
     struct IalModule_s *next;
 } IalModule;
 
-void *dl_function(char *, const char *);
+void *dl_function (char *, const char *);
 
 /* Add/Remove a single modules to the configuration */
-void module_add(char *);
-void module_remove(IalModule *);
+void module_add (char *);
+void module_remove (IalModule *);
 
-gboolean module_init(char *);
-gboolean module_verify(char *);
+gboolean module_init (char *);
+gboolean module_verify (char *);
 
 /* Scan MODULES_DIR for modules */
-void modules_scan(void);
+void modules_scan (void);
 
 /* Load/Unload all modules */
-void modules_load(void);
-void module_unload(IalModule *);
-void modules_unload(void);
+void modules_load (void);
+void module_unload (IalModule *);
+void modules_unload (void);
