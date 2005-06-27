@@ -2,7 +2,7 @@
  *
  * iald_conf.c - Input Abstraction Layer Configuration File Parser
  *
- * SVN ID: $Id:$
+ * SVN ID: $Id$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
  *
@@ -60,8 +60,7 @@ extern IalModule *modules_list_head;
 void
 conf_parse_module (xmlDocPtr doc, xmlNodePtr cur, xmlAttrPtr attr, const char *conf_file)
 {
-    xmlChar *tok,
-     *val;
+    xmlChar *tok, *val;
     IalModule *m = NULL;
     ModuleOption *opt = NULL;
 
