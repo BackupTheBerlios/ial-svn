@@ -2,7 +2,7 @@
  *
  * iald_mod.c - Input Abstraction Layer Daemon Module Loader
  *
- * SVN ID: $Id:$
+ * SVN ID: $Id$
  * 
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
  *
@@ -57,6 +57,7 @@ extern IalModule *modules_list_head;
  * @param   symbol      Symbel to lookup in library
  * @returns             Void Pointer to function
  */
+
 void *
 dl_function (char *filename, const char *symbol)
 {
@@ -87,6 +88,7 @@ dl_function (char *filename, const char *symbol)
  *
  *  @param filename     Filename of module.
  */
+
 void
 module_add (char *filename)
 {
@@ -111,6 +113,7 @@ module_add (char *filename)
  *
  * @param module        Module to be removed.
  */
+
 void
 module_remove (IalModule * module)
 {
@@ -122,6 +125,7 @@ module_remove (IalModule * module)
  * @param filename      Filename of module.
  * @returns             TRUE if module was initialized succeeded, else FALSE.
  */
+
 gboolean
 module_init (char *filename)
 {
@@ -137,6 +141,7 @@ module_init (char *filename)
  * @param filename      Filename of module.
  * @returns             TRUE if module has the symbol `mod_get_data', else FALSE;
  */
+
 gboolean
 module_verify (char *filename)
 {
@@ -158,12 +163,12 @@ module_verify (char *filename)
 /** Scan (LIBDIR)/iald/modules for modules. 
  *
  */
+
 void
 modules_scan ()
 {
 /* Heavily based on scan_plugins() by XMMS (http://www.xmms.org) */
-    char *filename,
-     *extension;
+    char *filename, *extension;
     char *module_dir = MODULE_DIR;
     DIR *dir;
     struct dirent *entry;
@@ -195,6 +200,7 @@ modules_scan ()
 /** Load all modules.
  *
  */
+
 void
 modules_load ()
 {
@@ -211,7 +217,7 @@ modules_load ()
         ERROR (("No modules found."));
     }
 
-    /** Try to start the modules. */
+    /* Try to start the modules. */
     while (m) {
         if (m->data->load () == FALSE) {
             WARNING (("Failed to initialize %s.", m->data->name));
@@ -233,6 +239,7 @@ modules_load ()
 /** Unload a specific module
  *
  */
+
 void
 module_unload (IalModule * m)
 {
@@ -258,6 +265,7 @@ module_unload (IalModule * m)
 /** Unload all modules.
  *
  */
+
 void
 modules_unload ()
 {
