@@ -2,7 +2,7 @@
  *
  * libial_evdev_main.c - Linux Event Interface Input Abstraction Layer Module
  *
- * SVN ID: $Id:$
+ * SVN ID: $Id$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
  *
@@ -28,6 +28,9 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "libial_evdev.h"
 
@@ -41,44 +44,72 @@ extern ModuleData mod_data;
  */
 
 IalEvent event;
-
 evdev event_devices[MAX_EVENT_DEV];
-
 struct Input_Event_s input_event;
+struct stat stats;
+
+/** Event interface observer callback function
+ *
+ * @param       none
+ * @returns     TRUE on success, FALSE on error.
+ */
+
+gboolean
+evdev_observer_callback ()
+{
+    struct stat new_stats;
+
+    if (stat (DEV_INPUT, &new_stats) != 0) {
+        DEBUG (("Error while accesing \"" DEV_INPUT "\"."));
+        return FALSE;
+    }
+
+    if (stats.st_ctime == new_stats.st_ctime) {
+        /* nothing has changed */
+        return TRUE;
+    } else {
+        /* we either lost an input device or found a new one. */
+        evdev_fd_init ();
+        return FALSE;
+    }
+}
 
 /** Event Interface callback function.
  *
  * @param       user_data Pointer to evdev_current->io_channel.
  * @returns     TRUE on success, FALSE on error.
  */
+
 gboolean
 evdev_callback (gpointer user_data)
 {
     int fd = g_io_channel_unix_get_fd (user_data);
     char source[MAX_EVENT_DEV_NAME];
 
-    read (fd, &input_event, sizeof (input_event));
+    if (read (fd, &input_event, sizeof (input_event)) == -1) {
+        DEBUG (("Lost input device."));
+        return FALSE;
+    }
 
     /* We only care about key presses. */
     if ((input_event.type == EV_KEY) && (input_event.value == 1)) {
         /* We do _not_ want to report all keys. Otherwise passwords and everything else would go to the bus */
-/*        if (key_blacklisted(input_event.code) == TRUE) {
-            DEBUG(("Key blacklisted. Not sending to D-Bus."));
+        if (key_blacklisted (input_event.code) == TRUE) {
+            DEBUG (("Key blacklisted. Not sending to D-Bus."));
+        } else {
+            /* TODO: move checks to event_send implementation */
+            /* Get device name */
+            if (ioctl (fd, EVIOCGNAME (sizeof (source)), source) == -1)
+                strcpy (source, "Unknown device");
+
+            /* Fill structure and send D-Bus message */
+            event.sender = mod_data.token;
+            event.source = source;
+            event.name = key_to_string (input_event.code);
+            event.raw = input_event.code;
+
+            event_send (&event);
         }
-        else { */
-        /* TODO: move checks to event_send implementation */
-        /* Get device name */
-        if (ioctl (fd, EVIOCGNAME (sizeof (source)), source) == -1)
-            strcpy (source, "Unknown device");
-
-        /* Fill structure and send D-Bus message */
-        event.sender = mod_data.token;
-        event.source = source;
-        event.name = key_to_string (input_event.code);
-        event.raw = input_event.code;
-
-        event_send (&event);
-/*        } */
     }
 
     return TRUE;
@@ -88,6 +119,7 @@ evdev_callback (gpointer user_data)
  *
  * @returns TRUE on success, FALSE on error.
  */
+
 gboolean
 evdev_fd_init ()
 {
@@ -95,15 +127,18 @@ evdev_fd_init ()
     char evdev_if[32];
     char source[MAX_EVENT_DEV_NAME];
     char phys[MAX_EVENT_DEV_NAME];
-    int i,
-      protocol_version,
-      evdev_if_count = 0;
+    int i, protocol_version, evdev_if_count = 0;
+
+    if (stat (DEV_INPUT, &stats) != 0) {
+        DEBUG (("Error while accesing \"" DEV_INPUT "\"."));
+        return FALSE;
+    }
 
     for (i = 0; i < MAX_EVENT_DEV; i++) {
 
         evdev_current = &event_devices[i];
 
-        snprintf (evdev_if, sizeof (evdev_if), "/dev/input/event%d", i);
+        snprintf (evdev_if, sizeof (evdev_if), DEV_INPUT_EVENT "%d", i);
         evdev_current->fd = open (evdev_if, O_RDONLY);
 
         if (evdev_current->fd > 0) {
@@ -139,12 +174,14 @@ evdev_fd_init ()
         }
     }
 
+    g_timeout_add (1000, (GSourceFunc) evdev_observer_callback, NULL);
+
     if (evdev_if_count > 0) {
         DEBUG (("Found %i event interface(s).", evdev_if_count));
         return TRUE;
     } else {
-        DEBUG (("No event interface(s) (/dev/input/*) found."));
-        return FALSE;
+        DEBUG (("No event interface(s) (" DEV_INPUT_EVENT "/*) found."));
+        return TRUE;
     }
 }
 
