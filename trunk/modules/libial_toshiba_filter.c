@@ -1,6 +1,6 @@
 /***************************************************************************
  *
- * libial_toshiba.c Toshiba SMM Input Abstraction Layer Module
+ * libial_toshiba_filter.c Toshiba SMM Input Abstraction Layer Module
  *
  * SVN ID: $Id$
  *

@@ -2,7 +2,7 @@
  *
  * libial_toshiba.c - Toshiba SMM Input Abstraction Layer Module
  *
- * SVN ID: $Id:$
+ * SVN ID: $Id$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
  *

@@ -2,7 +2,7 @@
  *
  * libial_evdev.c - Linux Event Interface Input Abstraction Layer Module
  *
- * SVN ID: $Id:$
+ * SVN ID: $Id$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
  *
@@ -23,6 +23,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  **************************************************************************/
+
+#include <string.h>
 
 #include "libial_evdev.h"
 
