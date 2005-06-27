@@ -1,10 +1,13 @@
-/* libial_evdev.h 
+/***************************************************************************
+ *
+ * libial_evdev.h - Linux Event Interface Input Abstraction Layer Module
+ *
+ * SVN ID: $Id$
  *
  * Copyright (C) 2004, 2005 Timo Hoenig <thoenig@nouse.net>
- *                          All rights reserved
  *
  * Licensed under the Academic Free License version 2.1
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -14,18 +17,21 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- */
+ **************************************************************************/
 
 #define MODULE_NAME "Event Interface Input Abstraction Layer Module"
 #define MODULE_TOKEN "evdev"
 #define MODULE_VERSION "0.0.1"
 #define MODULE_AUTHOR "Timo Hoenig <thoenig@nouse.net>"
 #define MODULE_DESCR "This module reports (unknown) keycodes."
+
+#define DEV_INPUT "/dev/input"
+#define DEV_INPUT_EVENT "/dev/input/event"
 
 #include <sys/time.h>
 #include <sys/ioctl.h>
@@ -68,15 +74,17 @@ static char *KEY_NAME[KEY_MAX] = {
 #define EV_FF_STATUS            0x17
 #define EV_MAX                  0x1f
 
+gboolean evdev_observer_callback (void);
 gboolean evdev_callback (gpointer);
+gboolean evdev_fd_init (void);
 gboolean libial_evdev_start (void);
 
 gboolean mod_load (void);
 gboolean mod_unload (void);
 
 typedef struct Evdev_s {
-    int fd,
-      watch;
+    int fd;
+    int watch;
     GIOChannel *io_channel;
 } evdev;
 
