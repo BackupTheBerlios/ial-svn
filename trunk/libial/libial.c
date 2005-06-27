@@ -51,6 +51,7 @@ DBusConnection *dbus_connection;
  * @returns     TRUE if connection could be established or if connection is already,
  *              established. FALSE if connection failed.
  */
+
 gboolean
 ial_dbus_connect ()
 {
