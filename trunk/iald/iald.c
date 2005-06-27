@@ -447,18 +447,18 @@ main (int argc, char *argv[])
         WARNING (("No modules available"));
     }
 
-/* Parse config file */
+    /* Parse config file */
     conf_parse ();
 
-/* Parse command line options */
+    /* Parse command line options */
     if (argc > 1) {
         opt_parse (argc, argv);
     }
 
-/* Setup logfile */
+    /* Setup logfile */
     log_logfile_set (opt_logfile);
 
-/* Set logging level */
+    /* Set logging level */
     log_level_set (opt_debug);
 
     if (pid_file_exists () == TRUE) {
@@ -466,7 +466,7 @@ main (int argc, char *argv[])
         exit (1);
     }
 
-/* Daemonize or run in foreground */
+    /* Daemonize or run in foreground */
     if (opt_foreground == TRUE) {
         INFO (("Running in foreground"));
     } else {
@@ -485,11 +485,11 @@ main (int argc, char *argv[])
             break;
 
         case 0:
-/* Child */
+            /* Child */
             break;
 
         default:
-/* Parent */
+            /* Parent */
             exit (0);
             break;
         }
@@ -523,11 +523,11 @@ main (int argc, char *argv[])
 
     dbus_error_init (&dbus_error);
 
-/* TODO
- *
- * Evaluate if it makes sense to check whether dbus_bus_service_exists() == TRUE and abort if so..
- *
- */
+    /* TODO
+     *
+     * Evaluate if it makes sense to check whether dbus_bus_service_exists() == TRUE and abort if so..
+     *
+     */
 
     dbus_bus_request_name (dbus_connection, IAL_DBUS_SERVICENAME, 0, &dbus_error);
 
