@@ -39,9 +39,6 @@
 /** libial_toshiba_utils.c */
 const char *toshiba_fnkey_description (int);
 
-/** libial_toshiba_filter.c */
-gboolean toshiba_add_filter (void);
-
 /** libial_toshiba_main.c */
 void toshiba_event_send (void);
 gboolean toshiba_acpi_check (void);
@@ -53,8 +50,9 @@ gboolean mod_load (void);
 gboolean mod_unload (void);
 
 /** Toshiba ACPI interface */
-#define ACPI_TOSHIBA            "/proc/acpi/toshiba"
-#define ACPI_TOSHIBA_KEYS       "/proc/acpi/toshiba/keys"
+#define ACPI_TOSHIBA        "/proc/acpi/toshiba"
+#define ACPI_TOSHIBA_KEYS   "/proc/acpi/toshiba/keys"
+#define ACPI_TOSHIBA_LCD    "/proc/acpi/toshiba/lcd"
 
 /** Polling frequency in ms*/
 #define POLL_FREQ_MAX           1000
@@ -62,7 +60,6 @@ gboolean mod_unload (void);
 #define POLL_FREQ_MIN           50
 
 /** Fn-Keys and values */
-
 #define FN              0x100
 #define FN_ESCAPE       0x101
 #define FN_1            0x102
