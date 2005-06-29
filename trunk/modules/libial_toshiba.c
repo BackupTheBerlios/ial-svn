@@ -61,6 +61,7 @@ ModuleData mod_data = {
  *
  * @returns pointer to mod_data.
  */
+
 ModuleData *
 mod_get_data ()
 {
@@ -71,6 +72,7 @@ mod_get_data ()
  *
  * @returns TRUE if initialization was successful, else FALSE.
  */
+
 gboolean
 mod_load ()
 {
@@ -117,6 +119,7 @@ mod_load ()
  *
  *  @returns TRUE if unloading was successful, else FALSE.
  */
+
 gboolean
 mod_unload ()
 {
