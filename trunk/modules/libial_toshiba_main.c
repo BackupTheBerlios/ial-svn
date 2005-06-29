@@ -180,10 +180,6 @@ toshiba_start ()
         return FALSE;
     }
 
-    if (!(toshiba_add_filter ())) {
-        WARNING (("toshiba_add_filter() failed."));
-        return FALSE;
-    }
     return TRUE;
 }
 
