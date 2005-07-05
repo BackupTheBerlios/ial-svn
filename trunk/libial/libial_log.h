@@ -2,7 +2,7 @@
  *
  * libial_log.h - Input Abstraction Layer Logging Facilities
  *
- * SVN ID: $Id:$
+ * SVN ID: $Id$
  *
  * Copyright (C) 2003        David Zeuthen, <david@fubar.dk>
  * Copyright (C) 2004, 2005  Timo Hoenig <thoenig@nouse.net>
@@ -62,7 +62,7 @@ void log_output (const char *format, ...);
             log_output expr; \
         } while(0)
 
-/** Error leve logging macro */
+/** Error level logging macro */
 #define ERROR(expr) \
         do { \
             log_setup(LOGPRI_ERROR, __FILE__, __LINE__, __FUNCTION__); \
