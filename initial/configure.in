@@ -1,0 +1,99 @@
+AC_INIT(src/Initial.cs)
+
+AM_CONFIG_HEADER(config.h)
+
+AM_INIT_AUTOMAKE(initial, 0.1)
+
+AM_MAINTAINER_MODE
+
+AC_PROG_INTLTOOL([0.33])
+
+AC_PROG_CC
+AC_ISC_POSIX
+AC_HEADER_STDC
+AM_PROG_LIBTOOL
+
+GNOME_COMPILE_WARNINGS
+AM_PATH_GLIB_2_0
+
+dnl --- Check for mono and mcs
+
+AC_PATH_PROG(MONO, mono)
+AC_PATH_PROG(MCS, mcs)
+
+dnl -- Check for mono pc file
+
+AC_MSG_CHECKING([for mono.pc])
+if test -z `$PKG_CONFIG --variable=prefix mono`; then
+  AC_MSG_ERROR([missing the mono.pc file, usually found in the mono-devel package])
+else
+  AC_MSG_RESULT([found])
+fi
+
+dnl -- check for various mono DLLs that we need.
+
+needed_dlls="Mono.Posix"
+for i in $needed_dlls; do
+  AC_MSG_CHECKING([for $i.dll])
+  if test ! -e `$PKG_CONFIG --variable=prefix mono`/lib/mono/1.0/$i.dll; then
+    AC_MSG_ERROR([missing required mono DLL: $i.dll])
+  else
+    AC_MSG_RESULT([found])
+  fi
+done
+
+dnl --- Required libraries
+
+LIBGNOME_REQUIRED=2.2
+LIBGNOMEUI_REQUIRED=2.2
+GTKSHARP_REQUIRED=1.0
+LIBGNOMEUI_REQUIRED=2.2
+
+PKG_CHECK_MODULES(INITIAL, libgnome-2.0 >= $LIBGNOME_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED glade-sharp >= $GTKSHARP_REQUIRED gtk+-2.0 >= 2.4)
+AC_SUBST(INITIAL_CFLAGS)
+AC_SUBST(INITIAL_LIBS)
+
+dnl -- Intl
+
+ALL_LINGUAS="de_DE en_GB fr"
+
+GETTEXT_PACKAGE=initial
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
+AM_GLIB_GNU_GETTEXT
+
+AC_SUBST(CFLAGS)
+AC_SUBST(CPPFLAGS)
+AC_SUBST(LDFLAGS)
+
+expanded_libdir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
+		   case $exec_prefix in NONE) exec_prefix=$prefix ;; *) ;; esac
+		   eval echo $libdir )`
+AC_SUBST(expanded_libdir)
+
+AC_CONFIG_FILES([src/initial],[chmod +x src/initial])
+
+AS_AC_EXPAND(LIBDIR,     $libdir)
+AS_AC_EXPAND(BINDIR,     $bindir)
+AS_AC_EXPAND(DATADIR,    $datadir)
+AS_AC_EXPAND(SYSCONFDIR, $sysconfdir)
+
+AC_OUTPUT([
+Makefile
+po/Makefile.in
+src/Makefile
+src/Initial_def.cs
+])
+
+echo "
+  Initial $VERSION
+===============
+
+prefix:        ${prefix}
+libdir:        ${LIBDIR}
+bindir:        ${BINDIR}
+datadir:       ${DATADIR}
+sysconfdir:    ${SYSCONFDIR}
+
+cflags:        ${CFLAGS}
+"

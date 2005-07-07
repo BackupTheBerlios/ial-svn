@@ -1,0 +1,6 @@
+# List of source files containing translatable strings.                                                                                                                
+# Please keep this file in alphabetical order.                                                                                                                         
+src/Initial.cs
+src/Initial_dbus.cs
+src/Initial_ui.cs
+src/ui/initial.glade

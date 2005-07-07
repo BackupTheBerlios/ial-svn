@@ -1,0 +1,14 @@
+#!/bin/sh
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+
+if [ -e ./initial.exe ] && [ -e ./Makefile ]; then
+    echo "*** Running uninstalled initial ***"
+    EXE_TO_RUN="./initial.exe"
+else
+    EXE_TO_RUN="$libdir/initial/initial.exe"
+fi
+
+mono --debug $EXE_TO_RUN "$@"
