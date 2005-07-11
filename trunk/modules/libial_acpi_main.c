@@ -80,6 +80,8 @@ acpi_event_fd_init ()
         if (acpi.event_fd >= 0) {
             acpi.io_channel = g_io_channel_unix_new (acpi.event_fd);
             return TRUE;
+        } else {
+            WARNING  (("Failed to access the ACPI event interface.")); 
         }
     }
         
@@ -94,6 +96,8 @@ acpi_event_fd_init ()
             == 0) {
             acpi.io_channel = g_io_channel_unix_new (acpi.event_fd);
             return TRUE;
+        } else {
+            WARNING  (("Failed to access the socket interface of 'acpid'."));
         }
     }
 
