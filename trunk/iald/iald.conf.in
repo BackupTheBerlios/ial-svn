@@ -19,6 +19,7 @@
     <!-- ACPI Module Options -->
     <module token="acpi">
         <disable>false</disable>
+        <force_acpid>true</force_acpid>
     </module>
     
     <!-- Toshiba Module Options -->
