@@ -94,7 +94,7 @@
 
 	  <child>
 	    <widget class="GtkMenuItem" id="menuitem8">
-	      <property name="False">True</property>
+	      <property name="visible">False</property>
 	      <property name="label" translatable="yes">_Edit</property>
 	      <property name="use_underline">True</property>
 
