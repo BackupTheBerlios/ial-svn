@@ -32,7 +32,8 @@ all: initial.exe
 
 EXTRA_DIST =					\
 	$(INITIAL_CSFILES)			\
-	ui/initial.glade
+	ui/initial.glade			\
+	ui/ial.png
 
 CLEANFILES =					\
 	initial						\
