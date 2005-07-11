@@ -37,7 +37,7 @@
 /** Module Options. */
 ModuleOption mod_options[] = {
     {"disable", "false", "disable=(true|false)"}
-    {"force_acpid", false", force_acpid=(true|false)"}
+    {"force_acpid", "false", "force_acpid=(true|false)"}
     ,
     {NULL}
 };
