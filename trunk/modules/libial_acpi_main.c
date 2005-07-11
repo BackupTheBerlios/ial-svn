@@ -50,6 +50,7 @@ int acpi_event_watch;
  *
  * @param button        Button description.
  */
+
 void
 acpi_event_send (char *button)
 {
@@ -67,29 +68,32 @@ acpi_event_send (char *button)
  *
  * @returns TRUE on success, else FALSE.
  */
+
 gboolean
 acpi_event_fd_init ()
 {
-    /* raw access to the ACPI event interface */
-    acpi.event_fd = open (ACPI_EVENT, 0);
-
-    if (acpi.event_fd >= 0) {
-        acpi.io_channel = g_io_channel_unix_new (acpi.event_fd);
-        return TRUE;
-    } else {
-
-        /* access to the ACPI events using sockt of `acpid` */
-        acpi.event_fd = socket (PF_UNIX, SOCK_STREAM, 0);
+    /* mod_options[1].value indicates whether we may use the ACPI event interface or not */
+    if (strcmp (mod_options[1].value, "false\0") == 0) {
+        /* raw access to the ACPI event interface */
+        acpi.event_fd = open (ACPI_EVENT, 0);
 
         if (acpi.event_fd >= 0) {
-            struct sockaddr_un addr;
-            addr.sun_family = AF_UNIX;
-            strcpy (addr.sun_path, ACPID_SOCKET);
-            if (connect (acpi.event_fd, (struct sockaddr *) &addr, sizeof (addr))
-                == 0) {
-                acpi.io_channel = g_io_channel_unix_new (acpi.event_fd);
-                return TRUE;
-            }
+            acpi.io_channel = g_io_channel_unix_new (acpi.event_fd);
+            return TRUE;
+        }
+    }
+        
+    /* access to the ACPI events using socket `acpid` */
+    acpi.event_fd = socket (PF_UNIX, SOCK_STREAM, 0);
+
+    if (acpi.event_fd >= 0) {
+        struct sockaddr_un addr;
+        addr.sun_family = AF_UNIX;
+        strcpy (addr.sun_path, ACPID_SOCKET);
+        if (connect (acpi.event_fd, (struct sockaddr *) &addr, sizeof (addr))
+            == 0) {
+            acpi.io_channel = g_io_channel_unix_new (acpi.event_fd);
+            return TRUE;
         }
     }
 
@@ -100,6 +104,7 @@ acpi_event_fd_init ()
  *
  * @returns ACPI_LID_STATE_OPEN if LID is open, ACPI_LID_STATE_CLOSED if LID is closed, ACPI_LID_STATE_ERROR on error.
  */
+
 int
 acpi_lid_state ()
 {
@@ -129,6 +134,7 @@ acpi_lid_state ()
  *
  * @param acpi_event String which contains the whole ACPI event.
  */
+
 void
 acpi_event_handle (GString * acpi_event)
 {
@@ -174,6 +180,7 @@ acpi_event_handle (GString * acpi_event)
  * @param       data Data.
  * @returns     TRUE on success, FALSE on error (callback function will be removed from event loop).
  */
+
 gboolean
 acpi_event_callback (GIOChannel * chan, GIOCondition cond, gpointer data)
 {
@@ -218,6 +225,7 @@ acpi_event_callback (GIOChannel * chan, GIOCondition cond, gpointer data)
  *
  * @returns TRUE on success, FALSE on error.
  */
+
 gboolean
 libial_acpi_start ()
 {
