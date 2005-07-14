@@ -158,6 +158,11 @@ evdev_fd_init ()
             /* Valid event interface found */
             evdev_if_count++;
             evdev_current->io_channel = g_io_channel_unix_new (evdev_current->fd);
+
+            /* remove old watches if we're reinitializing because of a new device */
+            if (evdev_current->watch)
+                g_source_remove (evdev_current->watch);
+            
             evdev_current->watch =
                 g_io_add_watch (evdev_current->io_channel,
                                 G_IO_IN | G_IO_ERR, (GIOFunc) evdev_callback, evdev_current->io_channel);
