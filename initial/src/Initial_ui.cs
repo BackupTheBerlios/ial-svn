@@ -331,7 +331,7 @@ namespace Initial
                 translators = null;
 
             /* TODO: get version by define */
-            new Gnome.About ("Initial", Defines.VERSION , "Copyright 2004 Timo Hoenig",
+            new Gnome.About ("Initial", Defines.VERSION , "Copyright 2005 Timo Hoenig",
                              Mono.Posix.Catalog.GetString ("A User Interface for the\n Input Abstraction Layer"),
                              authors, documenters, translators, logo).Show ();
         }
