@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: initial\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-04 16:24+0200\n"
+"POT-Creation-Date: 2005-07-07 10:39+0200\n"
 "PO-Revision-Date: 2005-07-07 10:53+0100\n"
 "Last-Translator: Timo Hoenig <thoenig@nouse.net>\n"
 "Language-Team: none <none>\n"
@@ -19,13 +19,21 @@ msgstr ""
 
 #: ../src/Initial.cs:114
 #, csharp-format
-msgid "Could not save the configuration to disk. Please check the persmissions of \"{0}/.initial\"."
-msgstr "Die Konfigurationsdatei konnte nicht gespeichter werden. Bitte überprüfen sie die Berechtigungen für \"{0}/.initial\"."
+msgid ""
+"Could not save the configuration to disk. Please check the persmissions of "
+"\"{0}/.initial\"."
+msgstr ""
+"Die Konfigurationsdatei konnte nicht gespeichter werden. Bitte überprüfen "
+"sie die Berechtigungen für \"{0}/.initial\"."
 
 #: ../src/Initial.cs:281
 #, csharp-format
-msgid "Could not execute the command \"{0}\". Please make sure that the application is in your path."
-msgstr "Das Kommando \"{0}\" konnte nicht ausgeführt werden. Bitte überprüfen sie, ob die Applikation in ihrem Pfad ist."
+msgid ""
+"Could not execute the command \"{0}\". Please make sure that the application "
+"is in your path."
+msgstr ""
+"Das Kommando \"{0}\" konnte nicht ausgeführt werden. Bitte überprüfen sie, "
+"ob die Applikation in ihrem Pfad ist."
 
 #: ../src/Initial_ui.cs:69
 msgid "H_ide"
@@ -66,7 +74,8 @@ msgstr "Diese Frage in Zukunft nicht anzeigen"
 #: ../src/Initial_ui.cs:420
 #, csharp-format
 msgid "Do you really want to delete the action \"{0}\" for the event \"{1}\"?"
-msgstr "Wollen sie wirklich die Aktion \"{0}\" für das Ereignis \"{1}\" löschen?"
+msgstr ""
+"Wollen sie wirklich die Aktion \"{0}\" für das Ereignis \"{1}\" löschen?"
 
 #: ../src/Initial_ui.cs:470
 #, csharp-format
@@ -107,12 +116,20 @@ msgid "Action"
 msgstr "Aktion"
 
 #: ../src/Initial_dbus.cs:55
-msgid "Could not connect to the D-BUS system bus. Please make sure that the D-BUS daemon is running."
-msgstr "Die Verbindung zum D-BUS Systembus ist fehlgeschlagen. Bitte stellen sie sicher, dass der D-BUS daemon läuft."
+msgid ""
+"Could not connect to the D-BUS system bus. Please make sure that the D-BUS "
+"daemon is running."
+msgstr ""
+"Die Verbindung zum D-BUS Systembus ist fehlgeschlagen. Bitte stellen sie "
+"sicher, dass der D-BUS daemon läuft."
 
 #: ../src/Initial_dbus.cs:75
-msgid "Could not aquire the Input Abstraction Layer interface. Please make sure that the Input Abstraction Layer daemon is running."
-msgstr "qqqDas Interface des Input Abstraction Layers konnte nicht gefunden werden. Bitte stellen sie sicher, dass der Input Abstraction Layer Daemon läuft."
+msgid ""
+"Could not aquire the Input Abstraction Layer interface. Please make sure "
+"that the Input Abstraction Layer daemon is running."
+msgstr ""
+"Das Interface des Input Abstraction Layers konnte nicht gefunden werden. "
+"Bitte stellen sie sicher, dass der Input Abstraction Layer Daemon läuft."
 
 #: ../src/ui/initial.glade:7
 msgid "Initial"
@@ -122,13 +139,11 @@ msgstr "Initial"
 msgid "_File"
 msgstr "_Datei"
 
-#: ../src/ui/initial.glade:38
-#: ../src/ui/initial.glade:233
+#: ../src/ui/initial.glade:38 ../src/ui/initial.glade:233
 msgid "_Add Event"
 msgstr "Ereignis _hinzufügen"
 
-#: ../src/ui/initial.glade:59
-#: ../src/ui/initial.glade:298
+#: ../src/ui/initial.glade:59 ../src/ui/initial.glade:298
 msgid "_Delete Event"
 msgstr "Ereignis _löschen"
 
@@ -160,10 +175,8 @@ msgstr "_Eingefangenes Ereignis"
 msgid "_Save Action"
 msgstr "Aktion _speichern"
 
-#: ../src/ui/initial.glade:512
-#: ../src/ui/initial.glade:537
-#: ../src/ui/initial.glade:562
-#: ../src/ui/initial.glade:683
+#: ../src/ui/initial.glade:512 ../src/ui/initial.glade:537
+#: ../src/ui/initial.glade:562 ../src/ui/initial.glade:683
 msgid "not available"
 msgstr "nicht verfügbar"
 
@@ -195,8 +208,7 @@ msgstr "_Starten einer Anwendung"
 msgid "_Map Event to a X Key Symbol"
 msgstr "_Abbilden eines Ereignisses auf ein X Tastensymbol"
 
-#: ../src/ui/initial.glade:816
-#: ../src/ui/initial.glade:2295
+#: ../src/ui/initial.glade:816 ../src/ui/initial.glade:2295
 msgid "(dummy)"
 msgstr "(platzhalter)"
 
@@ -216,8 +228,7 @@ msgstr "_Durchsuchen"
 msgid "Arguments:"
 msgstr "Aufrufparameter"
 
-#: ../src/ui/initial.glade:960
-#: ../src/ui/initial.glade:982
+#: ../src/ui/initial.glade:960 ../src/ui/initial.glade:982
 #: ../src/ui/initial.glade:1081
 msgid "*"
 msgstr "*"
@@ -814,8 +825,6 @@ msgstr "Abbilden eines Ereignisses auf ein X Tastensymbol"
 msgid "Choose Application"
 msgstr "Choose Application"
 
-#: ../src/ui/initial.glade:2405
-#: ../src/ui/initial.glade:2449
+#: ../src/ui/initial.glade:2405 ../src/ui/initial.glade:2449
 msgid "Please press a button."
 msgstr "Bitte drücken sie eine Taste."
-

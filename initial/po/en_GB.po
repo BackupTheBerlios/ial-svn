@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-05 12:18+0200\n"
+"POT-Creation-Date: 2005-07-07 10:39+0200\n"
 "PO-Revision-Date: 2005-07-07 10:55+0100\n"
 "Last-Translator: Timo Hoenig <thoenig@nouse.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,21 @@ msgstr ""
 
 #: ../src/Initial.cs:114
 #, csharp-format
-msgid "Could not save the configuration to disk. Please check the persmissions of \"{0}/.initial\"."
-msgstr "Could not save the configuration to disk. Please check the persmissions of \"{0}/.initial\"."
+msgid ""
+"Could not save the configuration to disk. Please check the persmissions of "
+"\"{0}/.initial\"."
+msgstr ""
+"Could not save the configuration to disk. Please check the permissions of "
+"\"{0}/.initial\"."
 
 #: ../src/Initial.cs:281
 #, csharp-format
-msgid "Could not execute the command \"{0}\". Please make sure that the application is in your path."
-msgstr "Could not execute the command \"{0}\". Please make sure that the application is in your path."
+msgid ""
+"Could not execute the command \"{0}\". Please make sure that the application "
+"is in your path."
+msgstr ""
+"Could not execute the command \"{0}\". Please make sure that the application "
+"is in your path."
 
 #: ../src/Initial_ui.cs:69
 msgid "H_ide"
@@ -105,12 +113,20 @@ msgid "Action"
 msgstr "Action"
 
 #: ../src/Initial_dbus.cs:55
-msgid "Could not connect to the D-BUS system bus. Please make sure that the D-BUS daemon is running."
-msgstr "Could not connect to the D-BUS system bus. Please make sure that the D-BUS daemon is running."
+msgid ""
+"Could not connect to the D-BUS system bus. Please make sure that the D-BUS "
+"daemon is running."
+msgstr ""
+"Could not connect to the D-BUS system bus. Please make sure that the D-BUS "
+"daemon is running."
 
 #: ../src/Initial_dbus.cs:75
-msgid "Could not aquire the Input Abstraction Layer interface. Please make sure that the Input Abstraction Layer daemon is running."
-msgstr "Could not aquire the Input Abstraction Layer interface. Please make sure that the Input Abstraction Layer daemon is running."
+msgid ""
+"Could not aquire the Input Abstraction Layer interface. Please make sure "
+"that the Input Abstraction Layer daemon is running."
+msgstr ""
+"Could not aquire the Input Abstraction Layer interface. Please make sure "
+"that the Input Abstraction Layer daemon is running."
 
 #: ../src/ui/initial.glade:7
 msgid "Initial"
@@ -120,13 +136,11 @@ msgstr "Initial"
 msgid "_File"
 msgstr "_File"
 
-#: ../src/ui/initial.glade:38
-#: ../src/ui/initial.glade:233
+#: ../src/ui/initial.glade:38 ../src/ui/initial.glade:233
 msgid "_Add Event"
 msgstr "_Add Event"
 
-#: ../src/ui/initial.glade:59
-#: ../src/ui/initial.glade:298
+#: ../src/ui/initial.glade:59 ../src/ui/initial.glade:298
 msgid "_Delete Event"
 msgstr "_Delete Event"
 
@@ -158,10 +172,8 @@ msgstr "_Capture Event"
 msgid "_Save Action"
 msgstr "_Save Action"
 
-#: ../src/ui/initial.glade:512
-#: ../src/ui/initial.glade:537
-#: ../src/ui/initial.glade:562
-#: ../src/ui/initial.glade:683
+#: ../src/ui/initial.glade:512 ../src/ui/initial.glade:537
+#: ../src/ui/initial.glade:562 ../src/ui/initial.glade:683
 msgid "not available"
 msgstr "not available"
 
@@ -193,8 +205,7 @@ msgstr "_Launch an Application"
 msgid "_Map Event to a X Key Symbol"
 msgstr "_Map Event to a X Key Symbol"
 
-#: ../src/ui/initial.glade:816
-#: ../src/ui/initial.glade:2295
+#: ../src/ui/initial.glade:816 ../src/ui/initial.glade:2295
 msgid "(dummy)"
 msgstr "(dummy)"
 
@@ -214,8 +225,7 @@ msgstr "_Browse"
 msgid "Arguments:"
 msgstr "Arguments:"
 
-#: ../src/ui/initial.glade:960
-#: ../src/ui/initial.glade:982
+#: ../src/ui/initial.glade:960 ../src/ui/initial.glade:982
 #: ../src/ui/initial.glade:1081
 msgid "*"
 msgstr "*"
@@ -812,8 +822,6 @@ msgstr "Map Event to a X Key Symbol"
 msgid "Choose Application"
 msgstr "Choose Application"
 
-#: ../src/ui/initial.glade:2405
-#: ../src/ui/initial.glade:2449
+#: ../src/ui/initial.glade:2405 ../src/ui/initial.glade:2449
 msgid "Please press a button."
 msgstr "Please press a button."
-
