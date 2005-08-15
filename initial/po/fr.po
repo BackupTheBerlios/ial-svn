@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-07 10:39+0200\n"
+"POT-Creation-Date: 2005-08-04 11:13+0200\n"
 "PO-Revision-Date: 2005-07-13 00:57+0100\n"
 "Last-Translator: Fred Blaise <fred@jaolin.net>\n"
 "Language-Team: timo and fred <thoenig@nouse.net>\n"
@@ -17,45 +17,43 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: BELGIUM\n"
 
-#: ../src/Initial.cs:114
-#, csharp-format
+#: ../src/Initial.cs:112
 msgid ""
-"Could not save the configuration to disk. Please check the persmissions of "
-"\"{0}/.initial\"."
+"Could not save the configuration to disk. Check the permissions of '{0}/."
+"initial'."
 msgstr ""
 "Impossible de sauvegarder la configuration sur le disque. Vérifiez les "
 "permissions de \"{0}/.initial\"."
 
-#: ../src/Initial.cs:281
-#, csharp-format
+#: ../src/Initial.cs:278
 msgid ""
-"Could not execute the command \"{0}\". Please make sure that the application "
-"is in your path."
+"Could not execute the command '{0}'. Make sure that the application is in "
+"your path."
 msgstr ""
 "Impossible d'exécuter la commande \"{0}\". Vérifiez que l'application se "
 "trouve dans le path."
 
-#: ../src/Initial_ui.cs:69
+#: ../src/Initial_ui.cs:67
 msgid "H_ide"
 msgstr "_Cacher"
 
-#: ../src/Initial_ui.cs:72
+#: ../src/Initial_ui.cs:70
 msgid "_Show"
 msgstr "_Montrer"
 
-#: ../src/Initial_ui.cs:79
+#: ../src/Initial_ui.cs:77
 msgid "_Quit"
 msgstr "_Quitter"
 
-#: ../src/Initial_ui.cs:258
+#: ../src/Initial_ui.cs:256
 msgid "Open"
 msgstr "Ouvrir"
 
-#: ../src/Initial_ui.cs:330
+#: ../src/Initial_ui.cs:328
 msgid "translator-credits"
 msgstr "Crédits-traducteurs"
 
-#: ../src/Initial_ui.cs:337
+#: ../src/Initial_ui.cs:335
 msgid ""
 "A User Interface for the\n"
 " Input Abstraction Layer"
@@ -63,70 +61,63 @@ msgstr ""
 "Une interface utilisateur pour\n"
 " Input Abstraction Layer"
 
-#: ../src/Initial_ui.cs:381
-msgid "Do you want to quit Initial?"
-msgstr "Voulez-vous vraiment quitter Initial?"
+#: ../src/Initial_ui.cs:377
+msgid "Really quit?"
+msgstr ""
 
-#: ../src/Initial_ui.cs:383
-msgid "Do not ask again"
+#: ../src/Initial_ui.cs:379
+msgid "Do Not Ask Again"
 msgstr "Ne plus jamais demander"
 
-#: ../src/Initial_ui.cs:420
-#, csharp-format
-msgid "Do you really want to delete the action \"{0}\" for the event \"{1}\"?"
+#: ../src/Initial_ui.cs:416
+msgid "Really delete the action \"{0}\" for the event \"{1}\"?"
 msgstr ""
 "Voulez-vous vraiment effacer cette action  \"{0}\" pour l'évènement \"{1}\" ?"
 
-#: ../src/Initial_ui.cs:470
-#, csharp-format
-msgid "Execute command \"{0}\""
-msgstr "Exécuter la commande \"{0}\""
+#: ../src/Initial_ui.cs:467
+msgid "Execute command \"{0}\" with argument(s) \"{1}\""
+msgstr ""
 
-#: ../src/Initial_ui.cs:476
-#, csharp-format
-msgid " with argument(s) \"{0}\""
-msgstr " avec argument(s) \"{0}\""
+#: ../src/Initial_ui.cs:471
+msgid "Execute command \"{0}\" with no additional arguments"
+msgstr ""
 
-#: ../src/Initial_ui.cs:479
-msgid " no additional arguments"
-msgstr " Pas d'autres arguments"
+#: ../src/Initial_ui.cs:484
+msgid "Type:"
+msgstr "Type:"
+
+#: ../src/Initial_ui.cs:486
+msgid "Sender:"
+msgstr "Envoyeur:"
+
+#: ../src/Initial_ui.cs:488
+msgid "Source:"
+msgstr "Source:"
 
 #: ../src/Initial_ui.cs:490
-msgid "Type: "
-msgstr "Type: "
+msgid "Raw Value:"
+msgstr "Valeur non formattée:"
 
-#: ../src/Initial_ui.cs:492
-msgid "Sender: "
-msgstr "Envoyeur: "
-
-#: ../src/Initial_ui.cs:494
-msgid "Source: "
-msgstr "Source: "
-
-#: ../src/Initial_ui.cs:496
-msgid "Raw Value: "
-msgstr "Valeur non formattée: "
-
-#: ../src/Initial_ui.cs:512
+#: ../src/Initial_ui.cs:506
 msgid "Event Name"
 msgstr "Nom de l'évènement"
 
-#: ../src/Initial_ui.cs:513
+#: ../src/Initial_ui.cs:507
 msgid "Action"
 msgstr "Action"
 
-#: ../src/Initial_dbus.cs:55
+#: ../src/Initial_dbus.cs:53
 msgid ""
-"Could not connect to the D-BUS system bus. Please make sure that the D-BUS "
-"daemon is running."
+"Could not connect to the D-BUS system bus. Make sure that the D-BUS daemon "
+"is running."
 msgstr ""
 "Impossible de se connecter au bus D-BUS. Vérifiez que le démon D-BUS est "
 "lancé."
 
-#: ../src/Initial_dbus.cs:75
+#: ../src/Initial_dbus.cs:72
 msgid ""
-"Could not aquire the Input Abstraction Layer interface. Please make sure "
-"that the Input Abstraction Layer daemon is running."
+"Could not acquire the input abstraction layer interface. Make sure that the "
+"input abstraction layer daemon is running."
 msgstr ""
 "Impossible d'acquérir l'interface Input Abstraction Layer. Vérifiez que le "
 "démon Input Abstraction Layer est lancé."
@@ -175,8 +166,12 @@ msgstr "_Capturer l'évènement"
 msgid "_Save Action"
 msgstr "_Sauvegarder l'Action"
 
-#: ../src/ui/initial.glade:512 ../src/ui/initial.glade:537
-#: ../src/ui/initial.glade:562 ../src/ui/initial.glade:683
+#: ../src/ui/initial.glade:512
+msgid "Not available"
+msgstr "Indisponible"
+
+#: ../src/ui/initial.glade:537 ../src/ui/initial.glade:562
+#: ../src/ui/initial.glade:683
 msgid "not available"
 msgstr "Indisponible"
 
@@ -205,7 +200,7 @@ msgid "_Launch an Application"
 msgstr "_Lancer une Application"
 
 #: ../src/ui/initial.glade:795
-msgid "_Map Event to a X Key Symbol"
+msgid "_Map Event to an X Key Symbol"
 msgstr "_Joindre un évènement à un symbole de clé X"
 
 #: ../src/ui/initial.glade:816 ../src/ui/initial.glade:2295
@@ -321,11 +316,7 @@ msgstr ""
 msgid "XF86CD"
 msgstr ""
 
-#: ../src/ui/initial.glade:1255
-msgid "XF86Calculater"
-msgstr ""
-
-#: ../src/ui/initial.glade:1263
+#: ../src/ui/initial.glade:1255 ../src/ui/initial.glade:1263
 msgid "XF86Calculator"
 msgstr ""
 
@@ -818,7 +809,7 @@ msgid "XF86iTouch"
 msgstr ""
 
 #: ../src/ui/initial.glade:2259
-msgid "Map Event to a X Key Symbol"
+msgid "Map Event to an X Key Symbol"
 msgstr "Joindre un évènement à un symbole de clé X"
 
 #: ../src/ui/initial.glade:2348
@@ -826,5 +817,11 @@ msgid "Choose Application"
 msgstr "Choisir une Application"
 
 #: ../src/ui/initial.glade:2405 ../src/ui/initial.glade:2449
-msgid "Please press a button."
+msgid "Press a button."
 msgstr "Appuyer sur un bouton."
+
+#~ msgid "Do you want to quit Initial?"
+#~ msgstr "Voulez-vous vraiment quitter Initial?"
+
+#~ msgid "Execute command \"{0}\""
+#~ msgstr "Exécuter la commande \"{0}\""

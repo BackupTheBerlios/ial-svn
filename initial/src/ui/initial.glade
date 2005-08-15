@@ -509,7 +509,7 @@
 			    <widget class="GtkLabel" id="lbl_e_device_val">
 			      <property name="width_request">150</property>
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">not available</property>
+			      <property name="label" translatable="yes">Not available</property>
 			      <property name="use_underline">False</property>
 			      <property name="use_markup">False</property>
 			      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -792,7 +792,7 @@
 			  <property name="width_request">150</property>
 			  <property name="visible">False</property>
 			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">_Map Event to a X Key Symbol</property>
+			  <property name="label" translatable="yes">_Map Event to an X Key Symbol</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="active">False</property>
@@ -1250,9 +1250,9 @@
 
 				  <child>
 				    <widget class="GtkListItem" id="listitem21">
-				      <property name="visible">True</property>
+				      <property name="visible">False</property>
 				      <property name="can_focus">True</property>
-				      <property name="label" translatable="yes">XF86Calculater</property>
+				      <property name="label" translatable="yes">XF86Calculator</property>
 				    </widget>
 				  </child>
 
@@ -2256,7 +2256,7 @@
 		      <child>
 			<widget class="GtkLabel" id="lbl_xkeysym">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Map Event to a X Key Symbol</property>
+			  <property name="label" translatable="yes">Map Event to an X Key Symbol</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -2402,7 +2402,7 @@
 
 <widget class="GtkDialog" id="dlg_press_button">
   <property name="visible">True</property>
-  <property name="title" translatable="yes">Please press a button.</property>
+  <property name="title" translatable="yes">Press a button.</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">True</property>
@@ -2446,7 +2446,7 @@
       <child>
 	<widget class="GtkLabel" id="lbl_press_button">
 	  <property name="visible">True</property>
-	  <property name="label" translatable="yes">Please press a button.</property>
+	  <property name="label" translatable="yes">Press a button.</property>
 	  <property name="use_underline">False</property>
 	  <property name="use_markup">False</property>
 	  <property name="justify">GTK_JUSTIFY_LEFT</property>

@@ -109,8 +109,7 @@ namespace Initial
                 w.Close ();
             } catch (System.UnauthorizedAccessException e) {
                 string warning =
-                    String.Format (Mono.Posix.Catalog.GetString ("Could not save the configuration to disk. Please " +
-                                                                 "check the persmissions of \"{0}/.initial\"."),
+                    String.Format (Mono.Posix.Catalog.GetString ("Could not save the configuration to disk. Check the permissions of '{0}/.initial'."),
                                    HomeDirectory);
 
                 MessageDialog md = new MessageDialog (null, DialogFlags.DestroyWithParent,
@@ -276,8 +275,7 @@ namespace Initial
                     p.Start ();
             } catch (System.ComponentModel.Win32Exception e) {
                 string warning =
-                    String.Format (Mono.Posix.Catalog.GetString ("Could not execute the command \"{0}\". Please make " +
-                                                                 "sure that the application is in your path."),
+                    String.Format (Mono.Posix.Catalog.GetString ("Could not execute the command '{0}'. Make sure that the application is in your path."),
                                   command);
 
                 MessageDialog md = new MessageDialog (null, DialogFlags.DestroyWithParent,
