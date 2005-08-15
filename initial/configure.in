@@ -51,7 +51,7 @@ AC_SUBST(INITIAL_LIBS)
 
 dnl -- Intl
 
-ALL_LINGUAS="de en_GB fr"
+ALL_LINGUAS="cs de hu fr nb pa pt"
 
 GETTEXT_PACKAGE=initial
 AC_SUBST(GETTEXT_PACKAGE)
