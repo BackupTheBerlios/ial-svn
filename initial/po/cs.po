@@ -1,0 +1,822 @@
+# translation of initial.po to Czech
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Jakub Friedl <jfried@suse.cz>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: initial\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-08-04 11:13+0200\n"
+"PO-Revision-Date: 2005-08-05 11:10+0200\n"
+"Last-Translator: Jakub Friedl <jfried@suse.cz>\n"
+"Language-Team: Czech <cs@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.10\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../src/Initial.cs:112
+#, csharp-format
+msgid ""
+"Could not save the configuration to disk. Check the permissions of '{0}/."
+"initial'."
+msgstr ""
+"Konfiguraci nelze uložit na disk. Zkontrolujte nastavení práv '{0}/."
+"initial'."
+
+#: ../src/Initial.cs:278
+#, csharp-format
+msgid ""
+"Could not execute the command '{0}'. Make sure that the application is in "
+"your path."
+msgstr "Nelze spustit příkaz '{0}'. Ujistěte se, že je požadovaná aplikace ve vaší cestě."
+
+#: ../src/Initial_ui.cs:67
+msgid "H_ide"
+msgstr "_Skrýt"
+
+#: ../src/Initial_ui.cs:70
+msgid "_Show"
+msgstr "_Zobrazit"
+
+#: ../src/Initial_ui.cs:77
+msgid "_Quit"
+msgstr "U_končit"
+
+#: ../src/Initial_ui.cs:256
+msgid "Open"
+msgstr "Otevřít"
+
+#: ../src/Initial_ui.cs:328
+msgid "translator-credits"
+msgstr "Jakub Friedl, jfriedl@suse.cz"
+
+#: ../src/Initial_ui.cs:335
+msgid ""
+"A User Interface for the\n"
+" Input Abstraction Layer"
+msgstr ""
+"Uživatelské rozhraní pro IAL\n"
+"(Input Abstraction Layer - vrstva abstrahující vstup)"
+
+#: ../src/Initial_ui.cs:377
+msgid "Really quit?"
+msgstr "Opravdu ukončit?"
+
+#: ../src/Initial_ui.cs:379
+msgid "Do Not Ask Again"
+msgstr "Znovu se neptat"
+
+#: ../src/Initial_ui.cs:416
+#, csharp-format
+msgid "Really delete the action \"{0}\" for the event \"{1}\"?"
+msgstr "Opravdu odstranit akci \"{0}\" události \"{1}\"?"
+
+#: ../src/Initial_ui.cs:467
+#, csharp-format
+msgid "Execute command \"{0}\" with argument(s) \"{1}\""
+msgstr "Spustit příkaz \"{0}\" s argumentem(y) \"{1}\""
+
+#: ../src/Initial_ui.cs:471
+#, csharp-format
+msgid "Execute command \"{0}\" with no additional arguments"
+msgstr "Spustit příkaz \"{0}\" bez dalších argumentů"
+
+#: ../src/Initial_ui.cs:484
+msgid "Type:"
+msgstr "Typ:"
+
+#: ../src/Initial_ui.cs:486
+msgid "Sender:"
+msgstr "Odesílatel:"
+
+#: ../src/Initial_ui.cs:488
+msgid "Source:"
+msgstr "Zdroj:"
+
+#: ../src/Initial_ui.cs:490
+msgid "Raw Value:"
+msgstr "Nezpracovaná hodnota:"
+
+#: ../src/Initial_ui.cs:506
+msgid "Event Name"
+msgstr "Jméno události"
+
+#: ../src/Initial_ui.cs:507
+msgid "Action"
+msgstr "Akce"
+
+#: ../src/Initial_dbus.cs:53
+msgid ""
+"Could not connect to the D-BUS system bus. Make sure that the D-BUS daemon "
+"is running."
+msgstr "Nelze se připojit k systému D-BUS. Ověřte, zda D-BUS démon běží."
+
+#: ../src/Initial_dbus.cs:72
+msgid ""
+"Could not acquire the input abstraction layer interface. Make sure that the "
+"input abstraction layer daemon is running."
+msgstr ""
+"Nelze získat rozhraní vrstvy abstrahující vstup. "
+"Ověřte, zda běží démon vrstvy abstrahující vstup."
+
+#: ../src/ui/initial.glade:7
+msgid "Initial"
+msgstr "Výchozí"
+
+#: ../src/ui/initial.glade:29
+msgid "_File"
+msgstr "_Soubor"
+
+#: ../src/ui/initial.glade:38 ../src/ui/initial.glade:233
+msgid "_Add Event"
+msgstr "_Přidat událost"
+
+#: ../src/ui/initial.glade:59 ../src/ui/initial.glade:298
+msgid "_Delete Event"
+msgstr "_Odstranit událost"
+
+#: ../src/ui/initial.glade:98
+msgid "_Edit"
+msgstr "_Upravit"
+
+#: ../src/ui/initial.glade:107
+msgid "Preferen_ces..."
+msgstr "_Předvolby"
+
+#: ../src/ui/initial.glade:131
+msgid "_Help"
+msgstr "_Nápověda"
+
+#: ../src/ui/initial.glade:140
+msgid "_About"
+msgstr "_O aplikaci"
+
+#: ../src/ui/initial.glade:347
+msgid "Add Event"
+msgstr "Přidat událost"
+
+#: ../src/ui/initial.glade:375
+msgid "_Capture Event"
+msgstr "_Zachytit událost"
+
+#: ../src/ui/initial.glade:440
+msgid "_Save Action"
+msgstr "_Uložit akci"
+
+#: ../src/ui/initial.glade:512
+msgid "Not available"
+msgstr "Nedostupný"
+
+#: ../src/ui/initial.glade:537 ../src/ui/initial.glade:562
+#: ../src/ui/initial.glade:683
+msgid "not available"
+msgstr "nedostupný"
+
+#: ../src/ui/initial.glade:586
+msgid "Device:"
+msgstr "Zařízení:"
+
+#: ../src/ui/initial.glade:610
+msgid "Module:"
+msgstr "Modul:"
+
+#: ../src/ui/initial.glade:634
+msgid "Numeric Value:"
+msgstr "Číselná hodnota:"
+
+#: ../src/ui/initial.glade:658
+msgid "Name:"
+msgstr "Název:"
+
+#: ../src/ui/initial.glade:716
+msgid "Captured Event"
+msgstr "Zachycená událost"
+
+#: ../src/ui/initial.glade:775
+msgid "_Launch an Application"
+msgstr "_Spustit aplikaci"
+
+#: ../src/ui/initial.glade:795
+msgid "_Map Event to an X Key Symbol"
+msgstr "_Mapovat událost na X Key symbol"
+
+#: ../src/ui/initial.glade:816 ../src/ui/initial.glade:2295
+msgid "(dummy)"
+msgstr "(dummy)"
+
+#: ../src/ui/initial.glade:837
+msgid "Assign Action"
+msgstr "Přiřadit akci"
+
+#: ../src/ui/initial.glade:887
+msgid "Application:"
+msgstr "Aplikace:"
+
+#: ../src/ui/initial.glade:912
+msgid "_Browse"
+msgstr "_Procházet"
+
+#: ../src/ui/initial.glade:930
+msgid "Arguments:"
+msgstr "Argumenty:"
+
+#: ../src/ui/initial.glade:960 ../src/ui/initial.glade:982
+#: ../src/ui/initial.glade:1081
+msgid "*"
+msgstr "*"
+
+#: ../src/ui/initial.glade:1000
+msgid "Launch an Application"
+msgstr "Spustit aplikaci"
+
+#: ../src/ui/initial.glade:1042
+msgid "X Key Symbol:"
+msgstr "X Key symbol:"
+
+#: ../src/ui/initial.glade:1095
+msgid "XF86AddFavorite"
+msgstr "XF86AddFavorite"
+
+#: ../src/ui/initial.glade:1103
+msgid "XF86ApplicationLeft"
+msgstr "XF86ApplicationLeft"
+
+#: ../src/ui/initial.glade:1111
+msgid "XF86ApplicationRight"
+msgstr "XF86ApplicationRight"
+
+#: ../src/ui/initial.glade:1119
+msgid "XF86AudioLowerVolume"
+msgstr "XF86AudioLowerVolume"
+
+#: ../src/ui/initial.glade:1127
+msgid "XF86AudioMedia"
+msgstr "XF86AudioMedia"
+
+#: ../src/ui/initial.glade:1135
+msgid "XF86AudioMute"
+msgstr "XF86AudioMute"
+
+#: ../src/ui/initial.glade:1143
+msgid "XF86AudioNext"
+msgstr "XF86AudioNext"
+
+#: ../src/ui/initial.glade:1151
+msgid "XF86AudioPause"
+msgstr "XF86AudioPause"
+
+#: ../src/ui/initial.glade:1159
+msgid "XF86AudioPlay"
+msgstr "XF86AudioPlay"
+
+#: ../src/ui/initial.glade:1167
+msgid "XF86AudioPrev"
+msgstr "XF86AudioPrev"
+
+#: ../src/ui/initial.glade:1175
+msgid "XF86AudioRaiseVolume"
+msgstr "XF86AudioRaiseVolume"
+
+#: ../src/ui/initial.glade:1183
+msgid "XF86AudioRecord"
+msgstr "XF86AudioRecord"
+
+#: ../src/ui/initial.glade:1191
+msgid "XF86AudioRewind"
+msgstr "XF86AudioRewind"
+
+#: ../src/ui/initial.glade:1199
+msgid "XF86AudioStop"
+msgstr "XF86AudioStop"
+
+#: ../src/ui/initial.glade:1207
+msgid "XF86Away"
+msgstr "XF86Away"
+
+#: ../src/ui/initial.glade:1215
+msgid "XF86Back"
+msgstr "XF86Back"
+
+#: ../src/ui/initial.glade:1223
+msgid "XF86BackForward"
+msgstr "XF86BackForward"
+
+#: ../src/ui/initial.glade:1231
+msgid "XF86Book"
+msgstr "XF86Book"
+
+#: ../src/ui/initial.glade:1239
+msgid "XF86BrightnessAdjust"
+msgstr "XF86BrightnessAdjust"
+
+#: ../src/ui/initial.glade:1247
+msgid "XF86CD"
+msgstr "XF86CD"
+
+#: ../src/ui/initial.glade:1255 ../src/ui/initial.glade:1263
+msgid "XF86Calculator"
+msgstr "XF86Calculator"
+
+#: ../src/ui/initial.glade:1271
+msgid "XF86Calendar"
+msgstr "XF86Calendar"
+
+#: ../src/ui/initial.glade:1279
+msgid "XF86Clear"
+msgstr "XF86Clear"
+
+#: ../src/ui/initial.glade:1287
+msgid "XF86Close"
+msgstr "XF86Close"
+
+#: ../src/ui/initial.glade:1295
+msgid "XF86Community"
+msgstr "XF86Community"
+
+#: ../src/ui/initial.glade:1303
+msgid "XF86ContrastAdjust"
+msgstr "XF86ContrastAdjust"
+
+#: ../src/ui/initial.glade:1311
+msgid "XF86Copy"
+msgstr "XF86Copy"
+
+#: ../src/ui/initial.glade:1319
+msgid "XF86Cut"
+msgstr "XF86Cut"
+
+#: ../src/ui/initial.glade:1327
+msgid "XF86DOS"
+msgstr "XF86DOS"
+
+#: ../src/ui/initial.glade:1335
+msgid "XF86Display"
+msgstr "XF86Display"
+
+#: ../src/ui/initial.glade:1343
+msgid "XF86Documents"
+msgstr "XF86Documents"
+
+#: ../src/ui/initial.glade:1351
+msgid "XF86Eject"
+msgstr "XF86Eject"
+
+#: ../src/ui/initial.glade:1359
+msgid "XF86Excel"
+msgstr "XF86Excel"
+
+#: ../src/ui/initial.glade:1367
+msgid "XF86Explorer"
+msgstr "XF86Explorer"
+
+#: ../src/ui/initial.glade:1375
+msgid "XF86Favorites"
+msgstr "XF86Favorites"
+
+#: ../src/ui/initial.glade:1383
+msgid "XF86Finance"
+msgstr "XF86Finance"
+
+#: ../src/ui/initial.glade:1391
+msgid "XF86Forward"
+msgstr "XF86Forward"
+
+#: ../src/ui/initial.glade:1399
+msgid "XF86Game"
+msgstr "XF86Game"
+
+#: ../src/ui/initial.glade:1407
+msgid "XF86Go"
+msgstr "XF86Go"
+
+#: ../src/ui/initial.glade:1415
+msgid "XF86History"
+msgstr "XF86History"
+
+#: ../src/ui/initial.glade:1423
+msgid "XF86HomePage"
+msgstr "XF86HomePage"
+
+#: ../src/ui/initial.glade:1431
+msgid "XF86HotLinks"
+msgstr "XF86HotLinks"
+
+#: ../src/ui/initial.glade:1439
+msgid "XF86Launch0"
+msgstr "XF86Launch0"
+
+#: ../src/ui/initial.glade:1447
+msgid "XF86Launch1"
+msgstr "XF86Launch1"
+
+#: ../src/ui/initial.glade:1455
+msgid "XF86Launch2"
+msgstr "XF86Launch2"
+
+#: ../src/ui/initial.glade:1463
+msgid "XF86Launch3"
+msgstr "XF86Launch3"
+
+#: ../src/ui/initial.glade:1471
+msgid "XF86Launch4"
+msgstr "XF86Launch4"
+
+#: ../src/ui/initial.glade:1479
+msgid "XF86Launch5"
+msgstr "XF86Launch5"
+
+#: ../src/ui/initial.glade:1487
+msgid "XF86Launch6"
+msgstr "XF86Launch6"
+
+#: ../src/ui/initial.glade:1495
+msgid "XF86Launch7"
+msgstr "XF86Launch7"
+
+#: ../src/ui/initial.glade:1503
+msgid "XF86Launch8"
+msgstr "XF86Launch8"
+
+#: ../src/ui/initial.glade:1511
+msgid "XF86Launch9"
+msgstr "XF86Launch9"
+
+#: ../src/ui/initial.glade:1519
+msgid "XF86LaunchA"
+msgstr "XF86LaunchA"
+
+#: ../src/ui/initial.glade:1527
+msgid "XF86LaunchB"
+msgstr "XF86LaunchB"
+
+#: ../src/ui/initial.glade:1535
+msgid "XF86LaunchC"
+msgstr "XF86LaunchC"
+
+#: ../src/ui/initial.glade:1543
+msgid "XF86LaunchD"
+msgstr "XF86LaunchD"
+
+#: ../src/ui/initial.glade:1551
+msgid "XF86LaunchE"
+msgstr "XF86LaunchE"
+
+#: ../src/ui/initial.glade:1559
+msgid "XF86LaunchF"
+msgstr "XF86LaunchF"
+
+#: ../src/ui/initial.glade:1567
+msgid "XF86LightBulb"
+msgstr "XF86LightBulb"
+
+#: ../src/ui/initial.glade:1575
+msgid "XF86LogOff"
+msgstr "XF86LogOff"
+
+#: ../src/ui/initial.glade:1583
+msgid "XF86Mail"
+msgstr "XF86Mail"
+
+#: ../src/ui/initial.glade:1591
+msgid "XF86MailForward"
+msgstr "XF86MailForward"
+
+#: ../src/ui/initial.glade:1599
+msgid "XF86Market"
+msgstr "XF86Market"
+
+#: ../src/ui/initial.glade:1607
+msgid "XF86Meeting"
+msgstr "XF86Meeting"
+
+#: ../src/ui/initial.glade:1615
+msgid "XF86Memo"
+msgstr "XF86Memo"
+
+#: ../src/ui/initial.glade:1623
+msgid "XF86MenuKB"
+msgstr "XF86MenuKB"
+
+#: ../src/ui/initial.glade:1631
+msgid "XF86MenuPB"
+msgstr "XF86MenuPB"
+
+#: ../src/ui/initial.glade:1639
+msgid "XF86Messenger"
+msgstr "XF86Messenger"
+
+#: ../src/ui/initial.glade:1647
+msgid "XF86ModeLock"
+msgstr "XF86ModeLock"
+
+#: ../src/ui/initial.glade:1655
+msgid "XF86Music"
+msgstr "XF86Music"
+
+#: ../src/ui/initial.glade:1663
+msgid "XF86MyComputer"
+msgstr "XF86MyComputer"
+
+#: ../src/ui/initial.glade:1671
+msgid "XF86MySites"
+msgstr "XF86MySites"
+
+#: ../src/ui/initial.glade:1679
+msgid "XF86New"
+msgstr "XF86New"
+
+#: ../src/ui/initial.glade:1687
+msgid "XF86News"
+msgstr "XF86News"
+
+#: ../src/ui/initial.glade:1695
+msgid "XF86OfficeHome"
+msgstr "XF86OfficeHome"
+
+#: ../src/ui/initial.glade:1703
+msgid "XF86Open"
+msgstr "XF86Open"
+
+#: ../src/ui/initial.glade:1711
+msgid "XF86OpenURL"
+msgstr "XF86OpenURL"
+
+#: ../src/ui/initial.glade:1719
+msgid "XF86Option"
+msgstr "XF86Option"
+
+#: ../src/ui/initial.glade:1727
+msgid "XF86Paste"
+msgstr "XF86Paste"
+
+#: ../src/ui/initial.glade:1735
+msgid "XF86Phone"
+msgstr "XF86Phone"
+
+#: ../src/ui/initial.glade:1743
+msgid "XF86Pictures"
+msgstr "XF86Pictures"
+
+#: ../src/ui/initial.glade:1751
+msgid "XF86PowerDown"
+msgstr "XF86PowerDown"
+
+#: ../src/ui/initial.glade:1759
+msgid "XF86PowerOff"
+msgstr "XF86PowerOff"
+
+#: ../src/ui/initial.glade:1767
+msgid "XF86Q"
+msgstr "XF86Q"
+
+#: ../src/ui/initial.glade:1775
+msgid "XF86Refresh"
+msgstr "XF86Refresh"
+
+#: ../src/ui/initial.glade:1783
+msgid "XF86Reload"
+msgstr "XF86Reload"
+
+#: ../src/ui/initial.glade:1791
+msgid "XF86Reply"
+msgstr "XF86Reply"
+
+#: ../src/ui/initial.glade:1799
+msgid "XF86RockerDown"
+msgstr "XF86RockerDown"
+
+#: ../src/ui/initial.glade:1807
+msgid "XF86RockerEnter"
+msgstr "XF86RockerEnter"
+
+#: ../src/ui/initial.glade:1815
+msgid "XF86RockerUp"
+msgstr "XF86RockerUp"
+
+#: ../src/ui/initial.glade:1823
+msgid "XF86RotateWindows"
+msgstr "XF86RotateWindows"
+
+#: ../src/ui/initial.glade:1831
+msgid "XF86RotationKB"
+msgstr "XF86RotationKB"
+
+#: ../src/ui/initial.glade:1839
+msgid "XF86RotationPB"
+msgstr "XF86RotationPB"
+
+#: ../src/ui/initial.glade:1847
+msgid "XF86Save"
+msgstr "XF86Save"
+
+#: ../src/ui/initial.glade:1855
+msgid "XF86ScreenSaver"
+msgstr "XF86ScreenSaver"
+
+#: ../src/ui/initial.glade:1863
+msgid "XF86ScrollClick"
+msgstr "XF86ScrollClick"
+
+#: ../src/ui/initial.glade:1871
+msgid "XF86ScrollDown"
+msgstr "XF86ScrollDown"
+
+#: ../src/ui/initial.glade:1879
+msgid "XF86ScrollUp"
+msgstr "XF86ScrollUp"
+
+#: ../src/ui/initial.glade:1887
+msgid "XF86Search"
+msgstr "XF86Search"
+
+#: ../src/ui/initial.glade:1895
+msgid "XF86Send"
+msgstr "XF86Send"
+
+#: ../src/ui/initial.glade:1903
+msgid "XF86Shop"
+msgstr "XF86Shop"
+
+#: ../src/ui/initial.glade:1911
+msgid "XF86Sleep"
+msgstr "XF86Sleep"
+
+#: ../src/ui/initial.glade:1919
+msgid "XF86Spell"
+msgstr "XF86Spell"
+
+#: ../src/ui/initial.glade:1927
+msgid "XF86SplitScreen"
+msgstr "XF86SplitScreen"
+
+#: ../src/ui/initial.glade:1935
+msgid "XF86Standby"
+msgstr "XF86Standby"
+
+#: ../src/ui/initial.glade:1943
+msgid "XF86Start"
+msgstr "XF86Start"
+
+#: ../src/ui/initial.glade:1951
+msgid "XF86Stop"
+msgstr "XF86Stop"
+
+#: ../src/ui/initial.glade:1959
+msgid "XF86Support"
+msgstr "XF86Support"
+
+#: ../src/ui/initial.glade:1967
+msgid "XF86TaskPane"
+msgstr "XF86TaskPane"
+
+#: ../src/ui/initial.glade:1975
+msgid "XF86Terminal"
+msgstr "XF86Terminal"
+
+#: ../src/ui/initial.glade:1983
+msgid "XF86ToDoList"
+msgstr "XF86ToDoList"
+
+#: ../src/ui/initial.glade:1991
+msgid "XF86Tools"
+msgstr "XF86Tools"
+
+#: ../src/ui/initial.glade:1999
+msgid "XF86Travel"
+msgstr "XF86Travel"
+
+#: ../src/ui/initial.glade:2007
+msgid "XF86User1KB"
+msgstr "XF86User1KB"
+
+#: ../src/ui/initial.glade:2015
+msgid "XF86User2KB"
+msgstr "XF86User2KB"
+
+#: ../src/ui/initial.glade:2023
+msgid "XF86UserPB"
+msgstr "XF86UserPB"
+
+#: ../src/ui/initial.glade:2031
+msgid "XF86VendorHome"
+msgstr "XF86VendorHome"
+
+#: ../src/ui/initial.glade:2039
+msgid "XF86Video"
+msgstr "XF86Video"
+
+#: ../src/ui/initial.glade:2047
+msgid "XF86WWW"
+msgstr "XF86WWW"
+
+#: ../src/ui/initial.glade:2055
+msgid "XF86WakeUp"
+msgstr "XF86WakeUp"
+
+#: ../src/ui/initial.glade:2063
+msgid "XF86WebCam"
+msgstr "XF86WebCam"
+
+#: ../src/ui/initial.glade:2071
+msgid "XF86WheelButton"
+msgstr "XF86WheelButton"
+
+#: ../src/ui/initial.glade:2079
+msgid "XF86Word"
+msgstr "XF86Word"
+
+#: ../src/ui/initial.glade:2087
+msgid "XF86Xfer"
+msgstr "XF86Xfer"
+
+#: ../src/ui/initial.glade:2095
+msgid "XF86ZoomIn"
+msgstr "XF86ZoomIn"
+
+#: ../src/ui/initial.glade:2103
+msgid "XF86ZoomOut"
+msgstr "XF86ZoomOut"
+
+#: ../src/ui/initial.glade:2111
+msgid "XF86_ClearGrab"
+msgstr "XF86_ClearGrab"
+
+#: ../src/ui/initial.glade:2119
+msgid "XF86_Next_VMode"
+msgstr "XF86_Next_VMode"
+
+#: ../src/ui/initial.glade:2127
+msgid "XF86_Prev_VMode"
+msgstr "XF86_Prev_VMode"
+
+#: ../src/ui/initial.glade:2135
+msgid "XF86_Switch_VT_1"
+msgstr "XF86_Switch_VT_1"
+
+#: ../src/ui/initial.glade:2143
+msgid "XF86_Switch_VT_10"
+msgstr "XF86_Switch_VT_10"
+
+#: ../src/ui/initial.glade:2151
+msgid "XF86_Switch_VT_11"
+msgstr "XF86_Switch_VT_11"
+
+#: ../src/ui/initial.glade:2159
+msgid "XF86_Switch_VT_12"
+msgstr "XF86_Switch_VT_12"
+
+#: ../src/ui/initial.glade:2167
+msgid "XF86_Switch_VT_2"
+msgstr "XF86_Switch_VT_2"
+
+#: ../src/ui/initial.glade:2175
+msgid "XF86_Switch_VT_3"
+msgstr "XF86_Switch_VT_3"
+
+#: ../src/ui/initial.glade:2183
+msgid "XF86_Switch_VT_4"
+msgstr "XF86_Switch_VT_4"
+
+#: ../src/ui/initial.glade:2191
+msgid "XF86_Switch_VT_5"
+msgstr "XF86_Switch_VT_5"
+
+#: ../src/ui/initial.glade:2199
+msgid "XF86_Switch_VT_6"
+msgstr "XF86_Switch_VT_6"
+
+#: ../src/ui/initial.glade:2207
+msgid "XF86_Switch_VT_7"
+msgstr "XF86_Switch_VT_7"
+
+#: ../src/ui/initial.glade:2215
+msgid "XF86_Switch_VT_8"
+msgstr "XF86_Switch_VT_8"
+
+#: ../src/ui/initial.glade:2223
+msgid "XF86_Switch_VT_9"
+msgstr "XF86_Switch_VT_9"
+
+#: ../src/ui/initial.glade:2231
+msgid "XF86_Ungrab"
+msgstr "XF86_Ungrab"
+
+#: ../src/ui/initial.glade:2239
+msgid "XF86iTouch"
+msgstr "XF86iTouch"
+
+#: ../src/ui/initial.glade:2259
+msgid "Map Event to an X Key Symbol"
+msgstr "Mapovat událost na X Key symbol"
+
+#: ../src/ui/initial.glade:2348
+msgid "Choose Application"
+msgstr "Zvolit aplikaci"
+
+#: ../src/ui/initial.glade:2405 ../src/ui/initial.glade:2449
+msgid "Press a button."
+msgstr "Stiskněte tlačítko."
+
