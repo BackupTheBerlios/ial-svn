@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-07 10:39+0200\n"
+"POT-Creation-Date: 2005-08-04 11:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,107 +16,103 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/Initial.cs:114
+#: ../src/Initial.cs:112
 #, csharp-format
 msgid ""
-"Could not save the configuration to disk. Please check the persmissions of "
-"\"{0}/.initial\"."
+"Could not save the configuration to disk. Check the permissions of '{0}/."
+"initial'."
 msgstr ""
 
-#: ../src/Initial.cs:281
+#: ../src/Initial.cs:278
 #, csharp-format
 msgid ""
-"Could not execute the command \"{0}\". Please make sure that the application "
-"is in your path."
+"Could not execute the command '{0}'. Make sure that the application is in "
+"your path."
 msgstr ""
 
-#: ../src/Initial_ui.cs:69
+#: ../src/Initial_ui.cs:67
 msgid "H_ide"
 msgstr ""
 
-#: ../src/Initial_ui.cs:72
+#: ../src/Initial_ui.cs:70
 msgid "_Show"
 msgstr ""
 
-#: ../src/Initial_ui.cs:79
+#: ../src/Initial_ui.cs:77
 msgid "_Quit"
 msgstr ""
 
-#: ../src/Initial_ui.cs:258
+#: ../src/Initial_ui.cs:256
 msgid "Open"
 msgstr ""
 
-#: ../src/Initial_ui.cs:330
+#: ../src/Initial_ui.cs:328
 msgid "translator-credits"
 msgstr ""
 
-#: ../src/Initial_ui.cs:337
+#: ../src/Initial_ui.cs:335
 msgid ""
 "A User Interface for the\n"
 " Input Abstraction Layer"
 msgstr ""
 
-#: ../src/Initial_ui.cs:381
-msgid "Do you want to quit Initial?"
+#: ../src/Initial_ui.cs:377
+msgid "Really quit?"
 msgstr ""
 
-#: ../src/Initial_ui.cs:383
-msgid "Do not ask again"
+#: ../src/Initial_ui.cs:379
+msgid "Do Not Ask Again"
 msgstr ""
 
-#: ../src/Initial_ui.cs:420
+#: ../src/Initial_ui.cs:416
 #, csharp-format
-msgid "Do you really want to delete the action \"{0}\" for the event \"{1}\"?"
+msgid "Really delete the action \"{0}\" for the event \"{1}\"?"
 msgstr ""
 
-#: ../src/Initial_ui.cs:470
+#: ../src/Initial_ui.cs:467
 #, csharp-format
-msgid "Execute command \"{0}\""
+msgid "Execute command \"{0}\" with argument(s) \"{1}\""
 msgstr ""
 
-#: ../src/Initial_ui.cs:476
+#: ../src/Initial_ui.cs:471
 #, csharp-format
-msgid " with argument(s) \"{0}\""
+msgid "Execute command \"{0}\" with no additional arguments"
 msgstr ""
 
-#: ../src/Initial_ui.cs:479
-msgid " no additional arguments"
+#: ../src/Initial_ui.cs:484
+msgid "Type:"
+msgstr ""
+
+#: ../src/Initial_ui.cs:486
+msgid "Sender:"
+msgstr ""
+
+#: ../src/Initial_ui.cs:488
+msgid "Source:"
 msgstr ""
 
 #: ../src/Initial_ui.cs:490
-msgid "Type: "
+msgid "Raw Value:"
 msgstr ""
 
-#: ../src/Initial_ui.cs:492
-msgid "Sender: "
-msgstr ""
-
-#: ../src/Initial_ui.cs:494
-msgid "Source: "
-msgstr ""
-
-#: ../src/Initial_ui.cs:496
-msgid "Raw Value: "
-msgstr ""
-
-#: ../src/Initial_ui.cs:512
+#: ../src/Initial_ui.cs:506
 msgid "Event Name"
 msgstr ""
 
-#: ../src/Initial_ui.cs:513
+#: ../src/Initial_ui.cs:507
 msgid "Action"
 msgstr ""
 
-#: ../src/Initial_dbus.cs:55
+#: ../src/Initial_dbus.cs:53
 msgid ""
-"Could not connect to the D-BUS system bus. Please make sure that the D-BUS "
-"daemon is running."
+"Could not connect to the D-BUS system bus. Make sure that the D-BUS daemon "
+"is running."
 msgstr ""
 
-#: ../src/Initial_dbus.cs:75
+#: ../src/Initial_dbus.cs:72
 msgid ""
-"Could not aquire the Input Abstraction Layer interface. Please make sure "
-"that the Input Abstraction Layer daemon is running."
+"Could not acquire the input abstraction layer interface. Make sure that the "
+"input abstraction layer daemon is running."
 msgstr ""
 
 #: ../src/ui/initial.glade:7
@@ -163,8 +159,12 @@ msgstr ""
 msgid "_Save Action"
 msgstr ""
 
-#: ../src/ui/initial.glade:512 ../src/ui/initial.glade:537
-#: ../src/ui/initial.glade:562 ../src/ui/initial.glade:683
+#: ../src/ui/initial.glade:512
+msgid "Not available"
+msgstr ""
+
+#: ../src/ui/initial.glade:537 ../src/ui/initial.glade:562
+#: ../src/ui/initial.glade:683
 msgid "not available"
 msgstr ""
 
@@ -193,7 +193,7 @@ msgid "_Launch an Application"
 msgstr ""
 
 #: ../src/ui/initial.glade:795
-msgid "_Map Event to a X Key Symbol"
+msgid "_Map Event to an X Key Symbol"
 msgstr ""
 
 #: ../src/ui/initial.glade:816 ../src/ui/initial.glade:2295
@@ -309,11 +309,7 @@ msgstr ""
 msgid "XF86CD"
 msgstr ""
 
-#: ../src/ui/initial.glade:1255
-msgid "XF86Calculater"
-msgstr ""
-
-#: ../src/ui/initial.glade:1263
+#: ../src/ui/initial.glade:1255 ../src/ui/initial.glade:1263
 msgid "XF86Calculator"
 msgstr ""
 
@@ -806,7 +802,7 @@ msgid "XF86iTouch"
 msgstr ""
 
 #: ../src/ui/initial.glade:2259
-msgid "Map Event to a X Key Symbol"
+msgid "Map Event to an X Key Symbol"
 msgstr ""
 
 #: ../src/ui/initial.glade:2348
@@ -814,5 +810,5 @@ msgid "Choose Application"
 msgstr ""
 
 #: ../src/ui/initial.glade:2405 ../src/ui/initial.glade:2449
-msgid "Please press a button."
+msgid "Press a button."
 msgstr ""
