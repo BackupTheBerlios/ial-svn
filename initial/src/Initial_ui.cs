@@ -327,7 +327,7 @@ namespace Initial
             string [] documenters = { "Timo Hoenig <thoenig@nouse.net>" };
             string translators    = Mono.Posix.Catalog.GetString ("translator-credits");
  
-            if(System.String.Compare(translators,"translator-credits") == 0) 
+            if(System.String.Compare(translators, "Translator Credits") == 0) 
                 translators = null;
 
             /* TODO: get version by define */
@@ -335,8 +335,6 @@ namespace Initial
                              Mono.Posix.Catalog.GetString ("A User Interface for the\n Input Abstraction Layer"),
                              authors, documenters, translators, logo).Show ();
         }
-
-
 
         public void on_cb_toggled (object o, EventArgs args)
         {
@@ -376,9 +374,9 @@ namespace Initial
                                                       DialogFlags.DestroyWithParent,
                                                       MessageType.Question,
                                                       ButtonsType.YesNo,
-                                                      Mono.Posix.Catalog.GetString ("Do you want to quit Initial?") );
+                                                      Mono.Posix.Catalog.GetString ("Really quit?") );
 
-                CheckButton cb = new CheckButton (Mono.Posix.Catalog.GetString ("Do not ask again"));
+                CheckButton cb = new CheckButton (Mono.Posix.Catalog.GetString ("Do Not Ask Again"));
                 cb.Toggled += on_cb_toggled;
                 cb.Visible = true;
 
@@ -415,8 +413,7 @@ namespace Initial
                 string action_name = (string) model.GetValue (iter, 1);
 
                 string question = 
-                    String.Format (Mono.Posix.Catalog.GetString ("Do you really want to delete the action \"{0}\" " +
-                                                                 "for the event \"{1}\"?"),
+                    String.Format (Mono.Posix.Catalog.GetString ("Really delete the action \"{0}\" for the event \"{1}\"?"),
                                    action_name,
                                    event_name);
 
@@ -464,17 +461,16 @@ namespace Initial
 
                 InitialAction a = ea.initial_action;
                 if (a.GetType() == typeof(ActionCommand)) {
-                    col2 =
-                        String.Format (Mono.Posix.Catalog.GetString ("Execute command \"{0}\""),
-                                       ((ActionCommand) ea.initial_action).command);
-
                     string args = ((ActionCommand) ea.initial_action).args; 
                     if (args.Length > 0) {
-                        col2 += 
-                            String.Format (Mono.Posix.Catalog.GetString (" with argument(s) \"{0}\""),
-                                           args);
+                        col2 =
+                            String.Format (Mono.Posix.Catalog.GetString ("Execute command \"{0}\" with argument(s) \"{1}\""),
+                                           ((ActionCommand) ea.initial_action).command, args);
                     } else {
-                        col2 += Mono.Posix.Catalog.GetString (" no additional arguments");
+                        col2 =
+                            String.Format (Mono.Posix.Catalog.GetString ("Execute command \"{0}\" with no additional arguments"),
+                                           ((ActionCommand) ea.initial_action).command);
+
                     }
                 } else if (a.GetType() == typeof(ActionXKeysym)) {
                     col2 = "Emulate FIXME "; 
@@ -485,13 +481,13 @@ namespace Initial
                 }
 
                 iter = tvw_ea_store.AppendValues (col1, col2);
-                tvw_ea_store.AppendValues (iter, Mono.Posix.Catalog.GetString("Type: "),
+                tvw_ea_store.AppendValues (iter, Mono.Posix.Catalog.GetString("Type:"),
                                            ea.initial_action.GetType().ToString ());
-                tvw_ea_store.AppendValues (iter, Mono.Posix.Catalog.GetString("Sender: "),
+                tvw_ea_store.AppendValues (iter, Mono.Posix.Catalog.GetString("Sender:"),
                                            ea.initial_event.Sender);
-                tvw_ea_store.AppendValues (iter, Mono.Posix.Catalog.GetString("Source: "),
+                tvw_ea_store.AppendValues (iter, Mono.Posix.Catalog.GetString("Source:"),
                                            ea.initial_event.Source);
-                tvw_ea_store.AppendValues (iter, Mono.Posix.Catalog.GetString("Raw Value: "),
+                tvw_ea_store.AppendValues (iter, Mono.Posix.Catalog.GetString("Raw Value:"),
                                            ea.initial_event.Raw.ToString ());
 
                 ea.iter = iter;
