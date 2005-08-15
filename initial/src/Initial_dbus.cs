@@ -50,8 +50,7 @@ namespace Initial
                 System.Console.WriteLine (e.Message);
  
                 string warning =
-                    Mono.Posix.Catalog.GetString ("Could not connect to the D-BUS system bus. Please make sure that " +
-                                                  "the D-BUS daemon is running.");
+                    Mono.Posix.Catalog.GetString ("Could not connect to the D-BUS system bus. Make sure that the D-BUS daemon is running.");
 
 
                 MessageDialog md = new MessageDialog (null, DialogFlags.DestroyWithParent, 
@@ -70,8 +69,7 @@ namespace Initial
                 System.Console.WriteLine (e.Message);
  
                 string warning = 
-                    Mono.Posix.Catalog.GetString ("Could not aquire the Input Abstraction Layer interface. Please " +
-                                                  "make sure that the Input Abstraction Layer daemon is running.");
+                    Mono.Posix.Catalog.GetString ("Could not acquire the input abstraction layer interface. Make sure that the input abstraction layer daemon is running.");
 
                 MessageDialog md = new MessageDialog (null, DialogFlags.DestroyWithParent, 
                                                       MessageType.Error, 
