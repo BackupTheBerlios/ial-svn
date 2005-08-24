@@ -24,8 +24,12 @@
  *
  **************************************************************************/
 
-DBusHandlerResult get_modules (DBusConnection *, DBusMessage *);
+gboolean          iald_dbus_setup (void); 
+gboolean          iald_dbus_reconnect (gpointer);
 
-DBusHandlerResult filter_function (DBusConnection *, DBusMessage *, void *);
+DBusHandlerResult get_modules (DBusConnection *,
+                               DBusMessage *);
 
-void iald_dbus_init (void);
+DBusHandlerResult filter_function (DBusConnection *,
+                                   DBusMessage *,
+                                   void *);

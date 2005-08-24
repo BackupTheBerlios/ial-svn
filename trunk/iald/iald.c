@@ -434,7 +434,6 @@ int
 main (int argc, char *argv[])
 {
     IalModule *m = NULL;
-    DBusError dbus_error;
 
 /* Scan for modules that both conf_parse() and opt_parse() can set
  * options for modules.
@@ -514,33 +513,10 @@ main (int argc, char *argv[])
 
     loop = g_main_loop_new (NULL, FALSE);
 
-    if (ial_dbus_connect () == FALSE) {
-        ERROR (("D-BUS connection failed."));
-        exit (1);
-    }
-
-    dbus_connection_setup_with_g_main (dbus_connection, NULL);
-
-    dbus_error_init (&dbus_error);
-
-    /* TODO
-     *
-     * Evaluate if it makes sense to check whether dbus_bus_service_exists() == TRUE and abort if so..
-     *
-     */
-
-    dbus_bus_request_name (dbus_connection, IAL_DBUS_SERVICENAME, 0, &dbus_error);
-
-    if (dbus_error_is_set (&dbus_error)) {
-        ERROR (("dbus_bus_request_name(): Error. (%s)", dbus_error.message));
-        exit (1);
-    } else {
-        INFO (("dbus_bus_request_name(): Success. (%s)", IAL_DBUS_SERVICENAME));
-    }
+    if (iald_dbus_setup () == FALSE)
+        return 1;
 
     modules_load ();
-
-    iald_dbus_init ();
 
     g_main_loop_run (loop);
 
