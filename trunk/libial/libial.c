@@ -61,7 +61,6 @@ ial_dbus_connect ()
         dbus_connection_set_change_sigpipe (TRUE);
         dbus_error_init (&dbus_error);
         dbus_connection = dbus_bus_get (DBUS_BUS_SYSTEM, &dbus_error);
-
         if (dbus_connection == NULL) {
             ERROR (("dbus_bus_get(): Error. (%s)", dbus_error.message));
             return FALSE;
@@ -91,7 +90,7 @@ ial_dbus_connect ()
  */
 
 IalEvent
-event_receive (DBusMessage * dbus_message)
+event_receive (DBusMessage *dbus_message)
 {
     IalEvent event;
     DBusError dbus_error;
@@ -112,7 +111,7 @@ event_receive (DBusMessage * dbus_message)
  */
 
 void
-event_send (IalEvent * event)
+event_send (IalEvent *event)
 {
     DBusMessage *dbus_message = NULL;
     DBusMessageIter dbus_it;
