@@ -115,7 +115,7 @@ module_add (char *filename)
  */
 
 void
-module_remove (IalModule * module)
+module_remove (IalModule *module)
 {
 
 }
@@ -241,7 +241,7 @@ modules_load ()
  */
 
 void
-module_unload (IalModule * m)
+module_unload (IalModule *m)
 {
     if (m == modules_list_head) {
         DEBUG (("Removing list head."));
