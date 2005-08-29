@@ -26,6 +26,38 @@
 
 #include "libial_toshiba.h"
 
+void
+toshiba_brightness_set (int mode)
+{
+    FILE *f;
+    int   value = 0;
+
+    f = fopen (ACPI_TOSHIBA_LCD, "r+");
+
+    if (!f) {
+        WARNING (("Error opening %s. Could not adjust brightness.", ACPI_TOSHIBA_LCD));
+        goto out;
+    }
+
+    fscanf (f, "brightness:%1d", &value);
+
+    switch (mode) {
+        case BRN_UP:
+            fprintf (f, "brightness:%1d", ++value);
+            break;
+        case BRN_DN:
+            fprintf (f, "brightness:%1d", --value);
+            break;
+        default:
+            break;
+    }
+
+    fclose (f);
+
+out:
+    return;
+}
+
 const char *
 toshiba_fnkey_description (int key_value)
 {
@@ -38,5 +70,7 @@ toshiba_fnkey_description (int key_value)
             *keylist++;
         }
     }
+
     return NULL;
 }
+

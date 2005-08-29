@@ -137,13 +137,17 @@ toshiba_key_poll ()
 {
     while (toshiba_key_ready () == TRUE) {
 
+        if (fnkey.value == FN_F6)
+            toshiba_brightness_set (BRN_DN);
+        if (fnkey.value == FN_F7)
+            toshiba_brightness_set (BRN_UP);
+
         /* If we have a description it is a known key.
          * otherwise we have either a key up event
          * or some unkown key.
          */
 
         fnkey.description = toshiba_fnkey_description (fnkey.value);
-
         if (fnkey.description) {
             toshiba_event_send ();
         } else {

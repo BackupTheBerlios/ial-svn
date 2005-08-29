@@ -37,6 +37,7 @@
 #include <libial/libial.h>
 
 /** libial_toshiba_utils.c */
+void toshiba_brightness_set (int);
 const char *toshiba_fnkey_description (int);
 
 /** libial_toshiba_main.c */
@@ -53,6 +54,10 @@ gboolean mod_unload (void);
 #define ACPI_TOSHIBA        "/proc/acpi/toshiba"
 #define ACPI_TOSHIBA_KEYS   "/proc/acpi/toshiba/keys"
 #define ACPI_TOSHIBA_LCD    "/proc/acpi/toshiba/lcd"
+
+/** Toshiba Brightness Control */
+#define BRN_DN  0
+#define BRN_UP  1
 
 /** Polling frequency in ms*/
 #define POLL_FREQ_MAX           1000
