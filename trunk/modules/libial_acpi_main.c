@@ -142,8 +142,8 @@ acpi_lid_state ()
 void
 acpi_event_handle (GString * acpi_event)
 {
+    /* regular ACPI events */
     if (strstr (acpi_event->str, "button")) {
-
         if (strstr (acpi_event->str, "PWRF")) {
             /* Power Button */
             acpi_event_send ("Power Button");
@@ -169,12 +169,20 @@ acpi_event_handle (GString * acpi_event)
             default:
                 break;
             }
-        } else {
-            WARNING (("Unknown button event received."));
-            acpi_event_send (acpi_event->str);
+        }
+    /* IBM ACPI events */
+    } else if (strstr (acpi_event->str, "ibm")) {
+        if (strstr (acpi_event->str, ACPI_IBM_STB)) {
+            /* Stand-by */
+            acpi_event_send ("Stand-by (IBM)");
+        } else if (strstr (acpi_event->str, ACPI_IBM_STR)) {
+            /* Suspend to RAM */
+            acpi_event_send ("Suspend to RAM (IBM)");
+        } else if (strstr (acpi_event->str, ACPI_IBM_STD)) {
+            /* Suspend to Disk */
+            acpi_event_send ("Suspend to Disk (IBM)");
         }
     }
-
 }
 
 /** ACPI Event callback

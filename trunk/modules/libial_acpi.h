@@ -35,6 +35,11 @@
 #define ACPI_LID                "/proc/acpi/button/lid/LID/state"
 #define ACPID_SOCKET            "/var/run/acpid.socket"
 
+/** IBM ACPI events */
+#define ACPI_IBM_STB            "00001003"
+#define ACPI_IBM_STR            "00001004"
+#define ACPI_IBM_STD            "0000100c"
+
 /** Lid states */
 #define ACPI_LID_STATE_OPEN     1
 #define ACPI_LID_STATE_CLOSED   0
