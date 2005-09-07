@@ -461,7 +461,7 @@ main (int argc, char *argv[])
     log_level_set (opt_debug);
 
     if (pid_file_exists () == TRUE) {
-        ERROR (("PID file %s exists. Please remove if you're sure that there is no other instance of `iald` running."));
+        ERROR (("PID file %s exists. Please remove if you're sure that there is no other instance of `iald` running.", IALD_PID_FILE));
         exit (1);
     }
 
