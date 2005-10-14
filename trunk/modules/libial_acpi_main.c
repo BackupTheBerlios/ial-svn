@@ -209,6 +209,9 @@ acpi_event_callback (GIOChannel * chan, GIOCondition cond, gpointer data)
          *   /proc/acpi/event.
          */
 
+	if (acpi.event_fd)
+		close (acpi.event_fd);
+
         /* wait a bit to give acpid a chance to claim the interface again */
         usleep (1000 * 1000 * 2);
 
