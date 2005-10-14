@@ -39,7 +39,7 @@ void log_logfile_set (const char *);
 void log_level_set (int);
 int log_level_get (void);
 
-void log_output (const char *format, ...);
+void log_output (const char *format, ...) __attribute__((__format__(__printf__,1,2)));
 
 /** Debug information logging macro */
 #define DEBUG(expr) \
