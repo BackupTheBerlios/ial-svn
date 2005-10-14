@@ -3,15 +3,19 @@
  "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
 <busconfig>
 
-  <policy context="default">
-    <deny own="com.novell.Ial"/>
-    <deny send_interface="com.novell.Ial"/>
-    <allow receive_interface="com.novell.Ial"/>
-  </policy>
-
   <policy user="root">
     <allow own="com.novell.Ial"/>
     <allow send_interface="com.novell.Ial"/>
+    <allow receive_interface="com.novell.Ial"/>
+  </policy>
+
+  <policy context="default">
+    <deny own="com.novell.Ial"/>
+    <deny send_interface="com.novell.Ial"/>
+    <deny receive_interface="com.novell.Ial"/>
+  </policy>
+
+  <policy at_console="true">
     <allow receive_interface="com.novell.Ial"/>
   </policy>
 
